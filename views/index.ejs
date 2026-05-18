@@ -2,232 +2,252 @@
 <%- include('partials/navbar') %>
 
 <!-- Hero Section -->
-<section style="background: linear-gradient(135deg, #FF6B00 0%, #ff8c00 50%, #e65c00 100%);" class="py-16 px-4">
+<section class="py-16 px-4" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);">
   <div class="max-w-5xl mx-auto text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-3 drop-shadow">Türkiye'nin Kupon Merkezi</h1>
-    <p class="text-white text-lg md:text-xl mb-8 opacity-90">En güncel indirim kuponları, promosyon kodları ve fırsatlar bir arada. Alışverişte tasarruf etmek hiç bu kadar kolay olmamıştı!</p>
-    <!-- Search Bar -->
+    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-3 leading-tight">Türkiye'nin Kupon Merkezi</h1>
+    <p class="text-gray-300 text-lg md:text-xl mb-8 opacity-90">En güncel indirim kuponları, promosyon kodları ve fırsatlar bir arada.</p>
     <form action="/arama" method="GET" class="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto mb-10">
-      <input type="text" name="q" placeholder="Mağaza veya kupon ara..." class="flex-1 px-5 py-3 rounded-xl text-gray-800 text-lg shadow focus:outline-none focus:ring-2 focus:ring-orange-300" />
-      <button type="submit" class="bg-white font-bold px-8 py-3 rounded-xl shadow hover:bg-orange-50 transition text-lg" style="color:#FF6B00;">Ara</button>
+      <input type="text" name="q" placeholder="Mağaza veya kupon ara..." class="flex-1 px-5 py-3.5 rounded-xl text-gray-800 text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400" />
+      <button type="submit" class="font-bold px-8 py-3.5 rounded-xl shadow-lg text-lg text-white transition hover:opacity-90" style="background:#FF6B00;">Ara</button>
     </form>
-    <!-- Stats -->
-    <div class="flex flex-wrap justify-center gap-8">
+    <div class="flex flex-wrap justify-center gap-10">
       <div class="text-center">
         <div class="text-3xl font-extrabold text-white"><%= stats && stats.totalCoupons ? stats.totalCoupons.toLocaleString('tr-TR') : '0' %>+</div>
-        <div class="text-white opacity-80 text-sm mt-1">Aktif Kupon</div>
+        <div class="text-gray-400 text-sm mt-1">Aktif Kupon</div>
       </div>
       <div class="text-center">
         <div class="text-3xl font-extrabold text-white"><%= stats && stats.totalStores ? stats.totalStores.toLocaleString('tr-TR') : '0' %>+</div>
-        <div class="text-white opacity-80 text-sm mt-1">Mağaza</div>
+        <div class="text-gray-400 text-sm mt-1">Mağaza</div>
       </div>
       <div class="text-center">
         <div class="text-3xl font-extrabold text-white"><%= stats && stats.totalCategories ? stats.totalCategories.toLocaleString('tr-TR') : '0' %>+</div>
-        <div class="text-white opacity-80 text-sm mt-1">Kategori</div>
+        <div class="text-gray-400 text-sm mt-1">Kategori</div>
       </div>
       <% if (stats && stats.totalUsers) { %>
       <div class="text-center">
         <div class="text-3xl font-extrabold text-white"><%= stats.totalUsers.toLocaleString('tr-TR') %>+</div>
-        <div class="text-white opacity-80 text-sm mt-1">Üye</div>
+        <div class="text-gray-400 text-sm mt-1">Üye</div>
       </div>
       <% } %>
     </div>
   </div>
 </section>
 
-<!-- AdSense Placeholder -->
-<!-- <div class="max-w-6xl mx-auto my-4 px-4">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div> -->
-
-<!-- Categories Grid -->
-<% if (categories && categories.length > 0) { %>
-<section class="py-12 px-4 bg-white">
+<!-- Slider -->
+<% if (sliders && sliders.length > 0) { %>
+<section class="bg-gray-100 py-6 px-4">
   <div class="max-w-6xl mx-auto">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Kategoriler</h2>
-      <a href="/kategoriler" class="text-sm font-medium hover:underline" style="color:#FF6B00;">Tümünü Gör →</a>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-      <% categories.forEach(function(cat) { %>
-      <a href="/kategori/<%= cat.slug %>" class="flex flex-col items-center p-4 rounded-2xl border border-gray-100 hover:border-orange-300 hover:shadow-md transition group bg-gray-50 hover:bg-orange-50">
-        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white text-sm font-bold" style="background:#FF6B00"><%= cat.name ? cat.name.charAt(0).toUpperCase() : 'K' %></div>
-        <span class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 text-center"><%= cat.name %></span>
-        <span class="text-xs text-gray-400 mt-1"><%= cat.coupon_count || 0 %> kupon</span>
-      </a>
-      <% }); %>
-    </div>
-  </div>
-</section>
-<% } %>
-
-<!-- Featured Stores -->
-<% if (featuredStores && featuredStores.length > 0) { %>
-<section class="py-12 px-4 bg-gray-50">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Öne Çıkan Mağazalar</h2>
-      <a href="/magazalar" class="text-sm font-medium hover:underline" style="color:#FF6B00;">Tümünü Gör →</a>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-      <% featuredStores.forEach(function(store) { %>
-      <a href="/magaza/<%= store.slug %>" class="flex flex-col items-center p-4 rounded-2xl bg-white border border-gray-100 hover:shadow-lg hover:border-orange-200 transition group">
-        <% if (store.logo_url) { %>
-        <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="w-14 h-14 object-contain rounded-xl mb-2" />
-        <% } else { %>
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center text-white text-2xl font-bold mb-2" style="background:#FF6B00;">
-          <%= store.name ? store.name.charAt(0).toUpperCase() : '?' %>
+    <div class="relative overflow-hidden rounded-2xl shadow-lg" id="mainSlider">
+      <div class="flex" id="sliderTrack" style="transition: transform 0.5s ease;">
+        <% sliders.forEach(function(slide, idx) { %>
+        <div class="w-full flex-shrink-0 rounded-2xl" style="background: linear-gradient(135deg, <%= slide.bg_color %> 0%, <%= slide.bg_color %>cc 100%);">
+          <a href="<%= slide.link_url %>" class="flex items-center px-8 py-10 min-h-[170px]">
+            <div>
+              <p class="text-white text-xs font-semibold uppercase tracking-widest mb-2 opacity-75">Özel Fırsat</p>
+              <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2 leading-tight"><%= slide.title %></h3>
+              <% if (slide.subtitle) { %>
+              <p class="text-white text-sm opacity-80 mb-5"><%= slide.subtitle %></p>
+              <% } %>
+              <span class="inline-flex items-center gap-2 bg-white font-bold px-5 py-2.5 rounded-xl text-sm" style="color: <%= slide.bg_color %>;">
+                Kupona Git
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
         </div>
-        <% } %>
-        <span class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 text-center truncate w-full text-center"><%= store.name %></span>
-        <span class="text-xs text-gray-400 mt-1"><%= store.coupon_count || store.active_coupons || 0 %> kupon</span>
+        <% }) %>
+      </div>
+      <button onclick="sliderMove(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg flex items-center justify-center transition z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button onclick="sliderMove(1)" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg flex items-center justify-center transition z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="sliderDots">
+        <% sliders.forEach(function(_, idx) { %>
+        <button onclick="sliderGoTo(<%= idx %>)" class="slider-dot w-2.5 h-2.5 rounded-full bg-white transition-all" style="opacity:<%= idx===0?'1':'0.45' %>; transform:scale(<%= idx===0?'1.3':'1' %>);"></button>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- 3-Tab Brand Section -->
+<section class="py-10 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-wrap gap-1 mb-8 bg-gray-100 rounded-2xl p-1.5 w-fit">
+      <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold transition text-white" data-tab="popular" style="background:#FF6B00;">
+        Popüler İndirim Kodları
+      </button>
+      <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="new">
+        En Yeni İndirim Kodları
+      </button>
+      <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="expiring">
+        Kaçıyor
+      </button>
+    </div>
+
+    <div id="tab-popular" class="tab-content">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <% (popularBrands || []).forEach(function(store) { %>
+        <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-4 rounded-2xl bg-white border border-gray-100 hover:shadow-lg hover:border-orange-200 transition">
+          <div class="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 mb-3 border border-gray-100">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xl font-extrabold" style="background:#FF6B00;">
+              <%= (store.name || 'K').charAt(0).toUpperCase() %>
+            </div>
+            <% if (store.logo_url) { %>
+            <img src="<%= store.logo_url %>" alt="<%= store.name %>"
+              class="absolute inset-0 w-full h-full object-contain p-1.5 bg-white"
+              onerror="this.style.display='none'"/>
+            <% } %>
+          </div>
+          <span class="text-sm font-semibold text-gray-800 group-hover:text-orange-600 text-center w-full truncate leading-tight"><%= store.name %></span>
+          <span class="text-xs text-gray-400 mt-1"><%= store.active_coupons || 0 %> kupon</span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-new" class="tab-content hidden">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <% (newBrands || []).forEach(function(store) { %>
+        <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-4 rounded-2xl bg-white border border-gray-100 hover:shadow-lg hover:border-orange-200 transition">
+          <div class="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 mb-3 border border-gray-100">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xl font-extrabold" style="background:#FF6B00;">
+              <%= (store.name || 'K').charAt(0).toUpperCase() %>
+            </div>
+            <% if (store.logo_url) { %>
+            <img src="<%= store.logo_url %>" alt="<%= store.name %>"
+              class="absolute inset-0 w-full h-full object-contain p-1.5 bg-white"
+              onerror="this.style.display='none'"/>
+            <% } %>
+          </div>
+          <span class="text-sm font-semibold text-gray-800 group-hover:text-orange-600 text-center w-full truncate leading-tight"><%= store.name %></span>
+          <span class="text-xs text-gray-400 mt-1"><%= store.active_coupons || 0 %> kupon</span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-expiring" class="tab-content hidden">
+      <% if ((expiringBrands || []).length > 0) { %>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <% expiringBrands.forEach(function(store) { %>
+        <a href="/magaza/<%= store.slug %>" class="group relative flex flex-col items-center p-4 rounded-2xl bg-white border border-gray-100 hover:shadow-lg hover:border-red-200 transition">
+          <span class="absolute top-2 right-2 text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded-full">Son</span>
+          <div class="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 mb-3 border border-gray-100">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xl font-extrabold" style="background:#FF6B00;">
+              <%= (store.name || 'K').charAt(0).toUpperCase() %>
+            </div>
+            <% if (store.logo_url) { %>
+            <img src="<%= store.logo_url %>" alt="<%= store.name %>"
+              class="absolute inset-0 w-full h-full object-contain p-1.5 bg-white"
+              onerror="this.style.display='none'"/>
+            <% } %>
+          </div>
+          <span class="text-sm font-semibold text-gray-800 group-hover:text-orange-600 text-center w-full truncate leading-tight"><%= store.name %></span>
+          <span class="text-xs text-red-400 mt-1"><% if(store.earliest_expiry){%><%= new Date(store.earliest_expiry).toLocaleDateString('tr-TR') %><%}%></span>
+        </a>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div class="text-center py-16 text-gray-400">
+        <svg class="w-12 h-12 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-base font-medium">Yakında sona erecek kupon bulunmuyor.</p>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a href="/magazalar" class="inline-flex items-center gap-2 px-7 py-3 border-2 rounded-xl font-semibold text-sm transition hover:bg-orange-50" style="border-color:#FF6B00;color:#FF6B00;">
+        Tüm Markaları Gör
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <% }); %>
     </div>
   </div>
 </section>
-<% } %>
 
-<!-- New Coupons -->
-<% if (newCoupons && newCoupons.length > 0) { %>
-<section class="py-12 px-4 bg-white">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Yeni Kuponlar</h2>
-      <a href="/yeni-kuponlar" class="text-sm font-semibold hover:underline" style="color:#FF6B00;">Tümünü Gör →</a>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <% newCoupons.forEach(function(coupon) { %>
-      <%- include('partials/coupon-card', { coupon: coupon }) %>
-      <% }); %>
-    </div>
-  </div>
-</section>
-<% } %>
-
-<!-- AdSense Placeholder -->
-<!-- <div class="max-w-6xl mx-auto my-4 px-4">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div> -->
-
-<!-- Popular Coupons -->
-<% if (popularCoupons && popularCoupons.length > 0) { %>
-<section class="py-12 px-4 bg-gray-50">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Popüler Kuponlar</h2>
-      <a href="/populer-kuponlar" class="text-sm font-semibold hover:underline" style="color:#FF6B00;">Tümünü Gör →</a>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <% popularCoupons.forEach(function(coupon) { %>
-      <%- include('partials/coupon-card', { coupon: coupon }) %>
-      <% }); %>
-    </div>
-  </div>
-</section>
-<% } %>
-
-<!-- Hakkımızda Section -->
-<section class="py-14 px-4 bg-white">
+<!-- About -->
+<section class="py-14 px-4 bg-gray-50">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Kuponluk.com Nedir?</h2>
-    <p class="text-gray-600 text-lg leading-relaxed mb-6">
-      Kuponluk.com, Türkiye'nin en kapsamlı kupon ve indirim kodu platformudur. Yüzlerce mağazadan derlediğimiz binlerce aktif kupon kodu ile alışverişlerinizde ciddi tasarruflar elde edebilirsiniz. Her gün güncellenen içeriklerimizle en güncel fırsatları kaçırmayın.
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-      <div class="p-6 rounded-2xl bg-orange-50 border border-orange-100">
+    <p class="text-gray-600 text-lg leading-relaxed mb-8">Türkiye'nin en kapsamlı kupon ve indirim kodu platformudur. Yüzlerce mağazadan derlenen binlerce aktif kupon kodu ile alışverişlerinizde ciddi tasarruflar elde edin.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm text-left">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#FF6B00">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <h3 class="font-bold text-gray-800 mb-2">Doğrulanmış Kuponlar</h3>
-        <p class="text-gray-600 text-sm">Tüm kuponlarımız ekibimiz tarafından test edilip doğrulanmaktadır.</p>
+        <p class="text-gray-500 text-sm">Tüm kuponlarımız ekibimiz tarafından test edilip doğrulanmaktadır.</p>
       </div>
-      <div class="p-6 rounded-2xl bg-orange-50 border border-orange-100">
+      <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm text-left">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#FF6B00">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         </div>
-        <h3 class="font-bold text-gray-800 mb-2">Anlık Bildirimler</h3>
-        <p class="text-gray-600 text-sm">Telegram kanalımıza katılarak yeni fırsatlardan anında haberdar olun.</p>
+        <h3 class="font-bold text-gray-800 mb-2">Marka Bildirimleri</h3>
+        <p class="text-gray-500 text-sm">Favori markanızın yeni kuponlarından e-posta ile anında haberdar olun.</p>
       </div>
-      <div class="p-6 rounded-2xl bg-orange-50 border border-orange-100">
+      <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm text-left">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#FF6B00">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <h3 class="font-bold text-gray-800 mb-2">Ücretsiz Kullanım</h3>
-        <p class="text-gray-600 text-sm">Kuponluk.com tamamen ücretsizdir. Kayıt olmadan da kupon kullanabilirsiniz.</p>
+        <p class="text-gray-500 text-sm">Kuponluk.com tamamen ücretsizdir. Kayıt olmadan da kupon kullanabilirsiniz.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="py-14 px-4 bg-gray-50">
+<!-- FAQ -->
+<section class="py-14 px-4 bg-white">
   <div class="max-w-3xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Sıkça Sorulan Sorular</h2>
-    <div class="space-y-4">
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Kupon kodu nasıl kullanılır?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          Kupon kodunu kopyaladıktan sonra alışveriş yaptığınız mağazanın ödeme sayfasına gidin. "İndirim Kodu" veya "Promosyon Kodu" alanına kopyaladığınız kodu yapıştırın ve uygulayın. İndirim tutarı sepetinizden otomatik olarak düşülecektir.
-        </div>
+    <div class="space-y-3">
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kupon kodu nasıl kullanılır?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Kupon kodunu kopyaladıktan sonra alışveriş yaptığınız mağazanın ödeme sayfasına gidin. "İndirim Kodu" alanına kodu yapıştırıp uygulayun; indirim otomatik düşülecektir.</div>
       </details>
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Kuponlar gerçekten çalışıyor mu?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          Evet! Kuponluk.com'daki tüm kuponlar ekibimiz tarafından düzenli olarak kontrol edilmektedir. "Doğrulanmış" rozeti taşıyan kuponlar bizzat test edilmiştir.
-        </div>
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kuponlar gerçekten çalışıyor mu?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Evet! Tüm kuponlarımız ekibimiz tarafından düzenli olarak kontrol edilmektedir. “Doğrulanmış” rozeti taşıyan kuponlar bizzat test edilmiştir.</div>
       </details>
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Kupon kodunu görmek için üye olmak gerekiyor mu?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          Hayır, üye olmadan da kupon kodlarını görebilir ve kullanabilirsiniz. Üye olmanın avantajı ise kuponları kaydedebilmek ve favori mağazaları takip edebilmektir.
-        </div>
-      </details>
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Yeni kuponlardan nasıl haberdar olabilirim?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          Telegram kanalımıza katılarak yeni yayınlanan kuponlardan anlık bildirim alabilirsiniz. Ayrıca "Yeni Kuponlar" bölümünü düzenli takip edebilirsiniz.
-        </div>
-      </details>
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Kupon eklemek istiyorum, nasıl yapabilirim?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          <a href="/kupon-ekle" class="font-semibold hover:underline" style="color:#FF6B00;">Kupon Ekle</a> sayfamız üzerinden yeni kupon önerisi gönderebilirsiniz. Ekibimiz inceledikten sonra onaylanan kuponlar sitemizde yayınlanacaktır.
-        </div>
-      </details>
-      <details class="bg-white rounded-xl border border-gray-100 shadow-sm group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">
-          Kuponluk.com nasıl para kazanıyor?
-          <span class="transition-transform group-open:rotate-180" style="color:#FF6B00;">▼</span>
-        </summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-          Sitemiz, bazı mağaza linkleri üzerinden affiliate (satış ortaklığı) komisyonu ve reklam gelirleriyle sürdürülmektedir. Bu durum, kullanıcılarımıza sunulan kuponların kalitesini veya doğruluğunu etkilememektedir.
-        </div>
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Belirli bir markanın bildirimlerini nasıl alabilirim?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Her marka ve kupon sayfasındaki “Bildirim Al” formunu kullanarak o markaya özel e-posta bildirimleri alabilirsiniz.</div>
       </details>
     </div>
   </div>
 </section>
 
-<!-- AdSense Placeholder -->
-<!-- <div class="max-w-6xl mx-auto my-4 px-4">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="ZZZZZZZZZZ" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div> -->
+<script>
+var _sliderCurrent = 0, _sliderTotal = <%= sliders ? sliders.length : 0 %>, _sliderTimer;
+function sliderGoTo(idx) {
+  _sliderCurrent = ((idx % _sliderTotal) + _sliderTotal) % _sliderTotal;
+  var t = document.getElementById('sliderTrack');
+  if (t) t.style.transform = 'translateX(-' + (_sliderCurrent * 100) + '%)';
+  document.querySelectorAll('.slider-dot').forEach(function(d, i) {
+    d.style.opacity = i === _sliderCurrent ? '1' : '0.45';
+    d.style.transform = i === _sliderCurrent ? 'scale(1.3)' : 'scale(1)';
+  });
+}
+function sliderMove(dir) { sliderGoTo(_sliderCurrent + dir); resetSliderTimer(); }
+function resetSliderTimer() {
+  clearInterval(_sliderTimer);
+  if (_sliderTotal > 1) _sliderTimer = setInterval(function(){ sliderGoTo(_sliderCurrent + 1); }, 5000);
+}
+if (_sliderTotal > 1) resetSliderTimer();
 
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.style.background=''; b.style.color='#4b5563'; });
+    this.style.background = '#FF6B00'; this.style.color = 'white';
+    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.add('hidden'); });
+    var t = document.getElementById('tab-' + this.dataset.tab);
+    if (t) t.classList.remove('hidden');
+  });
+});
+</script>
 
 <%- include('partials/footer') %>
 </body>
