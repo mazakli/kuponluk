@@ -8,71 +8,73 @@
     <div class="h-24 w-full" style="background: linear-gradient(135deg, #FF6B00, #ff8c00);"></div>
     <div class="px-6 pb-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-10">
-        <!-- Logo -->
         <div class="flex-shrink-0">
-          <% if (store.logo_url) { %>
-          <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow object-contain p-1" />
-          <% } else { %>
-          <div class="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow flex items-center justify-center text-3xl font-extrabold text-white" style="background:#FF6B00;">
-            <%= store.name ? store.name.charAt(0).toUpperCase() : '?' %>
+          <div class="relative w-20 h-20 rounded-2xl overflow-hidden border-4 border-white shadow">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-3xl font-extrabold" style="background:#FF6B00;">
+              <%= (store.name || '?').charAt(0).toUpperCase() %>
+            </div>
+            <% if (store.logo_url) { %>
+            <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain p-1.5 bg-white" onerror="this.style.display='none'"/>
+            <% } %>
           </div>
-          <% } %>
         </div>
-        <!-- Store Info -->
         <div class="flex-1 min-w-0">
           <h1 class="text-2xl font-extrabold text-gray-900"><%= store.name %></h1>
-          <% if (store.category_name) { %>
-          <span class="text-sm text-gray-500"><%= store.category_name %></span>
-          <% } %>
+          <% if (store.category_name) { %><span class="text-sm text-gray-500"><%= store.category_name %></span><% } %>
         </div>
-        <!-- Actions -->
         <div class="flex gap-3 flex-shrink-0">
           <% if (store.website_url) { %>
           <a href="<%= store.website_url %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600 transition text-sm">
-            🌐 Siteye Git
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Siteye Git
           </a>
           <% } %>
           <% if (currentUser) { %>
           <form action="/magaza/<%= store.slug %>/favori" method="POST">
             <button type="submit" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold transition text-sm <%= isFavorite ? 'text-white border-transparent' : 'text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600' %>" style="<%= isFavorite ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>">
-              <%= isFavorite ? '❤️ Favorilerde' : '🤍 Favoriye Ekle' %>
+              <svg class="w-4 h-4" fill="<%= isFavorite ? 'white' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              <%= isFavorite ? 'Favorilerde' : 'Favoriye Ekle' %>
             </button>
           </form>
           <% } %>
         </div>
       </div>
-      <% if (store.description) { %>
-      <p class="text-gray-600 mt-4 leading-relaxed"><%= store.description %></p>
-      <% } %>
+      <% if (store.description) { %><p class="text-gray-600 mt-4 leading-relaxed"><%= store.description %></p><% } %>
+
+      <!-- Brand Newsletter -->
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <p class="text-sm font-medium text-gray-700 mb-2"><%= store.name %> için yeni kupon bildirimlerini e-posta ile alın</p>
+        <form id="storeSubForm" class="flex gap-2 max-w-md">
+          <input type="hidden" name="store_id" value="<%= store.id %>"/>
+          <input type="email" name="email" placeholder="E-posta adresiniz" required
+            value="<%= currentUser ? currentUser.email : '' %>"
+            class="flex-1 px-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <button type="submit" class="text-white text-sm font-semibold px-5 py-2 rounded-xl transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">Bildirim Al</button>
+        </form>
+        <p id="storeSubMsg" class="text-xs mt-1.5 hidden"></p>
+      </div>
     </div>
   </div>
 
   <div class="flex flex-col lg:flex-row gap-8">
-    <!-- Main: Coupons List -->
     <div class="flex-1 min-w-0">
       <h2 class="text-xl font-bold text-gray-800 mb-5">
         <%= store.name %> Kuponları
-        <% if (coupons && coupons.length > 0) { %>
-        <span class="text-base font-normal text-gray-400 ml-2">(<%= coupons.length %> kupon)</span>
-        <% } %>
+        <% if (coupons && coupons.length > 0) { %><span class="text-base font-normal text-gray-400 ml-2">(<%= coupons.length %> kupon)</span><% } %>
       </h2>
-
       <% if (coupons && coupons.length > 0) { %>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <% coupons.forEach(function(coupon) { %>
-        <%- include('partials/coupon-card', { coupon: coupon }) %>
-        <% }); %>
+        <% coupons.forEach(function(coupon) { %><%- include('partials/coupon-card', { coupon: coupon }) %><% }); %>
       </div>
       <% } else { %>
       <div class="bg-white rounded-2xl border border-gray-100 shadow p-12 text-center">
-        <div class="text-5xl mb-4">🏷️</div>
+        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Henüz Kupon Yok</h3>
         <p class="text-gray-500">Bu mağaza için şu an aktif kupon bulunmamaktadır.</p>
       </div>
       <% } %>
     </div>
 
-    <!-- Sidebar: Related Stores -->
     <aside class="lg:w-64 flex-shrink-0">
       <% if (relatedStores && relatedStores.length > 0) { %>
       <div class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden sticky top-4">
@@ -82,13 +84,10 @@
         <div class="divide-y divide-gray-50">
           <% relatedStores.forEach(function(s) { %>
           <a href="/magaza/<%= s.slug %>" class="flex items-center gap-3 px-5 py-3 hover:bg-orange-50 transition group">
-            <% if (s.logo_url) { %>
-            <img src="<%= s.logo_url %>" alt="<%= s.name %>" class="w-9 h-9 object-contain rounded-lg border border-gray-100" />
-            <% } else { %>
-            <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background:#FF6B00;">
-              <%= s.name ? s.name.charAt(0).toUpperCase() : '?' %>
+            <div class="relative w-9 h-9 rounded-lg overflow-hidden flex-shrink-0">
+              <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm" style="background:#FF6B00;"><%= (s.name||'?').charAt(0).toUpperCase() %></div>
+              <% if (s.logo_url) { %><img src="<%= s.logo_url %>" alt="<%= s.name %>" class="absolute inset-0 w-full h-full object-contain p-0.5 bg-white" onerror="this.style.display='none'"/><% } %>
             </div>
-            <% } %>
             <div class="min-w-0">
               <div class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 truncate"><%= s.name %></div>
               <div class="text-xs text-gray-400"><%= s.active_coupons || s.coupon_count || 0 %> kupon</div>
@@ -101,6 +100,21 @@
     </aside>
   </div>
 </div>
+
+<script>
+var storeSubForm = document.getElementById('storeSubForm');
+if (storeSubForm) {
+  storeSubForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('/marka-abone-ol', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(storeSubForm)).toString() })
+    .then(r => r.json()).then(function(d) {
+      var m = document.getElementById('storeSubMsg');
+      m.textContent = d.message; m.style.color = d.success ? '#16a34a' : '#dc2626'; m.classList.remove('hidden');
+      if (d.success) storeSubForm.querySelector('input[type=email]').value = '';
+    });
+  });
+}
+</script>
 
 <%- include('partials/footer') %>
 </body>
