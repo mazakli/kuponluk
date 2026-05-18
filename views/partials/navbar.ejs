@@ -3,7 +3,7 @@
   <div class="max-w-7xl mx-auto flex justify-between items-center">
     <div class="flex items-center gap-4">
       <a href="/telegram" class="hover:text-orange-400 transition flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         Telegram
       </a>
       <span class="text-gray-500">|</span>
@@ -28,19 +28,29 @@
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
       <a href="/" class="flex items-center gap-2 flex-shrink-0">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#FF6B00">
-          <span class="text-white font-bold text-lg">K</span>
+        <div class="w-9 h-9 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full">
+            <rect width="100" height="100" rx="20" fill="#FF6B00"/>
+            <rect x="30" y="15" width="42" height="70" rx="5" fill="white"/>
+            <path d="M72 30 L88 50 L72 70 Z" fill="white"/>
+            <circle cx="82" cy="50" r="6" fill="#FF6B00"/>
+            <path d="M8 30 L44 50" stroke="#1a1a2e" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="7" cy="26" r="9" fill="none" stroke="#1a1a2e" stroke-width="5"/>
+            <path d="M8 70 L44 50" stroke="#1a1a2e" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="7" cy="74" r="9" fill="none" stroke="#1a1a2e" stroke-width="5"/>
+            <circle cx="44" cy="50" r="5" fill="#FF6B00" stroke="white" stroke-width="1.5"/>
+            <line x1="49" y1="50" x2="80" y2="50" stroke="#1a1a2e" stroke-width="2.5" stroke-dasharray="5,4" opacity="0.6"/>
+          </svg>
         </div>
         <span class="font-bold text-xl" style="color:#1a1a2e">Kuponluk<span style="color:#FF6B00">.com</span></span>
       </a>
 
-      <!-- Search Bar -->
+      <!-- Search -->
       <form action="/arama" method="GET" class="hidden md:flex flex-1 max-w-xl mx-6">
         <div class="relative w-full">
           <input type="text" name="q" placeholder="Kupon kodu, mağaza veya indirim ara..."
             value="<%= typeof q !== 'undefined' ? q : '' %>"
-            class="w-full border border-gray-200 rounded-xl pl-4 pr-12 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
-          >
+            class="w-full border border-gray-200 rounded-xl pl-4 pr-12 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 transition">
           <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
@@ -61,15 +71,12 @@
 
     <!-- Secondary Nav -->
     <div class="hidden md:flex items-center gap-1 pb-2 border-t border-gray-100 pt-2 text-sm">
-
-      <!-- Kategoriler trigger -->
       <div id="kategorilerBtn">
         <a href="/kategoriler" class="flex items-center gap-1 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
           Kategoriler
-          <svg id="kategorilerArrow" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
       </div>
-
       <a href="/magazalar" class="whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">Mağazalar</a>
       <a href="/kupon/son-eklenenler" class="whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">Son Eklenen Kuponlar</a>
       <a href="/kupon/populer" class="whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">Popüler Kuponlar</a>
@@ -81,7 +88,7 @@
     <div class="max-w-7xl mx-auto px-6 py-6">
       <div class="flex items-center justify-between mb-4">
         <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Tüm Kategoriler</span>
-        <a href="/kategoriler" class="text-xs font-semibold hover:underline" style="color:#FF6B00">Tümünü Gör →</a>
+        <a href="/kategoriler" class="text-xs font-semibold hover:underline" style="color:#FF6B00">Tümünü Gör</a>
       </div>
       <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3">
         <% if (typeof navCategories !== 'undefined' && navCategories.length > 0) { %>
@@ -104,8 +111,8 @@
     <div class="grid grid-cols-2 gap-2 text-sm">
       <a href="/kategoriler" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Kategoriler</a>
       <a href="/magazalar" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Mağazalar</a>
-      <a href="/kupon/son-eklenenler" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Son Eklenen Kuponlar</a>
-      <a href="/kupon/populer" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Popüler Kuponlar</a>
+      <a href="/kupon/son-eklenenler" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Son Eklenen</a>
+      <a href="/kupon/populer" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-orange-50 font-medium">Popüler</a>
       <a href="/kupon-gonder" class="flex items-center gap-2 px-3 py-2 rounded-lg text-white font-semibold col-span-2 justify-center" style="background:#FF6B00">Kupon Gönder</a>
     </div>
   </div>
