@@ -6,27 +6,23 @@
   <nav class="text-sm text-gray-500 mb-6 flex flex-wrap items-center gap-1">
     <a href="/" class="hover:text-orange-600">Ana Sayfa</a>
     <span>/</span>
-    <a href="/kategori/<%= coupon.category_slug %>" class="hover:text-orange-600"><%= coupon.category_name %></a>
-    <span>/</span>
+    <% if (coupon.category_slug) { %><a href="/kategori/<%= coupon.category_slug %>" class="hover:text-orange-600"><%= coupon.category_name %></a><span>/</span><% } %>
     <a href="/magaza/<%= coupon.store_slug %>" class="hover:text-orange-600"><%= coupon.store_name %></a>
     <span>/</span>
     <span class="text-gray-800 font-medium truncate max-w-xs"><%= coupon.title %></span>
   </nav>
 
   <div class="flex flex-col lg:flex-row gap-8">
-    <!-- Main Content -->
     <div class="flex-1 min-w-0">
       <!-- Main Coupon Card -->
-      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
-        <!-- Store Header -->
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-6">
         <div class="flex items-center gap-4 px-6 py-5 border-b border-gray-100" style="background: linear-gradient(90deg, #fff7f0, #fff);">
-          <% if (coupon.logo_url) { %>
-            <img src="<%= coupon.logo_url %>" alt="<%= coupon.store_name %>" class="w-16 h-16 object-contain rounded-xl border border-gray-100 bg-white p-1" />
-          <% } else { %>
-            <div class="w-16 h-16 rounded-xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0" style="background:#FF6B00;">
-              <%= (coupon.store_name || 'K').charAt(0).toUpperCase() %>
-            </div>
-          <% } %>
+          <div class="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold" style="background:#FF6B00;"><%= (coupon.store_name||'K').charAt(0).toUpperCase() %></div>
+            <% if (coupon.logo_url) { %>
+            <img src="<%= coupon.logo_url %>" alt="<%= coupon.store_name %>" class="absolute inset-0 w-full h-full object-contain p-1 bg-white" onerror="this.style.display='none'"/>
+            <% } %>
+          </div>
           <div>
             <a href="/magaza/<%= coupon.store_slug %>" class="text-lg font-bold text-gray-800 hover:text-orange-600 transition"><%= coupon.store_name %></a>
             <div class="flex flex-wrap gap-2 mt-1">
@@ -37,52 +33,42 @@
               </span>
               <% } %>
               <% if (coupon.is_exclusive == 1) { %>
-              <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#FF6B00;">⭐ Özel</span>
+              <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#FF6B00;">Özel</span>
               <% } %>
             </div>
           </div>
         </div>
 
-        <!-- Coupon Body -->
         <div class="px-6 py-6">
           <h1 class="text-2xl font-bold text-gray-900 mb-3"><%= coupon.title %></h1>
-          <% if (coupon.description) { %>
-          <p class="text-gray-600 mb-5"><%= coupon.description %></p>
-          <% } %>
+          <% if (coupon.description) { %><p class="text-gray-600 mb-5"><%= coupon.description %></p><% } %>
 
-          <!-- Discount Badge -->
           <div class="mb-6">
             <% if (coupon.discount_type === 'percent') { %>
               <span class="inline-block bg-green-100 text-green-700 text-2xl font-extrabold px-5 py-2 rounded-xl"><%= coupon.discount_value %>% İndirim</span>
             <% } else if (coupon.discount_type === 'fixed') { %>
               <span class="inline-block bg-blue-100 text-blue-700 text-2xl font-extrabold px-5 py-2 rounded-xl"><%= coupon.discount_value %> TL İndirim</span>
             <% } else if (coupon.discount_type === 'free_shipping') { %>
-              <span class="inline-block bg-purple-100 text-purple-700 text-2xl font-extrabold px-5 py-2 rounded-xl">🚚 Ücretsiz Kargo</span>
+              <span class="inline-block bg-purple-100 text-purple-700 text-2xl font-extrabold px-5 py-2 rounded-xl">Ücretsiz Kargo</span>
             <% } else { %>
               <span class="inline-block text-white text-2xl font-extrabold px-5 py-2 rounded-xl" style="background:#FF6B00;"><%= coupon.discount_value || 'Özel Fırsat' %></span>
             <% } %>
           </div>
 
-          <!-- Coupon Code + Copy Button -->
           <% if (coupon.code) { %>
           <div class="mb-6">
             <p class="text-sm text-gray-500 font-medium mb-2">Kupon Kodu</p>
             <div class="flex items-center gap-3">
               <div class="flex-1 bg-orange-50 border-2 border-dashed rounded-xl px-5 py-3 font-mono text-xl font-bold tracking-widest text-gray-800" style="border-color:#FF6B00;" id="coupon-code-box">
-                <span id="main-code-display"><%= coupon.code.substring(0, 4) %><span class="blur-sm select-none text-gray-400">••••••</span></span>
+                <span id="main-code-display"><%= coupon.code.substring(0,4) %><span class="blur-sm select-none text-gray-400">••••••</span></span>
               </div>
-              <button id="copy-btn" onclick="revealAndCopy('<%= coupon.code %>')" class="text-white text-base font-bold px-6 py-3 rounded-xl transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">
-                Kodu Kopyala
-              </button>
+              <button id="copy-btn" onclick="revealAndCopy('<%= coupon.code %>')" class="text-white text-base font-bold px-6 py-3 rounded-xl transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">Kodu Kopyala</button>
             </div>
           </div>
           <% } else { %>
-          <a href="<%= coupon.affiliate_url || '#' %>" target="_blank" rel="nofollow noopener" class="inline-block text-white text-lg font-bold px-8 py-3 rounded-xl mb-6 transition hover:opacity-90" style="background:#FF6B00;">
-            Fırsatı Kullan →
-          </a>
+          <a href="<%= coupon.affiliate_url || '#' %>" target="_blank" rel="nofollow noopener" class="inline-block text-white text-lg font-bold px-8 py-3 rounded-xl mb-6 transition hover:opacity-90" style="background:#FF6B00;">Fırsatı Kullan</a>
           <% } %>
 
-          <!-- Action Buttons -->
           <div class="flex flex-wrap gap-3 mb-6">
             <% if (currentUser) { %>
             <form action="/kupon/<%= coupon.id %>/kaydet" method="POST">
@@ -92,39 +78,21 @@
               </button>
             </form>
             <% } %>
-            <a href="<%= coupon.affiliate_url || '#' %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 px-5 py-2 rounded-lg border-2 border-gray-200 text-gray-700 font-semibold hover:border-orange-400 hover:text-orange-600 transition">
+            <a href="<%= coupon.website_url || '#' %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 px-5 py-2 rounded-lg border-2 border-gray-200 text-gray-700 font-semibold hover:border-orange-400 hover:text-orange-600 transition">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
               Mağazaya Git
             </a>
           </div>
 
-          <!-- Meta Info -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center border-t border-gray-100 pt-5">
-            <div>
-              <div class="text-xs text-gray-400 mb-1">Son Kullanma</div>
-              <div class="text-sm font-semibold text-gray-700">
-                <% if (coupon.expiry_date) { %>
-                  <%= new Date(coupon.expiry_date).toLocaleDateString('tr-TR') %>
-                <% } else { %>
-                  Süresiz
-                <% } %>
-              </div>
-            </div>
-            <div>
-              <div class="text-xs text-gray-400 mb-1">Kullanım</div>
-              <div class="text-sm font-semibold text-gray-700"><%= coupon.use_count || 0 %> kez</div>
-            </div>
-            <div>
-              <div class="text-xs text-gray-400 mb-1">Görüntüleme</div>
-              <div class="text-sm font-semibold text-gray-700"><%= coupon.view_count || 0 %></div>
-            </div>
+            <div><div class="text-xs text-gray-400 mb-1">Son Kullanma</div><div class="text-sm font-semibold text-gray-700"><% if(coupon.expiry_date){%><%= new Date(coupon.expiry_date).toLocaleDateString('tr-TR') %><%}else{%>Süresiz<%}%></div></div>
+            <div><div class="text-xs text-gray-400 mb-1">Kullanım</div><div class="text-sm font-semibold text-gray-700"><%= coupon.use_count || 0 %> kez</div></div>
+            <div><div class="text-xs text-gray-400 mb-1">Görüntüleme</div><div class="text-sm font-semibold text-gray-700"><%= coupon.view_count || 0 %></div></div>
             <div>
               <div class="text-xs text-gray-400 mb-1">Puan</div>
               <div class="text-sm font-semibold text-gray-700">
                 <% var avg = coupon.rating_count > 0 ? Math.round(coupon.rating_sum / coupon.rating_count) : 0; %>
-                <% for (var i = 1; i <= 5; i++) { %>
-                  <span class="<%= i <= avg ? 'text-yellow-400' : 'text-gray-300' %>">★</span>
-                <% } %>
+                <% for(var i=1;i<=5;i++){%><span class="<%= i<=avg?'text-yellow-400':'text-gray-300' %>">&#9733;</span><%}%>
                 <span class="text-xs text-gray-400">(<%= coupon.rating_count || 0 %>)</span>
               </div>
             </div>
@@ -132,53 +100,103 @@
         </div>
       </div>
 
-      <!-- Rating Section -->
-      <div class="bg-white rounded-2xl shadow border border-gray-100 px-6 py-5 mb-8">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">Bu kuponu değerlendirin</h3>
-        <% if (currentUser) { %>
-        <form action="/kupon/<%= coupon.id %>/puan" method="POST" class="flex items-center gap-3">
-          <div class="flex gap-1" id="star-rating">
-            <% for (var s = 1; s <= 5; s++) { %>
-            <label class="cursor-pointer">
-              <input type="radio" name="rating" value="<%= s %>" class="sr-only" <%= userRating === s ? 'checked' : '' %> />
-              <span class="text-3xl <%= (userRating && s <= userRating) ? 'text-yellow-400' : 'text-gray-300' %> hover:text-yellow-400 transition star-btn" data-val="<%= s %>">★</span>
-            </label>
-            <% } %>
+      <!-- Brand Info -->
+      <div class="bg-white rounded-2xl shadow border border-gray-100 px-6 py-5 mb-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4"><%= coupon.store_name %> Hakkında</h3>
+        <div class="flex items-start gap-4 mb-4">
+          <div class="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xl font-bold" style="background:#FF6B00;"><%= (coupon.store_name||'K').charAt(0).toUpperCase() %></div>
+            <% if (coupon.logo_url) { %><img src="<%= coupon.logo_url %>" alt="<%= coupon.store_name %>" class="absolute inset-0 w-full h-full object-contain p-1.5 bg-white" onerror="this.style.display='none'"/><% } %>
           </div>
-          <button type="submit" class="px-5 py-2 rounded-lg text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Gönder</button>
+          <div class="flex-1">
+            <% if (coupon.store_desc) { %><p class="text-gray-600 text-sm mb-3 leading-relaxed"><%= coupon.store_desc %></p><% } %>
+            <div class="flex flex-wrap gap-3">
+              <a href="/magaza/<%= coupon.store_slug %>" class="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-xl border-2 transition hover:bg-orange-50" style="border-color:#FF6B00;color:#FF6B00;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                Tüm Kuponları Gör
+              </a>
+              <% if (coupon.website_url) { %>
+              <a href="<%= coupon.website_url %>" target="_blank" rel="nofollow noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-600 hover:border-gray-400 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Resmi Site
+              </a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-100 pt-4">
+          <p class="text-sm font-medium text-gray-700 mb-3"><%= coupon.store_name %> için yeni kupon bildirimlerini e-posta ile alın</p>
+          <form id="brandSubForm" class="flex gap-2 max-w-md">
+            <input type="hidden" name="store_id" value="<%= coupon.store_id %>"/>
+            <input type="email" name="email" placeholder="E-posta adresiniz" required
+              value="<%= currentUser ? currentUser.email : '' %>"
+              class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+            <button type="submit" class="text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">Bildirim Al</button>
+          </form>
+          <p id="brandSubMsg" class="text-xs mt-2 hidden"></p>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="bg-white rounded-2xl shadow border border-gray-100 px-6 py-5 mb-6" id="yorumlar">
+        <h3 class="text-lg font-bold text-gray-800 mb-5">Kullanıcı Yorumları (<%= reviews ? reviews.length : 0 %>)</h3>
+
+        <% if (currentUser && !userHasReviewed) { %>
+        <form action="/kupon/<%= coupon.id %>/yorum" method="POST" class="mb-6 pb-6 border-b border-gray-100">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Yorumunuzu Ekleyin</p>
+          <div class="flex gap-1 mb-3" id="reviewStars">
+            <% for(var s=1;s<=5;s++){%>
+            <label class="cursor-pointer">
+              <input type="radio" name="rating" value="<%= s %>" class="sr-only" required/>
+              <span class="text-2xl text-gray-300 hover:text-yellow-400 transition star-review" data-val="<%= s %>">&#9733;</span>
+            </label>
+            <%}%>
+          </div>
+          <textarea name="comment" rows="3" placeholder="Deneyiminizi paylaşın..." required
+            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 resize-none mb-3"></textarea>
+          <button type="submit" class="text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition hover:opacity-90" style="background:#FF6B00;">Yorumu Gönder</button>
         </form>
+        <% } else if (!currentUser) { %>
+        <p class="text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100">Yorum yapabilmek için <a href="/giris" class="font-semibold hover:underline" style="color:#FF6B00;">giriş yapın</a>.</p>
+        <% } else if (userHasReviewed) { %>
+        <p class="text-sm text-green-600 font-medium mb-6 pb-6 border-b border-gray-100">Bu kuponu daha önce değlendirdiniz.</p>
+        <% } %>
+
+        <% if (reviews && reviews.length > 0) { %>
+        <div class="space-y-5">
+          <% reviews.forEach(function(review) { %>
+          <div class="flex gap-3">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">
+              <%= review.username.charAt(0).toUpperCase() %>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-gray-800"><%= review.username %></span>
+                <div class="flex gap-0.5">
+                  <% for(var ri=1;ri<=5;ri++){%><span class="text-sm <%= ri<=review.rating?'text-yellow-400':'text-gray-300' %>">&#9733;</span><%}%>
+                </div>
+                <span class="text-xs text-gray-400"><%= new Date(review.created_at).toLocaleDateString('tr-TR') %></span>
+              </div>
+              <p class="text-sm text-gray-600"><%= review.comment %></p>
+            </div>
+          </div>
+          <% }) %>
+        </div>
         <% } else { %>
-        <p class="text-gray-500">Puanlama yapabilmek için <a href="/giris" class="font-semibold hover:underline" style="color:#FF6B00;">giriş yapın</a>.</p>
+        <p class="text-sm text-gray-400 text-center py-6">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
         <% } %>
       </div>
 
       <!-- How to Use -->
-      <div class="bg-white rounded-2xl shadow border border-gray-100 px-6 py-5 mb-8">
+      <div class="bg-white rounded-2xl shadow border border-gray-100 px-6 py-5 mb-6">
         <h3 class="text-lg font-bold text-gray-800 mb-4">Nasıl Kullanılır?</h3>
         <ol class="space-y-3">
-          <li class="flex items-start gap-3">
-            <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">1</span>
-            <span class="text-gray-600">Yukarıdaki "Kodu Kopyala" butonuna tıklayarak kupon kodunu panoya kopyalayın.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">2</span>
-            <span class="text-gray-600"><a href="/magaza/<%= coupon.store_slug %>" class="font-semibold hover:underline" style="color:#FF6B00;"><%= coupon.store_name %></a> web sitesine gidin ve ürünlerinizi sepetinize ekleyin.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">3</span>
-            <span class="text-gray-600">Ödeme sayfasında "İndirim Kodu" veya "Kupon Kodu" alanına kopyaladığınız kodu yapıştırın.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">4</span>
-            <span class="text-gray-600">İndirim tutarı sepetinize yansıyacak, siparişinizi tamamlayın ve tasarruf edin!</span>
-          </li>
+          <li class="flex items-start gap-3"><span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">1</span><span class="text-gray-600">"Kodu Kopyala" butonuna tıklayarak kupon kodunu panoya kopyalayın.</span></li>
+          <li class="flex items-start gap-3"><span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">2</span><span class="text-gray-600"><a href="/magaza/<%= coupon.store_slug %>" class="font-semibold hover:underline" style="color:#FF6B00;"><%= coupon.store_name %></a> web sitesine gidin ve ürünlerinizi sepete ekleyin.</span></li>
+          <li class="flex items-start gap-3"><span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">3</span><span class="text-gray-600">Ödeme sayfasında "İndirim Kodu" alanına kodu yapıştırın.</span></li>
+          <li class="flex items-start gap-3"><span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">4</span><span class="text-gray-600">İndirim sepetinize yansıyacak, siparişinizi tamamlayın ve tasarruf edin!</span></li>
         </ol>
       </div>
-
-      <!-- AdSense Placeholder -->
-      <!-- <div class="my-4">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      </div> -->
 
       <!-- Same Store Coupons -->
       <% if (storeCoupons && storeCoupons.length > 0) { %>
@@ -195,24 +213,17 @@
 
     <!-- Sidebar -->
     <aside class="lg:w-72 flex-shrink-0">
-      <!-- Popular Coupons -->
-      <div class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden sticky top-20">
         <div class="px-5 py-4 border-b border-gray-100" style="background:#FF6B00;">
           <h3 class="text-white font-bold text-lg">Popüler Kuponlar</h3>
         </div>
         <div class="divide-y divide-gray-50">
           <% popularCoupons.forEach(function(c) { %>
           <div class="px-5 py-3 hover:bg-orange-50 transition">
-            <a href="/kupon/<%= c.id %>-<%= (c.slug || '') %>" class="text-sm font-semibold text-gray-700 hover:text-orange-600 transition block mb-1 line-clamp-2"><%= c.title %></a>
+            <a href="/kupon/<%= c.id %>" class="text-sm font-semibold text-gray-700 hover:text-orange-600 transition block mb-1 line-clamp-2"><%= c.title %></a>
             <div class="flex items-center justify-between">
               <span class="text-xs text-gray-400"><%= c.store_name %></span>
-              <% if (c.discount_type === 'percent') { %>
-                <span class="text-xs bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full"><%= c.discount_value %>%</span>
-              <% } else if (c.discount_type === 'fixed') { %>
-                <span class="text-xs bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full"><%= c.discount_value %> TL</span>
-              <% } else if (c.discount_type === 'free_shipping') { %>
-                <span class="text-xs bg-purple-100 text-purple-700 font-bold px-2 py-0.5 rounded-full">Kargo</span>
-              <% } %>
+              <% if(c.discount_type==='percent'){%><span class="text-xs bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full"><%= c.discount_value %>%</span><%}else if(c.discount_type==='fixed'){%><span class="text-xs bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full"><%= c.discount_value %> TL</span><%}else if(c.discount_type==='free_shipping'){%><span class="text-xs bg-purple-100 text-purple-700 font-bold px-2 py-0.5 rounded-full">Kargo</span><%}%>
             </div>
           </div>
           <% }) %>
@@ -224,27 +235,43 @@
 
 <script>
 function revealAndCopy(code) {
-  var display = document.getElementById('main-code-display');
-  if (display) display.innerHTML = '<span class="tracking-widest">' + code + '</span>';
+  var d = document.getElementById('main-code-display');
+  if (d) d.innerHTML = '<span class="tracking-widest">' + code + '</span>';
   var btn = document.getElementById('copy-btn');
   navigator.clipboard.writeText(code).then(function() {
-    btn.textContent = '✓ Kopyalandı!';
+    btn.textContent = 'Kopyalandı!';
     btn.style.background = '#16a34a';
-    setTimeout(function() { btn.textContent = 'Kodu Kopyala'; btn.style.background = '#FF6B00'; }, 3000);
-  }).catch(function() {
-    btn.textContent = 'Kodu Kopyala';
+    setTimeout(function(){ btn.textContent='Kodu Kopyala'; btn.style.background='#FF6B00'; }, 3000);
   });
 }
-// Star rating hover effect
-document.querySelectorAll('.star-btn').forEach(function(star) {
+document.querySelectorAll('.star-review').forEach(function(star) {
   star.addEventListener('mouseenter', function() {
     var val = parseInt(this.dataset.val);
-    document.querySelectorAll('.star-btn').forEach(function(s) {
-      s.classList.toggle('text-yellow-400', parseInt(s.dataset.val) <= val);
-      s.classList.toggle('text-gray-300', parseInt(s.dataset.val) > val);
+    document.querySelectorAll('.star-review').forEach(function(s) {
+      s.style.color = parseInt(s.dataset.val) <= val ? '#facc15' : '';
     });
   });
+  star.addEventListener('click', function() {
+    var val = parseInt(this.dataset.val);
+    document.querySelectorAll('.star-review').forEach(function(s) {
+      s.style.color = parseInt(s.dataset.val) <= val ? '#facc15' : '#d1d5db';
+    });
+    var inp = this.previousElementSibling;
+    if (inp) inp.checked = true;
+  });
 });
+var brandForm = document.getElementById('brandSubForm');
+if (brandForm) {
+  brandForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('/marka-abone-ol', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(brandForm)).toString() })
+    .then(r => r.json()).then(function(d) {
+      var m = document.getElementById('brandSubMsg');
+      m.textContent = d.message; m.style.color = d.success ? '#16a34a' : '#dc2626'; m.classList.remove('hidden');
+      if (d.success) brandForm.reset();
+    });
+  });
+}
 </script>
 
 <%- include('partials/footer') %>

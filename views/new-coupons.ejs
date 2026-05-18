@@ -2,63 +2,32 @@
 <%- include('partials/navbar') %>
 
 <div class="max-w-6xl mx-auto px-4 py-10">
-
-  <!-- Page Header -->
   <div class="mb-8">
-    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">🆕 Yeni Kuponlar</h1>
-    <p class="text-gray-500">
-      En son eklenen indirim kuponları ve promosyon kodları.
-      <% if (total) { %><strong class="text-gray-700"><%= total %></strong> kupon bulundu.<% } %>
-    </p>
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Yeni Kuponlar</h1>
+    <p class="text-gray-500">En son eklenen indirim kuponları ve promosyon kodları.<% if (total) { %> <strong class="text-gray-700"><%= total %></strong> kupon bulundu.<% } %></p>
   </div>
-
-  <!-- Coupons Grid -->
   <% if (coupons && coupons.length > 0) { %>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
-    <% coupons.forEach(function(coupon) { %>
-    <%- include('partials/coupon-card', { coupon: coupon }) %>
-    <% }); %>
+    <% coupons.forEach(function(coupon) { %><%- include('partials/coupon-card', { coupon: coupon }) %><% }); %>
   </div>
-
-  <!-- Pagination -->
   <% if (totalPages && totalPages > 1) { %>
   <nav class="flex justify-center items-center gap-2 flex-wrap">
-    <% if (currentPage > 1) { %>
-    <a href="/yeni-kuponlar?sayfa=<%= currentPage - 1 %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">← Önceki</a>
-    <% } %>
-
-    <% var startPage = Math.max(1, currentPage - 2); %>
-    <% var endPage = Math.min(totalPages, currentPage + 2); %>
-
-    <% if (startPage > 1) { %>
-    <a href="/yeni-kuponlar?sayfa=1" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">1</a>
-    <% if (startPage > 2) { %><span class="text-gray-400">...</span><% } %>
-    <% } %>
-
-    <% for (var p = startPage; p <= endPage; p++) { %>
-    <a href="/yeni-kuponlar?sayfa=<%= p %>" class="px-4 py-2 rounded-lg border font-medium text-sm transition <%= p === currentPage ? 'text-white border-transparent' : 'border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600' %>" style="<%= p === currentPage ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>"><%= p %></a>
-    <% } %>
-
-    <% if (endPage < totalPages) { %>
-    <% if (endPage < totalPages - 1) { %><span class="text-gray-400">...</span><% } %>
-    <a href="/yeni-kuponlar?sayfa=<%= totalPages %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm"><%= totalPages %></a>
-    <% } %>
-
-    <% if (currentPage < totalPages) { %>
-    <a href="/yeni-kuponlar?sayfa=<%= currentPage + 1 %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">Sonraki →</a>
-    <% } %>
+    <% if (currentPage > 1) { %><a href="/kupon/son-eklenenler?sayfa=<%= currentPage - 1 %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">&#8592; Önceki</a><% } %>
+    <% var startPage = Math.max(1, currentPage - 2); var endPage = Math.min(totalPages, currentPage + 2); %>
+    <% if (startPage > 1) { %><a href="/kupon/son-eklenenler?sayfa=1" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">1</a><% if (startPage > 2) { %><span class="text-gray-400">...</span><% } %><% } %>
+    <% for (var p = startPage; p <= endPage; p++) { %><a href="/kupon/son-eklenenler?sayfa=<%= p %>" class="px-4 py-2 rounded-lg border font-medium text-sm transition <%= p === currentPage ? 'text-white border-transparent' : 'border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600' %>" style="<%= p === currentPage ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>"><%= p %></a><% } %>
+    <% if (endPage < totalPages) { %><% if (endPage < totalPages - 1) { %><span class="text-gray-400">...</span><% } %><a href="/kupon/son-eklenenler?sayfa=<%= totalPages %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm"><%= totalPages %></a><% } %>
+    <% if (currentPage < totalPages) { %><a href="/kupon/son-eklenenler?sayfa=<%= currentPage + 1 %>" class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-orange-400 hover:text-orange-600 transition font-medium text-sm">Sonraki &#8594;</a><% } %>
   </nav>
   <% } %>
-
   <% } else { %>
   <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
-    <div class="text-6xl mb-4">🏷️</div>
+    <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Henüz Kupon Yok</h3>
     <p class="text-gray-500">Yeni kuponlar yakında eklenecek.</p>
     <a href="/" class="inline-block mt-4 px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Ana Sayfaya Dön</a>
   </div>
   <% } %>
-
 </div>
 
 <%- include('partials/footer') %>
