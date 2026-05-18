@@ -7,24 +7,19 @@ router.get('/son-eklenenler', (req, res) => {
   const page = parseInt(req.query.sayfa) || 1;
   const limit = 20;
   const offset = (page - 1) * limit;
-
   const total = db.prepare('SELECT COUNT(*) as c FROM coupons').get().c;
   const coupons = db.prepare(`
     SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
-           c.name as category_name, c.icon as category_icon
+           c.name as category_name, c.slug as category_slug
     FROM coupons cp
     JOIN stores s ON cp.store_id = s.id
     LEFT JOIN categories c ON s.category_id = c.id
-    ORDER BY cp.created_at DESC
-    LIMIT ? OFFSET ?
+    ORDER BY cp.created_at DESC LIMIT ? OFFSET ?
   `).all(limit, offset);
-
   res.render('new-coupons', {
     title: 'Son Eklenen Kuponlar - Kuponluk.com',
-    coupons,
-    currentPage: page,
-    totalPages: Math.ceil(total / limit),
-    total,
+    coupons, currentPage: page,
+    totalPages: Math.ceil(total / limit), total,
   });
 });
 
@@ -32,73 +27,89 @@ router.get('/populer', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(`
     SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
-           c.name as category_name, c.icon as category_icon
+           c.name as category_name, c.slug as category_slug
     FROM coupons cp
     JOIN stores s ON cp.store_id = s.id
     LEFT JOIN categories c ON s.category_id = c.id
-    ORDER BY cp.use_count DESC
-    LIMIT 40
+    ORDER BY cp.use_count DESC LIMIT 40
   `).all();
-
-  res.render('popular-coupons', {
-    title: 'Popüler Kuponlar - Kuponluk.com',
-    coupons,
-  });
+  res.render('popular-coupons', { title: 'Popüler Kuponlar - Kuponluk.com', coupons });
 });
 
 router.get('/:id', (req, res) => {
   const db = getDb();
+  const rawId = req.params.id.split('-')[0];
   const coupon = db.prepare(`
     SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
-           s.website_url, s.description as store_desc,
-           c.name as category_name, c.icon as category_icon, c.slug as category_slug
+           s.website_url, s.description as store_desc, s.id as store_id_ref,
+           c.name as category_name, c.slug as category_slug
     FROM coupons cp
     JOIN stores s ON cp.store_id = s.id
     LEFT JOIN categories c ON s.category_id = c.id
     WHERE cp.id = ?
-  `).get(req.params.id);
+  `).get(rawId);
 
   if (!coupon) return res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
 
-  // Increment view count
   db.prepare('UPDATE coupons SET view_count = view_count + 1 WHERE id = ?').run(coupon.id);
 
   const storeCoupons = db.prepare(`
-    SELECT * FROM coupons
-    WHERE store_id = ? AND id != ?
-    ORDER BY is_verified DESC, use_count DESC
-    LIMIT 5
+    SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url
+    FROM coupons cp JOIN stores s ON cp.store_id = s.id
+    WHERE cp.store_id = ? AND cp.id != ?
+    ORDER BY cp.is_verified DESC, cp.use_count DESC LIMIT 4
   `).all(coupon.store_id, coupon.id);
 
   const popularCoupons = db.prepare(`
     SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url
-    FROM coupons cp
-    JOIN stores s ON cp.store_id = s.id
-    ORDER BY cp.use_count DESC
-    LIMIT 6
+    FROM coupons cp JOIN stores s ON cp.store_id = s.id
+    ORDER BY cp.use_count DESC LIMIT 6
   `).all();
 
-  // Check if user saved this coupon
-  let isSaved = false;
-  let userRating = 0;
+  const reviews = db.prepare(`
+    SELECT cr.*, u.username
+    FROM coupon_reviews cr
+    JOIN users u ON cr.user_id = u.id
+    WHERE cr.coupon_id = ?
+    ORDER BY cr.created_at DESC LIMIT 20
+  `).all(coupon.id);
+
+  let isSaved = false, userRating = 0, userHasReviewed = false;
   if (req.session.user) {
     const saved = db.prepare('SELECT 1 FROM user_saved_coupons WHERE user_id = ? AND coupon_id = ?').get(req.session.user.id, coupon.id);
     isSaved = !!saved;
     const rated = db.prepare('SELECT rating FROM coupon_ratings WHERE user_id = ? AND coupon_id = ?').get(req.session.user.id, coupon.id);
     userRating = rated ? rated.rating : 0;
+    const reviewed = db.prepare('SELECT 1 FROM coupon_reviews WHERE user_id = ? AND coupon_id = ?').get(req.session.user.id, coupon.id);
+    userHasReviewed = !!reviewed;
   }
 
   res.render('coupon', {
     title: `${coupon.title} - ${coupon.store_name} Kupon - Kuponluk.com`,
-    coupon, storeCoupons, popularCoupons, isSaved, userRating,
+    coupon, storeCoupons, popularCoupons, isSaved, userRating, reviews, userHasReviewed,
   });
+});
+
+router.post('/:id/yorum', (req, res) => {
+  if (!req.session.user) return res.redirect('/giris?redirect=/kupon/' + req.params.id);
+  const rating = parseInt(req.body.rating);
+  const comment = (req.body.comment || '').trim();
+  if (!rating || rating < 1 || rating > 5 || !comment) return res.redirect('/kupon/' + req.params.id);
+
+  const db = getDb();
+  try {
+    db.prepare(`
+      INSERT INTO coupon_reviews (coupon_id, user_id, rating, comment) VALUES (?, ?, ?, ?)
+      ON CONFLICT(user_id, coupon_id) DO UPDATE SET rating = excluded.rating, comment = excluded.comment, created_at = CURRENT_TIMESTAMP
+    `).run(req.params.id, req.session.user.id, rating, comment);
+  } catch (e) {}
+  res.redirect('/kupon/' + req.params.id + '#yorumlar');
 });
 
 router.post('/:id/kaydet', (req, res) => {
   if (!req.session.user) return res.json({ success: false, message: 'Giriş yapmanız gerekiyor' });
   const db = getDb();
   const existing = db.prepare('SELECT 1 FROM user_saved_coupons WHERE user_id = ? AND coupon_id = ?').get(req.session.user.id, req.params.id);
-
   if (existing) {
     db.prepare('DELETE FROM user_saved_coupons WHERE user_id = ? AND coupon_id = ?').run(req.session.user.id, req.params.id);
     res.json({ success: true, action: 'removed' });
@@ -109,13 +120,11 @@ router.post('/:id/kaydet', (req, res) => {
 });
 
 router.post('/:id/puan', (req, res) => {
-  if (!req.session.user) return res.json({ success: false, message: 'Giriş yapmanız gerekiyor' });
+  if (!req.session.user) return res.json({ success: false });
   const rating = parseInt(req.body.rating);
   if (rating < 1 || rating > 5) return res.json({ success: false });
-
   const db = getDb();
   const existing = db.prepare('SELECT rating FROM coupon_ratings WHERE user_id = ? AND coupon_id = ?').get(req.session.user.id, req.params.id);
-
   if (existing) {
     const diff = rating - existing.rating;
     db.prepare('UPDATE coupon_ratings SET rating = ? WHERE user_id = ? AND coupon_id = ?').run(rating, req.session.user.id, req.params.id);
@@ -124,7 +133,6 @@ router.post('/:id/puan', (req, res) => {
     db.prepare('INSERT INTO coupon_ratings (user_id, coupon_id, rating) VALUES (?, ?, ?)').run(req.session.user.id, req.params.id, rating);
     db.prepare('UPDATE coupons SET rating_sum = rating_sum + ?, rating_count = rating_count + 1 WHERE id = ?').run(rating, req.params.id);
   }
-
   const updated = db.prepare('SELECT rating_sum, rating_count FROM coupons WHERE id = ?').get(req.params.id);
   const avg = updated.rating_count > 0 ? (updated.rating_sum / updated.rating_count).toFixed(1) : 0;
   res.json({ success: true, avg, count: updated.rating_count });
