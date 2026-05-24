@@ -2,6 +2,23 @@ const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
 
+function ensureListingsTable(db) {
+  db.prepare(`CREATE TABLE IF NOT EXISTS listings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    title TEXT NOT NULL,
+    coupon_code TEXT,
+    store_name TEXT NOT NULL,
+    category TEXT,
+    price REAL,
+    is_free INTEGER DEFAULT 0,
+    description TEXT,
+    expires_at TEXT,
+    status TEXT DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`).run();
+}
+
 router.get('/kupon-gonder', (req, res) => {
   const db = getDb();
   const stores = db.prepare('SELECT id, name FROM stores ORDER BY name').all();
@@ -29,6 +46,53 @@ router.get('/gizlilik-politikasi', (req, res) => res.render('privacy', { title: 
 router.get('/kullanim-kosullari', (req, res) => res.render('terms', { title: 'Kullanım Koşulları - Kuponluk.com' }));
 router.get('/cerez-politikasi', (req, res) => res.render('cookies', { title: 'Çerez Politikası - Kuponluk.com' }));
 
+router.get('/ilanlar', (req, res) => {
+  const db = getDb();
+  ensureListingsTable(db);
+  const { kategori, magaza, tip } = req.query;
+  let query = "SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.status = 'approved'";
+  const params = [];
+  if (kategori) { query += ' AND l.category = ?'; params.push(kategori); }
+  if (magaza) { query += ' AND l.store_name = ?'; params.push(magaza); }
+  if (tip === 'ucretsiz') { query += ' AND l.is_free = 1'; }
+  if (tip === 'ucretli') { query += ' AND l.is_free = 0 AND l.price IS NOT NULL'; }
+  query += ' ORDER BY l.created_at DESC';
+  const listings = db.prepare(query).all(...params);
+  const categories = db.prepare("SELECT DISTINCT category FROM listings WHERE category IS NOT NULL AND status='approved' ORDER BY category").all().map(r => r.category);
+  const storeNames = db.prepare("SELECT DISTINCT store_name FROM listings WHERE status='approved' ORDER BY store_name").all().map(r => r.store_name);
+  res.render('ilanlar', {
+    title: 'İlanlar - Kuponluk.com',
+    listings,
+    categories,
+    storeNames,
+    filterCategory: kategori || null,
+    filterStore: magaza || null,
+    filterType: tip || null
+  });
+});
+
+router.get('/ilanlar/olustur', (req, res) => {
+  if (!req.session || !req.session.user) {
+    return res.redirect('/giris?redirect=/ilanlar/olustur');
+  }
+  res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: false, error: null });
+});
+
+router.post('/ilanlar/olustur', (req, res) => {
+  if (!req.session || !req.session.user) {
+    return res.redirect('/giris?redirect=/ilanlar/olustur');
+  }
+  const db = getDb();
+  ensureListingsTable(db);
+  const { title, coupon_code, store_name, category, price, is_free, description, expires_at } = req.body;
+  if (!title || !store_name) {
+    return res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: false, error: 'Başlık ve mağaza adı zorunludur.' });
+  }
+  db.prepare(`INSERT INTO listings (user_id, title, coupon_code, store_name, category, price, is_free, description, expires_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`)
+    .run(req.session.user.id, title, coupon_code || null, store_name, category || null, price ? parseFloat(price) : null, is_free ? 1 : 0, description || null, expires_at || null);
+  res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: true, error: null });
+});
+
 router.post('/abone-ol', (req, res) => {
   const db = getDb();
   const { email } = req.body;
@@ -46,7 +110,7 @@ router.post('/marka-abone-ol', (req, res) => {
   const { email, store_id } = req.body;
   if (!email || !email.includes('@') || !store_id) return res.json({ success: false, message: 'Geçerli bilgiler giriniz.' });
   try {
-    const user_id = req.session.user ? req.session.user.id : null;
+    const user_id = req.session && req.session.user ? req.session.user.id : null;
     db.prepare('INSERT OR IGNORE INTO brand_subscriptions (email, store_id, user_id) VALUES (?, ?, ?)').run(email, parseInt(store_id), user_id);
     res.json({ success: true, message: 'Marka bildirimlerine başarıyla abone oldunuz!' });
   } catch (e) {

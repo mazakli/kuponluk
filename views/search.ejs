@@ -1,7 +1,14 @@
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-<div class="max-w-6xl mx-auto px-4 py-10">
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-4">
+    <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-gray-800 font-medium">Arama<% if (q) { %>: <%= q %><% } %></span>
+  </nav>
 
   <!-- Search Form -->
   <div class="mb-8">
@@ -31,9 +38,8 @@
     </a>
   </div>
 
-  <!-- No Results -->
   <% if ((!coupons || coupons.length === 0) && (!stores || stores.length === 0)) { %>
-  <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
+  <div class="bg-white rounded-2xl border-2 border-gray-100 shadow p-16 text-center">
     <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Sonuç Bulunamadı</h3>
     <p class="text-gray-500 mb-2">
@@ -47,7 +53,6 @@
   </div>
   <% } %>
 
-  <!-- Coupon Results -->
   <% if ((!type || type === 'tumu' || type === 'kuponlar') && coupons && coupons.length > 0) { %>
   <section class="mb-12">
     <h2 class="text-xl font-bold text-gray-800 mb-5">
@@ -62,7 +67,6 @@
   </section>
   <% } %>
 
-  <!-- Store Results -->
   <% if ((!type || type === 'tumu' || type === 'magazalar') && stores && stores.length > 0) { %>
   <section>
     <h2 class="text-xl font-bold text-gray-800 mb-5">
@@ -71,7 +75,7 @@
     </h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
       <% stores.forEach(function(store) { %>
-      <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border border-gray-100 hover:border-orange-200 p-4 flex flex-col items-center text-center group">
+      <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border-2 border-gray-100 hover:border-orange-200 p-4 flex flex-col items-center text-center group">
         <% if (store.logo_url) { %>
         <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="w-12 h-12 object-contain rounded-lg mb-2 border border-gray-100" />
         <% } else { %>

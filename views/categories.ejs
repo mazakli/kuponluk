@@ -1,7 +1,15 @@
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-<div class="max-w-6xl mx-auto px-4 py-10">
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-6">
+    <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-gray-800 font-medium">Kategoriler</span>
+  </nav>
+
   <div class="mb-8 text-center">
     <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Tüm Kategoriler</h1>
     <p class="text-gray-500">Alışveriş yaptığınız kategoriyi seçin ve en iyi kuponları keşfedin.</p>
@@ -10,7 +18,7 @@
   <% if (categories && categories.length > 0) { %>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <% categories.forEach(function(cat) { %>
-    <a href="/kategori/<%= cat.slug %>" class="group rounded-2xl overflow-hidden shadow hover:shadow-xl transition border border-gray-100 hover:border-orange-200 flex flex-col bg-white">
+    <a href="/kategori/<%= cat.slug %>" class="group rounded-2xl overflow-hidden shadow hover:shadow-xl transition border-2 border-gray-100 hover:border-orange-200 flex flex-col bg-white">
       <div class="h-1.5 w-full" style="background: <%= cat.color || '#FF6B00' %>;"></div>
       <div class="flex-1 p-6 flex flex-col items-center text-center">
         <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-3" style="background: <%= cat.color || '#FF6B00' %>;">
@@ -35,7 +43,7 @@
     <% }); %>
   </div>
   <% } else { %>
-  <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
+  <div class="bg-white rounded-2xl border-2 border-gray-100 shadow p-16 text-center">
     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Kategori Bulunamadı</h3>
     <p class="text-gray-500">Henüz kategori eklenmemiş.</p>
