@@ -4,8 +4,8 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
 
   <!-- Store Header -->
-  <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
-    <div class="h-24 w-full" style="background: linear-gradient(135deg, #FF6B00, #ff8c00);"></div>
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-6">
+    <div class="h-20 w-full" style="background: linear-gradient(135deg, #FF6B00, #ff8c00);"></div>
     <div class="px-6 pb-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-10">
         <div class="flex-shrink-0">
@@ -18,74 +18,174 @@
             <% } %>
           </div>
         </div>
-        <div class="flex-1 min-w-0">
-          <h1 class="text-2xl font-extrabold text-gray-900"><%= store.name %></h1>
-          <% if (store.category_name) { %><span class="text-sm text-gray-500"><%= store.category_name %></span><% } %>
+        <div class="flex-1 min-w-0 pb-1">
+          <h1 class="text-2xl font-extrabold text-gray-900"><%= store.name %> İndirim Kodu</h1>
+          <!-- Stats row -->
+          <div class="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+              <span class="font-semibold text-gray-700"><%= totalCoupons %></span> kupon
+            </span>
+            <span class="text-gray-300">|</span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+              <span class="font-semibold text-gray-700"><%= totalUses %></span> kez kullanıldı
+            </span>
+            <% if (store.category_name) { %>
+            <span class="text-gray-300">|</span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+              <%= store.category_name %>
+            </span>
+            <% } %>
+            <span class="text-gray-300">|</span>
+            <span class="flex items-center gap-1">
+              <% var rating = parseFloat(avgRating) || 0; var fullStars = Math.floor(rating); %>
+              <% for(var si=0;si<5;si++) { %>
+                <svg class="w-4 h-4 <%= si < fullStars ? 'text-yellow-400' : 'text-gray-300' %>" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <% } %>
+              <span class="text-gray-600 font-medium"><%= rating.toFixed(1) %>/5</span>
+            </span>
+          </div>
         </div>
-        <div class="flex gap-3 flex-shrink-0">
+        <div class="flex gap-2 flex-shrink-0">
           <% if (store.website_url) { %>
-          <a href="<%= store.website_url %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600 transition text-sm">
+          <a href="<%= store.website_url %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 font-semibold text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600 transition text-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             Siteye Git
           </a>
           <% } %>
           <% if (currentUser) { %>
           <form action="/magaza/<%= store.slug %>/favori" method="POST">
-            <button type="submit" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold transition text-sm <%= isFavorite ? 'text-white border-transparent' : 'text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600' %>" style="<%= isFavorite ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>">
+            <button type="submit" class="flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 font-semibold transition text-sm <%= isFavorite ? 'text-white border-transparent' : 'text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600' %>" style="<%= isFavorite ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>">
               <svg class="w-4 h-4" fill="<%= isFavorite ? 'white' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-              <%= isFavorite ? 'Favorilerde' : 'Favoriye Ekle' %>
+              <%= isFavorite ? 'Favorilerde' : 'Favori' %>
             </button>
           </form>
           <% } %>
         </div>
       </div>
-      <% if (store.description) { %><p class="text-gray-600 mt-4 leading-relaxed"><%= store.description %></p><% } %>
-
-      <!-- Brand Newsletter -->
-      <div class="mt-4 pt-4 border-t border-gray-100">
-        <p class="text-sm font-medium text-gray-700 mb-2"><%= store.name %> için yeni kupon bildirimlerini e-posta ile alın</p>
-        <form id="storeSubForm" class="flex gap-2 max-w-md">
-          <input type="hidden" name="store_id" value="<%= store.id %>"/>
-          <input type="email" name="email" placeholder="E-posta adresiniz" required
-            value="<%= currentUser ? currentUser.email : '' %>"
-            class="flex-1 px-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
-          <button type="submit" class="text-white text-sm font-semibold px-5 py-2 rounded-xl transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">Bildirim Al</button>
-        </form>
-        <p id="storeSubMsg" class="text-xs mt-1.5 hidden"></p>
-      </div>
+      <% if (store.description) { %>
+      <details class="mt-4">
+        <summary class="text-sm text-gray-500 cursor-pointer select-none hover:text-orange-500">Mağaza hakkında &rsaquo; Daha fazla oku</summary>
+        <p class="text-gray-600 mt-2 text-sm leading-relaxed"><%= store.description %></p>
+      </details>
+      <% } %>
     </div>
   </div>
 
-  <div class="flex flex-col lg:flex-row gap-8">
+  <div class="flex flex-col lg:flex-row gap-6">
+    <!-- Main coupon list -->
     <div class="flex-1 min-w-0">
-      <h2 class="text-xl font-bold text-gray-800 mb-5">
-        <%= store.name %> Kuponları
-        <% if (coupons && coupons.length > 0) { %><span class="text-base font-normal text-gray-400 ml-2">(<%= coupons.length %> kupon)</span><% } %>
-      </h2>
-      <% if (coupons && coupons.length > 0) { %>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <% coupons.forEach(function(coupon) { %><%- include('partials/coupon-card', { coupon: coupon }) %><% }); %>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-1">Aktif <%= store.name %> Kuponları</h2>
+        <p class="text-sm text-gray-500 mb-5">Aşağıdaki güncel indirim kodlarını ve kampanyaları kullanarak <%= store.name %> alışverişlerinizde tasarruf edin.</p>
+
+        <!-- Filter + Sort bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <!-- Filter tabs -->
+          <div class="flex gap-1 bg-gray-100 rounded-xl p-1" id="filterTabs">
+            <button onclick="filterCoupons('all')" data-filter="all" class="filter-tab active px-3 py-1.5 rounded-lg text-sm font-semibold transition">Tümü</button>
+            <button onclick="filterCoupons('code')" data-filter="code" class="filter-tab px-3 py-1.5 rounded-lg text-sm font-semibold transition">Kod</button>
+            <button onclick="filterCoupons('campaign')" data-filter="campaign" class="filter-tab px-3 py-1.5 rounded-lg text-sm font-semibold transition">Kampanya</button>
+            <button onclick="filterCoupons('other')" data-filter="other" class="filter-tab px-3 py-1.5 rounded-lg text-sm font-semibold transition">Diğer</button>
+          </div>
+          <!-- Sort -->
+          <select id="couponSort" onchange="sortCoupons(this.value)" class="text-sm border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-300 bg-white">
+            <option value="default">Varsayılan</option>
+            <option value="most_used">En Çok Kullanılan</option>
+            <option value="newest">En Yeni</option>
+          </select>
+        </div>
+
+        <!-- Coupon cards -->
+        <div id="couponList">
+          <% if (coupons && coupons.length > 0) { %>
+            <% coupons.forEach(function(coupon) { %>
+            <div class="coupon-item border border-gray-100 rounded-2xl p-4 mb-3 hover:shadow-md transition"
+              data-type="<%= coupon.type === 'code' ? 'code' : coupon.type === 'campaign' ? 'campaign' : 'other' %>"
+              data-use-count="<%= coupon.use_count || 0 %>"
+              data-created-at="<%= coupon.created_at || '' %>">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <% if (coupon.type === 'code') { %>
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#fff3e6; color:#FF6B00;">KOD</span>
+                    <% } else if (coupon.type === 'campaign') { %>
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">KAMPANYA</span>
+                    <% } else { %>
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">DİĞER</span>
+                    <% } %>
+                    <% if (coupon.discount_value) { %>
+                    <span class="text-xs font-bold text-green-600">%<%= coupon.discount_value %> İndirim</span>
+                    <% } %>
+                  </div>
+                  <h3 class="font-semibold text-gray-800 text-sm leading-snug"><%= coupon.title %></h3>
+                  <% if (coupon.description) { %>
+                  <p class="text-xs text-gray-500 mt-0.5 line-clamp-2"><%= coupon.description %></p>
+                  <% } %>
+                  <div class="flex items-center gap-3 mt-1.5 text-xs text-gray-400">
+                    <% if (coupon.use_count) { %><span><%= coupon.use_count %> kez kullanıldı</span><% } %>
+                    <% if (coupon.expires_at) { %><span>Son: <%= new Date(coupon.expires_at).toLocaleDateString('tr-TR') %></span><% } %>
+                  </div>
+                </div>
+                <div class="flex-shrink-0">
+                  <% if (coupon.code) { %>
+                  <button onclick="openCouponModal('<%= coupon.id %>', '<%= (coupon.code||'').replace(/'/g,"\\'") %>', '<%= (coupon.title||'').replace(/'/g,"\\'") %>', '<%= store.website_url || '' %>', '<%= (store.name||'').replace(/'/g,"\\'") %>', '<%= store.id %>')"
+                    class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm transition hover:opacity-90 whitespace-nowrap"
+                    style="background:#FF6B00;">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                    Kodu Al
+                  </button>
+                  <% } else { %>
+                  <a href="<%= store.website_url || '#' %>" target="_blank" rel="nofollow noopener"
+                    class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm transition hover:opacity-90 whitespace-nowrap"
+                    style="background:#16a34a;">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Kampanyaya Git
+                  </a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          <% } else { %>
+          <div class="text-center py-12">
+            <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Henüz Kupon Yok</h3>
+            <p class="text-gray-500 text-sm">Bu mağaza için şu an aktif kupon bulunmamaktadır.</p>
+          </div>
+          <% } %>
+        </div>
       </div>
-      <% } else { %>
-      <div class="bg-white rounded-2xl border border-gray-100 shadow p-12 text-center">
-        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">Henüz Kupon Yok</h3>
-        <p class="text-gray-500">Bu mağaza için şu an aktif kupon bulunmamaktadır.</p>
-      </div>
-      <% } %>
     </div>
 
-    <aside class="lg:w-64 flex-shrink-0">
+    <!-- Sidebar -->
+    <aside class="lg:w-64 flex-shrink-0 space-y-4">
+      <!-- Subscribe box -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Bildirim Al</h3>
+        <p class="text-xs text-gray-500 mb-3"><%= store.name %> için yeni kuponlar eklenince e-posta ile haberdar ol.</p>
+        <form id="storeSubForm" class="space-y-2">
+          <input type="hidden" name="store_id" value="<%= store.id %>"/>
+          <input type="email" name="email" placeholder="E-posta adresiniz" required
+            value="<%= currentUser ? currentUser.email : '' %>"
+            class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <button type="submit" class="w-full text-white text-sm font-semibold px-4 py-2 rounded-xl transition hover:opacity-90" style="background:#FF6B00;">Bildirim Al</button>
+        </form>
+        <p id="storeSubMsg" class="text-xs mt-1.5 hidden"></p>
+      </div>
+
       <% if (relatedStores && relatedStores.length > 0) { %>
-      <div class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden sticky top-4">
-        <div class="px-5 py-4 border-b border-gray-100" style="background:#FF6B00;">
-          <h3 class="text-white font-bold">Benzer Mağazalar</h3>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="px-4 py-3 border-b border-gray-100" style="background:#FF6B00;">
+          <h3 class="text-white font-bold text-sm">Benzer Mağazalar</h3>
         </div>
         <div class="divide-y divide-gray-50">
           <% relatedStores.forEach(function(s) { %>
-          <a href="/magaza/<%= s.slug %>" class="flex items-center gap-3 px-5 py-3 hover:bg-orange-50 transition group">
-            <div class="relative w-9 h-9 rounded-lg overflow-hidden flex-shrink-0">
-              <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm" style="background:#FF6B00;"><%= (s.name||'?').charAt(0).toUpperCase() %></div>
+          <a href="/magaza/<%= s.slug %>" class="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition group">
+            <div class="relative w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+              <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs" style="background:#FF6B00;"><%= (s.name||'?').charAt(0).toUpperCase() %></div>
               <% if (s.logo_url) { %><img src="<%= s.logo_url %>" alt="<%= s.name %>" class="absolute inset-0 w-full h-full object-contain p-0.5 bg-white" onerror="this.style.display='none'"/><% } %>
             </div>
             <div class="min-w-0">
@@ -101,16 +201,235 @@
   </div>
 </div>
 
+<!-- Coupon Modal -->
+<div id="couponModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background:rgba(0,0,0,0.55);">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden">
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between" style="background:linear-gradient(135deg,#FF6B00,#ff8c00);">
+      <h3 class="text-white font-bold text-lg" id="modalTitle">İndirim Kodu</h3>
+      <button onclick="closeCouponModal()" class="text-white hover:text-orange-200 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="p-6 space-y-5">
+      <!-- Code display -->
+      <div>
+        <p class="text-xs text-gray-500 mb-1.5 font-medium">İndirim Kodunuz</p>
+        <div class="flex items-center gap-2">
+          <div class="flex-1 bg-orange-50 border-2 border-dashed border-orange-300 rounded-xl px-4 py-3 text-center">
+            <span id="modalCode" class="text-2xl font-extrabold tracking-widest" style="color:#FF6B00;"></span>
+          </div>
+          <button onclick="copyModalCode()" id="copyBtn" class="flex flex-col items-center gap-0.5 px-3 py-2.5 rounded-xl border-2 border-orange-300 hover:bg-orange-50 transition">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span class="text-xs text-orange-500 font-semibold">Kopyala</span>
+          </button>
+        </div>
+        <p id="copyMsg" class="text-xs text-green-600 mt-1 hidden">Kod kopyalandı!</p>
+      </div>
+
+      <!-- Feedback -->
+      <div class="bg-gray-50 rounded-xl p-4">
+        <p class="text-sm font-semibold text-gray-700 mb-3">Bu kuponu kullanabildiniz mi?</p>
+        <div class="flex gap-3">
+          <button onclick="submitFeedback(true)" id="feedbackYes" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl border-2 border-green-200 text-green-700 font-semibold text-sm hover:bg-green-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
+            Evet
+          </button>
+          <button onclick="submitFeedback(false)" id="feedbackNo" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl border-2 border-red-200 text-red-600 font-semibold text-sm hover:bg-red-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018c.163 0 .326.02.485.06L17 4m-7 10v2a2 2 0 002 2h.095c.5 0 .905-.405.905-.905 0-.714.211-1.412.608-2.006L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
+            Hayır
+          </button>
+        </div>
+        <p id="feedbackMsg" class="text-xs text-center mt-2 hidden"></p>
+      </div>
+
+      <!-- Share -->
+      <div>
+        <p class="text-xs text-gray-500 font-medium mb-2">Arkadaşlarınla paylaş</p>
+        <div class="flex gap-2">
+          <a id="shareWhatsapp" href="#" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold transition hover:opacity-90" style="background:#25D366;">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a id="shareTwitter" href="#" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold transition hover:opacity-90" style="background:#1DA1F2;">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+          <button onclick="copyShareLink()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-600 text-xs font-semibold hover:bg-gray-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Link Kopyala
+          </button>
+        </div>
+      </div>
+
+      <!-- Usage steps -->
+      <div class="bg-blue-50 rounded-xl p-4">
+        <p class="text-xs font-bold text-blue-700 mb-2">Nasıl Kullanılır?</p>
+        <ol class="text-xs text-blue-600 space-y-1 list-none">
+          <li class="flex items-start gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-200 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span> Kodu kopyalayın.</li>
+          <li class="flex items-start gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-200 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span> Mağazada alışverişinizi sepete ekleyin.</li>
+          <li class="flex items-start gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-200 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span> Ödeme sayfasında "İndirim Kodu" alanına yapıştırın.</li>
+        </ol>
+      </div>
+
+      <!-- CTA button -->
+      <a id="modalStoreLink" href="#" target="_blank" rel="nofollow noopener" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-white font-bold text-base transition hover:opacity-90" style="background:#16a34a;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        Alışverişe Başla
+      </a>
+
+      <!-- Email subscribe -->
+      <div class="border-t border-gray-100 pt-4">
+        <p class="text-xs text-gray-500 mb-2">Yeni kuponlardan haberdar olmak ister misiniz?</p>
+        <form id="modalSubForm" class="flex gap-2">
+          <input type="hidden" name="store_id" id="modalStoreId" value=""/>
+          <input type="email" name="email" placeholder="E-posta adresiniz" required
+            value="<%= currentUser ? currentUser.email : '' %>"
+            class="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <button type="submit" class="text-white text-xs font-semibold px-4 py-2 rounded-xl hover:opacity-90 whitespace-nowrap transition" style="background:#FF6B00;">Abone Ol</button>
+        </form>
+        <p id="modalSubMsg" class="text-xs mt-1 hidden"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.filter-tab { color:#6b7280; }
+.filter-tab.active { background:#FF6B00; color:#fff; }
+.coupon-item.hidden-coupon { display:none; }
+</style>
+
 <script>
+var currentCouponCode = '';
+var currentStoreUrl = '';
+var currentCouponId = '';
+
+function openCouponModal(id, code, title, storeUrl, storeName, storeId) {
+  currentCouponCode = code;
+  currentStoreUrl = storeUrl;
+  currentCouponId = id;
+  document.getElementById('modalTitle').textContent = title || (storeName + ' İndirim Kodu');
+  document.getElementById('modalCode').textContent = code;
+  document.getElementById('modalStoreLink').href = storeUrl || '#';
+  document.getElementById('modalStoreId').value = storeId || '';
+  var pageUrl = encodeURIComponent(window.location.href);
+  var shareText = encodeURIComponent('"' + code + '" kupon kodunu kullan, ' + storeName + '\'de indirim kazan! ');
+  document.getElementById('shareWhatsapp').href = 'https://wa.me/?text=' + shareText + pageUrl;
+  document.getElementById('shareTwitter').href = 'https://twitter.com/intent/tweet?text=' + shareText + '&url=' + pageUrl;
+  document.getElementById('copyMsg').classList.add('hidden');
+  document.getElementById('feedbackMsg').classList.add('hidden');
+  document.getElementById('feedbackYes').classList.remove('bg-green-100');
+  document.getElementById('feedbackNo').classList.remove('bg-red-100');
+  var modal = document.getElementById('couponModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeCouponModal() {
+  var modal = document.getElementById('couponModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+document.getElementById('couponModal').addEventListener('click', function(e) {
+  if (e.target === this) closeCouponModal();
+});
+
+function copyModalCode() {
+  if (!currentCouponCode) return;
+  navigator.clipboard.writeText(currentCouponCode).then(function() {
+    var msg = document.getElementById('copyMsg');
+    msg.classList.remove('hidden');
+    setTimeout(function(){ msg.classList.add('hidden'); }, 2500);
+  });
+}
+
+function copyShareLink() {
+  navigator.clipboard.writeText(window.location.href).then(function() {
+    alert('Sayfa linki kopyalandı!');
+  });
+}
+
+function submitFeedback(isPositive) {
+  var yesBtn = document.getElementById('feedbackYes');
+  var noBtn = document.getElementById('feedbackNo');
+  var msg = document.getElementById('feedbackMsg');
+  if (isPositive) {
+    yesBtn.classList.add('bg-green-100');
+    noBtn.classList.remove('bg-red-100');
+    msg.textContent = 'Teşekkürler! Geri bildiriminiz için teşekkür ederiz.';
+    msg.style.color = '#16a34a';
+  } else {
+    noBtn.classList.add('bg-red-100');
+    yesBtn.classList.remove('bg-green-100');
+    msg.textContent = 'Üzgünüz. En kısa sürede güncelleyeceğiz.';
+    msg.style.color = '#dc2626';
+  }
+  msg.classList.remove('hidden');
+  if (currentCouponId) {
+    fetch('/kupon/' + currentCouponId + '/geri-bildirim', {
+      method: 'POST',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      body: 'positive=' + (isPositive ? '1' : '0')
+    }).catch(function(){});
+  }
+}
+
+// Filter
+var activeFilter = 'all';
+function filterCoupons(type) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-tab').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.filter === type);
+  });
+  applyCouponDisplay();
+}
+
+// Sort
+function sortCoupons(val) {
+  var list = document.getElementById('couponList');
+  var items = Array.from(list.querySelectorAll('.coupon-item'));
+  items.sort(function(a, b) {
+    if (val === 'most_used') return parseInt(b.dataset.useCount||0) - parseInt(a.dataset.useCount||0);
+    if (val === 'newest') return (b.dataset.createdAt||'').localeCompare(a.dataset.createdAt||'');
+    return 0;
+  });
+  items.forEach(function(item){ list.appendChild(item); });
+  applyCouponDisplay();
+}
+
+function applyCouponDisplay() {
+  document.querySelectorAll('.coupon-item').forEach(function(item) {
+    var match = activeFilter === 'all' || item.dataset.type === activeFilter;
+    item.classList.toggle('hidden-coupon', !match);
+  });
+}
+
+// Subscribe form (sidebar)
 var storeSubForm = document.getElementById('storeSubForm');
 if (storeSubForm) {
   storeSubForm.addEventListener('submit', function(e) {
     e.preventDefault();
     fetch('/marka-abone-ol', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(storeSubForm)).toString() })
-    .then(r => r.json()).then(function(d) {
+    .then(function(r){ return r.json(); }).then(function(d) {
       var m = document.getElementById('storeSubMsg');
       m.textContent = d.message; m.style.color = d.success ? '#16a34a' : '#dc2626'; m.classList.remove('hidden');
       if (d.success) storeSubForm.querySelector('input[type=email]').value = '';
+    });
+  });
+}
+
+// Subscribe form (modal)
+var modalSubForm = document.getElementById('modalSubForm');
+if (modalSubForm) {
+  modalSubForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('/marka-abone-ol', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(modalSubForm)).toString() })
+    .then(function(r){ return r.json(); }).then(function(d) {
+      var m = document.getElementById('modalSubMsg');
+      m.textContent = d.message; m.style.color = d.success ? '#16a34a' : '#dc2626'; m.classList.remove('hidden');
+      if (d.success) modalSubForm.querySelector('input[type=email]').value = '';
     });
   });
 }
