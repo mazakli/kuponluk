@@ -49,13 +49,15 @@ router.get('/cerez-politikasi', (req, res) => res.render('cookies', { title: 'Ç
 router.get('/ilanlar', (req, res) => {
   const db = getDb();
   ensureListingsTable(db);
-  const { kategori, magaza, tip } = req.query;
+  const { kategori, magaza, tip, minFiyat, maxFiyat } = req.query;
   let query = "SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.status = 'approved'";
   const params = [];
   if (kategori) { query += ' AND l.category = ?'; params.push(kategori); }
   if (magaza) { query += ' AND l.store_name = ?'; params.push(magaza); }
   if (tip === 'ucretsiz') { query += ' AND l.is_free = 1'; }
   if (tip === 'ucretli') { query += ' AND l.is_free = 0 AND l.price IS NOT NULL'; }
+  if (minFiyat && !isNaN(parseFloat(minFiyat))) { query += ' AND l.price >= ?'; params.push(parseFloat(minFiyat)); }
+  if (maxFiyat && !isNaN(parseFloat(maxFiyat))) { query += ' AND l.price <= ?'; params.push(parseFloat(maxFiyat)); }
   query += ' ORDER BY l.created_at DESC';
   const listings = db.prepare(query).all(...params);
   const categories = db.prepare("SELECT DISTINCT category FROM listings WHERE category IS NOT NULL AND status='approved' ORDER BY category").all().map(r => r.category);
@@ -67,7 +69,9 @@ router.get('/ilanlar', (req, res) => {
     storeNames,
     filterCategory: kategori || null,
     filterStore: magaza || null,
-    filterType: tip || null
+    filterType: tip || null,
+    filterMinFiyat: minFiyat || null,
+    filterMaxFiyat: maxFiyat || null,
   });
 });
 

@@ -18,13 +18,14 @@ router.get('/', (req, res) => {
   res.render('categories', {
     title: 'Tüm Kategoriler - Kuponluk.com',
     categories,
+    currentUser: req.session.user || null,
   });
 });
 
 router.get('/:slug', (req, res) => {
   const db = getDb();
   const category = db.prepare('SELECT * FROM categories WHERE slug = ?').get(req.params.slug);
-  if (!category) return res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
+  if (!category) return res.status(404).render('404', { title: 'Sayfa Bulunamadı', currentUser: req.session.user || null });
 
   const stores = db.prepare(`
     SELECT s.*, COUNT(cp.id) as active_coupons
@@ -47,6 +48,7 @@ router.get('/:slug', (req, res) => {
   res.render('category', {
     title: `${category.name} Kuponları ve İndirimleri - Kuponluk.com`,
     category, stores, coupons,
+    currentUser: req.session.user || null,
   });
 });
 

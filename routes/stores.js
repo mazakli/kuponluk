@@ -36,6 +36,7 @@ router.get('/', (req, res) => {
   res.render('stores', {
     title: 'Tüm Mağazalar - Kuponluk.com',
     stores, categories, alphabet, letter, catSlug,
+    currentUser: req.session.user || null,
   });
 });
 
@@ -48,7 +49,7 @@ router.get('/:slug', (req, res) => {
     WHERE s.slug = ?
   `).get(req.params.slug);
 
-  if (!store) return res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
+  if (!store) return res.status(404).render('404', { title: 'Sayfa Bulunamadı', currentUser: req.session.user || null });
 
   const coupons = db.prepare(`
     SELECT * FROM coupons WHERE store_id = ? ORDER BY is_verified DESC, use_count DESC
@@ -90,6 +91,7 @@ router.get('/:slug', (req, res) => {
     totalUses: storeStats.total_uses,
     totalCoupons: storeStats.total_coupons,
     avgRating,
+    currentUser: req.session.user || null,
   });
 });
 

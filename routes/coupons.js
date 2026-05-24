@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
 
+function turkishSlugify(text) {
+  return (text || '').toLowerCase()
+    .replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u')
+    .replace(/â/g,'a').replace(/î/g,'i').replace(/û/g,'u')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50);
+}
+
 const COUPON_SELECT = `
   SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
          c.name as category_name, c.slug as category_slug
@@ -21,43 +28,44 @@ router.get('/son-eklenenler', (req, res) => {
     title: 'Son Eklenen Kuponlar - Kuponluk.com',
     coupons, currentPage: page,
     totalPages: Math.ceil(total / limit), total,
+    currentUser: req.session.user || null,
   });
 });
 
 router.get('/populer', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `ORDER BY cp.use_count DESC LIMIT 40`).all();
-  res.render('popular-coupons', { title: 'Popüler Kuponlar - Kuponluk.com', coupons });
+  res.render('popular-coupons', { title: 'Popüler Kuponlar - Kuponluk.com', coupons, currentUser: req.session.user || null });
 });
 
 router.get('/kupon-kodu', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `WHERE cp.code IS NOT NULL AND cp.code != '' ORDER BY cp.created_at DESC LIMIT 40`).all();
-  res.render('coupon-type', { title: 'Kupon Kodları - Kuponluk.com', coupons, typeName: 'Kupon Kodları', typeSlug: 'kupon-kodu', typeDesc: 'Kopyalayıp kullanabileceğiniz aktif kupon kodları.' });
+  res.render('coupon-type', { title: 'Kupon Kodları - Kuponluk.com', coupons, typeName: 'Kupon Kodları', typeSlug: 'kupon-kodu', typeDesc: 'Kopyalayıp kullanabileceğiniz aktif kupon kodları.', currentUser: req.session.user || null });
 });
 
 router.get('/indirim', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type IN ('percent', 'fixed') ORDER BY cp.discount_value DESC LIMIT 40`).all();
-  res.render('coupon-type', { title: 'İndirimler - Kuponluk.com', coupons, typeName: 'İndirimler', typeSlug: 'indirim', typeDesc: 'Yüzde ve sabit tutarlı indirim kampanyaları.' });
+  res.render('coupon-type', { title: 'İndirimler - Kuponluk.com', coupons, typeName: 'İndirimler', typeSlug: 'indirim', typeDesc: 'Yüzde ve sabit tutarlı indirim kampanyaları.', currentUser: req.session.user || null });
 });
 
 router.get('/hediye', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'gift' ORDER BY cp.created_at DESC LIMIT 40`).all();
-  res.render('coupon-type', { title: 'Hediye Kampanyaları - Kuponluk.com', coupons, typeName: 'Hediye', typeSlug: 'hediye', typeDesc: 'Ücretsiz hediye ve ürün kazanma fırsatları.' });
+  res.render('coupon-type', { title: 'Hediye Kampanyaları - Kuponluk.com', coupons, typeName: 'Hediye', typeSlug: 'hediye', typeDesc: 'Ücretsiz hediye ve ürün kazanma fırsatları.', currentUser: req.session.user || null });
 });
 
 router.get('/ucretsiz-kargo', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'free_shipping' ORDER BY cp.created_at DESC LIMIT 40`).all();
-  res.render('coupon-type', { title: 'Ücretsiz Kargo - Kuponluk.com', coupons, typeName: 'Ücretsiz Kargo', typeSlug: 'ucretsiz-kargo', typeDesc: 'Kargo ücreti olmadan alışveriş yapın.' });
+  res.render('coupon-type', { title: 'Ücretsiz Kargo - Kuponluk.com', coupons, typeName: 'Ücretsiz Kargo', typeSlug: 'ucretsiz-kargo', typeDesc: 'Kargo ücreti olmadan alışveriş yapın.', currentUser: req.session.user || null });
 });
 
 router.get('/banka-kampanyalari', (req, res) => {
   const db = getDb();
   const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'bank' ORDER BY cp.created_at DESC LIMIT 40`).all();
-  res.render('coupon-type', { title: 'Banka Kampanyaları - Kuponluk.com', coupons, typeName: 'Banka Kampanyaları', typeSlug: 'banka-kampanyalari', typeDesc: 'Kredi kartı ve banka özel indirim kampanyaları.' });
+  res.render('coupon-type', { title: 'Banka Kampanyaları - Kuponluk.com', coupons, typeName: 'Banka Kampanyaları', typeSlug: 'banka-kampanyalari', typeDesc: 'Kredi kartı ve banka özel indirim kampanyaları.', currentUser: req.session.user || null });
 });
 
 router.get('/:id', (req, res) => {
@@ -73,7 +81,7 @@ router.get('/:id', (req, res) => {
     WHERE cp.id = ?
   `).get(rawId);
 
-  if (!coupon) return res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
+  if (!coupon) return res.status(404).render('404', { title: 'Sayfa Bulunamadı', currentUser: req.session.user || null });
 
   db.prepare('UPDATE coupons SET view_count = view_count + 1 WHERE id = ?').run(coupon.id);
 
@@ -111,6 +119,7 @@ router.get('/:id', (req, res) => {
   res.render('coupon', {
     title: `${coupon.title} - ${coupon.store_name} Kupon - Kuponluk.com`,
     coupon, storeCoupons, popularCoupons, isSaved, userRating, reviews, userHasReviewed,
+    currentUser: req.session.user || null,
   });
 });
 
