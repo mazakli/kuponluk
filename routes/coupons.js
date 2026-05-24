@@ -89,7 +89,7 @@ router.get('/:id', (req, res) => {
     SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url
     FROM coupons cp JOIN stores s ON cp.store_id = s.id
     WHERE cp.store_id = ? AND cp.id != ?
-    ORDER BY cp.is_verified DESC, cp.use_count DESC LIMIT 4
+    ORDER BY cp.is_verified DESC, cp.use_count DESC LIMIT 8
   `).all(coupon.store_id, coupon.id);
 
   const popularCoupons = db.prepare(`
