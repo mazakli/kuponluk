@@ -54,6 +54,20 @@ router.get('/:slug', (req, res) => {
     SELECT * FROM coupons WHERE store_id = ? ORDER BY is_verified DESC, use_count DESC
   `).all(store.id);
 
+  const storeStats = db.prepare(`
+    SELECT
+      COALESCE(SUM(cp.use_count), 0) as total_uses,
+      COALESCE(SUM(cp.rating_sum), 0) as total_rating_sum,
+      COALESCE(SUM(cp.rating_count), 0) as total_rating_count,
+      COUNT(cp.id) as total_coupons
+    FROM coupons cp
+    WHERE cp.store_id = ?
+  `).get(store.id);
+
+  const avgRating = storeStats.total_rating_count > 0
+    ? Math.round((storeStats.total_rating_sum / storeStats.total_rating_count) * 10) / 10
+    : 0;
+
   const relatedStores = db.prepare(`
     SELECT s.*, COUNT(cp.id) as active_coupons
     FROM stores s
@@ -64,7 +78,6 @@ router.get('/:slug', (req, res) => {
     LIMIT 6
   `).all(store.category_id, store.id);
 
-  // Track if user has favorited
   let isFavorite = false;
   if (req.session.user) {
     const fav = db.prepare('SELECT 1 FROM user_favorites WHERE user_id = ? AND store_id = ?').get(req.session.user.id, store.id);
@@ -72,8 +85,11 @@ router.get('/:slug', (req, res) => {
   }
 
   res.render('store', {
-    title: `${store.name} Kupon Kodları ve İndirimler - Kuponluk.com`,
+    title: `${store.name} İndirim Kodu ve Kuponları - Kuponluk.com`,
     store, coupons, relatedStores, isFavorite,
+    totalUses: storeStats.total_uses,
+    totalCoupons: storeStats.total_coupons,
+    avgRating,
   });
 });
 

@@ -5,7 +5,13 @@ const { getDb } = require('../database');
 router.get('/', (req, res) => {
   const db = getDb();
 
-  const sliders = db.prepare('SELECT * FROM sliders WHERE active = 1 ORDER BY order_index ASC').all();
+  const sliders = db.prepare(`
+    SELECT sl.*, s.slug as store_slug, s.logo_url as store_logo, s.name as store_name_real
+    FROM sliders sl
+    LEFT JOIN stores s ON s.slug = REPLACE(REPLACE(sl.link_url, '/magaza/', ''), '/', '')
+    WHERE sl.active = 1
+    ORDER BY sl.order_index ASC
+  `).all();
 
   const popularBrands = db.prepare(`
     SELECT s.*, SUM(cp.use_count) as total_uses, COUNT(cp.id) as active_coupons
