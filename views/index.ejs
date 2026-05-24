@@ -37,22 +37,24 @@
 <% if (sliders && sliders.length > 0) { %>
 <section class="bg-gray-100 py-6 px-4">
   <div class="max-w-6xl mx-auto">
-    <div class="relative overflow-hidden rounded-2xl shadow-lg" id="mainSlider">
-      <div class="flex" id="sliderTrack" style="transition: transform 0.5s ease;">
+    <div class="relative overflow-hidden rounded-2xl shadow-lg aspect-square max-w-2xl mx-auto" id="mainSlider">
+      <div class="flex h-full" id="sliderTrack" style="transition: transform 0.5s ease;">
         <% sliders.forEach(function(slide, idx) { %>
-        <div class="w-full flex-shrink-0 rounded-2xl" style="background: linear-gradient(135deg, <%= slide.bg_color %> 0%, <%= slide.bg_color %>cc 100%);">
-          <a href="<%= slide.link_url %>" class="flex items-center px-8 py-10 min-h-[170px]">
-            <div>
-              <p class="text-white text-xs font-semibold uppercase tracking-widest mb-2 opacity-75">Özel Fırsat</p>
-              <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2 leading-tight"><%= slide.title %></h3>
-              <% if (slide.subtitle) { %>
-              <p class="text-white text-sm opacity-80 mb-5"><%= slide.subtitle %></p>
-              <% } %>
-              <span class="inline-flex items-center gap-2 bg-white font-bold px-5 py-2.5 rounded-xl text-sm" style="color: <%= slide.bg_color %>;">
-                Kupona Git
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-              </span>
-            </div>
+        <div class="w-full h-full flex-shrink-0 rounded-2xl relative" style="background: linear-gradient(135deg, <%= slide.bg_color %> 0%, <%= slide.bg_color %>cc 100%);">
+          <% if (slide.image_url) { %>
+          <img src="<%= slide.image_url %>" alt="<%= slide.title %>" class="absolute inset-0 w-full h-full object-cover rounded-2xl" />
+          <div class="absolute inset-0 rounded-2xl" style="background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);"></div>
+          <% } %>
+          <a href="<%= slide.link_url %>" class="absolute bottom-0 left-0 right-0 p-8">
+            <p class="text-white text-xs font-semibold uppercase tracking-widest mb-2 opacity-75">Özel Fırsat</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2 leading-tight"><%= slide.title %></h3>
+            <% if (slide.subtitle) { %>
+            <p class="text-white text-sm opacity-80 mb-4"><%= slide.subtitle %></p>
+            <% } %>
+            <span class="inline-flex items-center gap-2 bg-white font-bold px-5 py-2.5 rounded-xl text-sm" style="color: <%= slide.bg_color %>;">
+              Kupona Git
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </span>
           </a>
         </div>
         <% }) %>
@@ -168,11 +170,134 @@
   </div>
 </section>
 
-<!-- About -->
+<!-- Testimonials -->
 <section class="py-14 px-4 bg-gray-50">
-  <div class="max-w-4xl mx-auto text-center">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Kullanıcılar Bizim İçin Ne Demiş?</h2>
+    <p class="text-gray-500 text-center mb-10">Binlerce kullanıcının deneyimini okuyun.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+        <div class="flex items-center gap-1 mb-3">
+          <% for(var i=0;i<5;i++){%><svg class="w-4 h-4" style="color:#FF6B00" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><%}%>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">&ldquo;Kuponluk.com sayesinde her ay alışverişlerimde ortalama %20 tasarruf ediyorum. Hepsini burada buluyorum, tek adres!&rdquo;</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">A</div>
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Ayşe K.</p>
+            <p class="text-xs text-gray-400">İstanbul</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+        <div class="flex items-center gap-1 mb-3">
+          <% for(var i=0;i<5;i++){%><svg class="w-4 h-4" style="color:#FF6B00" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><%}%>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">&ldquo;Doğrulanmış kupon rozeti çok işe yarıyor. Artık geçersiz kupon dene dene vakit kaybetmiyorum. Kesinlikle tavsiye ederim.&rdquo;</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#1a1a2e;">M</div>
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Mehmet Y.</p>
+            <p class="text-xs text-gray-400">Ankara</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+        <div class="flex items-center gap-1 mb-3">
+          <% for(var i=0;i<4;i++){%><svg class="w-4 h-4" style="color:#FF6B00" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><%}%><svg class="w-4 h-4 text-gray-200" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">&ldquo;Marka bildirim sistemi mükemmel. Favori mağazalardan yeni kupon gelince anlık mail alıyorum. Hiçbir fırsat kaçmıyor.&rdquo;</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background:#FF6B00;">Z</div>
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Zeynep A.</p>
+            <p class="text-xs text-gray-400">İzmir</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-14 px-4 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Sıkça Sorulan Sorular</h2>
+    <div class="space-y-3">
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kupon kodu nasıl kullanılır?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Kupon kodunu kopyaladıktan sonra alışveriş yaptığınız mağazaının ödeme sayfasına gidin. “İndirim Kodu” alanına kodu yapıştırıp uygulayan; indirim otomatik düşülecektir.</div>
+      </details>
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kuponlar gerçekten çalışıyor mu?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Evet! Tüm kuponlarımız ekibimiz tarafından düzenli olarak kontrol edilmektedir. “Doğrulanmış” rozeti taşıyan kuponlar bizzat test edilmiştir.</div>
+      </details>
+      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Belirli bir markanın bildirimlerini nasıl alabilirim?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Her marka ve kupon sayfasındaki “Bildirim Al” formunu kullanarak o markaya özel e-posta bildirimleri alabilirsiniz.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Kuponluk Nedir? -->
+<section class="py-14 px-4 bg-gray-50">
+  <div class="max-w-4xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Kuponluk.com Nedir?</h2>
-    <p class="text-gray-600 text-lg leading-relaxed mb-8">Türkiye'nin en kapsamlı kupon ve indirim kodu platformudur. Yüzlerce mağazadan derlenen binlerce aktif kupon kodu ile alışverişlerinizde ciddi tasarruflar elde edin.</p>
+    <p class="text-gray-600 text-base leading-relaxed">Kuponluk.com, Türkiye'nin en kapsamlı kupon ve indirim kodu platformudur. Yüzlerce mağazadan derlenen binlerce aktif kupon kodu ile alışverişlerinizde ciddi tasarruflar elde edin. Her gün güncellenen kupon veritabanımız sayesinde en yeni fırsatları kaybetmeden yakalayın.</p>
+    <details class="group mt-5">
+      <summary class="cursor-pointer font-semibold inline-flex items-center gap-1.5 list-none select-none" style="color:#FF6B00;">
+        Daha fazla oku
+        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="mt-4 text-gray-600 leading-relaxed space-y-3 text-base">
+        <p>Kuponluk.com, alışveriş tutkunlarına ve akıllı tüketicilere yönelik bir indirim ve fırsat platformudur. Sitemizdeki kuponlar; kupon kodları, yüzde indirimler, sabit tutar indirimleri, ücretsiz kargo kampanyaları, hediye ürün fırsatları ve banka–kredi kartı kampanyaları olmak üzere altı ana kategoride sınıflandırılmıştır.</p>
+        <p>Platformumuzda yer alan her kupon, editoryel ekibimiz tarafından incelenir ve geçerliliği onaylanır. “Doğrulanmış” rozetiyle işaretlenen kuponlar bizzat test edilerek sistemimize eklenir. Bu sayede eski veya geçersiz kuponlarla vakit kaybetmezsiniz.</p>
+        <p>Favori markanızın sayfasını takip ederek yeni kupon eklendiğinde anında e-posta bildirimi alabilirsiniz. Ayrıca Telegram kanalımıza katılarak günlük seçilmiş fırsatlara anında ulaşabilirsiniz. Kuponluk.com tamamen ücretsizdir; kayıt olmadan da kupon kullanabilir, kayıt olarak ise kuponları kaydedebilir ve kendi kuponlarınızı gönderebilirsiniz.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 4 Feature Icons -->
+<section class="py-12 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="flex flex-col items-center">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style="background:#FFF3E8;">
+          <svg class="w-7 h-7" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Doğrulanmış Kuponlar</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Tüm kuponlar ekibimizce test edilip onaylanır.</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style="background:#FFF3E8;">
+          <svg class="w-7 h-7" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Marka Bildirimleri</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Favori markanızdan yeni kupon gelince haber alın.</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style="background:#FFF3E8;">
+          <svg class="w-7 h-7" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Kolay Kullanım</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Bir tıklayla kopyala, yapıştır ve tasarruf et.</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style="background:#FFF3E8;">
+          <svg class="w-7 h-7" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Tamamen Ücretsiz</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Kayıt olmadan da tüm kuponlara erişebilinirsiniz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Cards -->
+<section class="py-10 px-4 bg-gray-50">
+  <div class="max-w-4xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm text-left">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#FF6B00">
@@ -195,27 +320,6 @@
         <h3 class="font-bold text-gray-800 mb-2">Ücretsiz Kullanım</h3>
         <p class="text-gray-500 text-sm">Kuponluk.com tamamen ücretsizdir. Kayıt olmadan da kupon kullanabilirsiniz.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="py-14 px-4 bg-white">
-  <div class="max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Sıkça Sorulan Sorular</h2>
-    <div class="space-y-3">
-      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kupon kodu nasıl kullanılır?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Kupon kodunu kopyaladıktan sonra alışveriş yaptığınız mağazanın ödeme sayfasına gidin. "İndirim Kodu" alanına kodu yapıştırıp uygulayun; indirim otomatik düşülecektir.</div>
-      </details>
-      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Kuponlar gerçekten çalışıyor mu?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Evet! Tüm kuponlarımız ekibimiz tarafından düzenli olarak kontrol edilmektedir. “Doğrulanmış” rozeti taşıyan kuponlar bizzat test edilmiştir.</div>
-      </details>
-      <details class="bg-gray-50 rounded-xl border border-gray-100 group">
-        <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-semibold text-gray-800 list-none">Belirli bir markanın bildirimlerini nasıl alabilirim?<svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-        <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed">Her marka ve kupon sayfasındaki “Bildirim Al” formunu kullanarak o markaya özel e-posta bildirimleri alabilirsiniz.</div>
-      </details>
     </div>
   </div>
 </section>
