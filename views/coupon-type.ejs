@@ -1,3 +1,11 @@
+<%
+function turkishSlugify(text) {
+  return (text || '').toLowerCase()
+    .replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u')
+    .replace(/â/g,'a').replace(/î/g,'i').replace(/û/g,'u')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50);
+}
+%>
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
@@ -18,7 +26,7 @@
 </div>
 
 <!-- Type Filter Tabs -->
-<div class="bg-white border-b border-gray-100 sticky top-[calc(4rem+2.5rem)] z-40">
+<div class="bg-white border-b border-gray-100 z-40">
   <div class="max-w-6xl mx-auto px-4 overflow-x-auto">
     <div class="flex gap-1 py-2">
       <a href="/kupon/kupon-kodu" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'kupon-kodu' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='kupon-kodu'){%>style="background:#FF6B00"<%}%>>
@@ -50,7 +58,7 @@
     <% if (coupons && coupons.length > 0) { %>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <% coupons.forEach(function(coupon) { %>
-      <a href="/kupon/<%= coupon.id %>-<%= (coupon.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40) %>" class="group bg-white rounded-2xl border-2 border-gray-100 hover:shadow-lg hover:border-orange-200 transition overflow-hidden flex flex-col">
+      <a href="/kupon/<%= coupon.id %>-<%= turkishSlugify(coupon.title) %>" class="group bg-white rounded-2xl border-2 border-gray-100 hover:shadow-lg hover:border-orange-200 transition overflow-hidden flex flex-col">
         <div class="px-5 pt-5 pb-4 flex-1">
           <div class="flex items-start gap-3 mb-3">
             <div class="relative w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
