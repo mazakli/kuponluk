@@ -2,20 +2,21 @@ const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
 
+const COUPON_SELECT = `
+  SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
+         c.name as category_name, c.slug as category_slug
+  FROM coupons cp
+  JOIN stores s ON cp.store_id = s.id
+  LEFT JOIN categories c ON s.category_id = c.id
+`;
+
 router.get('/son-eklenenler', (req, res) => {
   const db = getDb();
   const page = parseInt(req.query.sayfa) || 1;
   const limit = 20;
   const offset = (page - 1) * limit;
   const total = db.prepare('SELECT COUNT(*) as c FROM coupons').get().c;
-  const coupons = db.prepare(`
-    SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
-           c.name as category_name, c.slug as category_slug
-    FROM coupons cp
-    JOIN stores s ON cp.store_id = s.id
-    LEFT JOIN categories c ON s.category_id = c.id
-    ORDER BY cp.created_at DESC LIMIT ? OFFSET ?
-  `).all(limit, offset);
+  const coupons = db.prepare(COUPON_SELECT + `ORDER BY cp.created_at DESC LIMIT ? OFFSET ?`).all(limit, offset);
   res.render('new-coupons', {
     title: 'Son Eklenen Kuponlar - Kuponluk.com',
     coupons, currentPage: page,
@@ -25,15 +26,38 @@ router.get('/son-eklenenler', (req, res) => {
 
 router.get('/populer', (req, res) => {
   const db = getDb();
-  const coupons = db.prepare(`
-    SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
-           c.name as category_name, c.slug as category_slug
-    FROM coupons cp
-    JOIN stores s ON cp.store_id = s.id
-    LEFT JOIN categories c ON s.category_id = c.id
-    ORDER BY cp.use_count DESC LIMIT 40
-  `).all();
+  const coupons = db.prepare(COUPON_SELECT + `ORDER BY cp.use_count DESC LIMIT 40`).all();
   res.render('popular-coupons', { title: 'Popüler Kuponlar - Kuponluk.com', coupons });
+});
+
+router.get('/kupon-kodu', (req, res) => {
+  const db = getDb();
+  const coupons = db.prepare(COUPON_SELECT + `WHERE cp.code IS NOT NULL AND cp.code != '' ORDER BY cp.created_at DESC LIMIT 40`).all();
+  res.render('coupon-type', { title: 'Kupon Kodları - Kuponluk.com', coupons, typeName: 'Kupon Kodları', typeSlug: 'kupon-kodu', typeDesc: 'Kopyalayıp kullanabileceğiniz aktif kupon kodları.' });
+});
+
+router.get('/indirim', (req, res) => {
+  const db = getDb();
+  const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type IN ('percent', 'fixed') ORDER BY cp.discount_value DESC LIMIT 40`).all();
+  res.render('coupon-type', { title: 'İndirimler - Kuponluk.com', coupons, typeName: 'İndirimler', typeSlug: 'indirim', typeDesc: 'Yüzde ve sabit tutarlı indirim kampanyaları.' });
+});
+
+router.get('/hediye', (req, res) => {
+  const db = getDb();
+  const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'gift' ORDER BY cp.created_at DESC LIMIT 40`).all();
+  res.render('coupon-type', { title: 'Hediye Kampanyaları - Kuponluk.com', coupons, typeName: 'Hediye', typeSlug: 'hediye', typeDesc: 'Ücretsiz hediye ve ürün kazanma fırsatları.' });
+});
+
+router.get('/ucretsiz-kargo', (req, res) => {
+  const db = getDb();
+  const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'free_shipping' ORDER BY cp.created_at DESC LIMIT 40`).all();
+  res.render('coupon-type', { title: 'Ücretsiz Kargo - Kuponluk.com', coupons, typeName: 'Ücretsiz Kargo', typeSlug: 'ucretsiz-kargo', typeDesc: 'Kargo ücreti olmadan alışveriş yapın.' });
+});
+
+router.get('/banka-kampanyalari', (req, res) => {
+  const db = getDb();
+  const coupons = db.prepare(COUPON_SELECT + `WHERE cp.discount_type = 'bank' ORDER BY cp.created_at DESC LIMIT 40`).all();
+  res.render('coupon-type', { title: 'Banka Kampanyaları - Kuponluk.com', coupons, typeName: 'Banka Kampanyaları', typeSlug: 'banka-kampanyalari', typeDesc: 'Kredi kartı ve banka özel indirim kampanyaları.' });
 });
 
 router.get('/:id', (req, res) => {

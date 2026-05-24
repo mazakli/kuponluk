@@ -1,0 +1,97 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="py-8 px-4" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-extrabold text-white mb-2"><%= typeName %></h1>
+    <p class="text-gray-300"><%= typeDesc %></p>
+  </div>
+</div>
+
+<!-- Type Filter Tabs -->
+<div class="bg-white border-b border-gray-100 sticky top-[calc(4rem+2.5rem)] z-40">
+  <div class="max-w-6xl mx-auto px-4 overflow-x-auto">
+    <div class="flex gap-1 py-2">
+      <a href="/kupon/kupon-kodu" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'kupon-kodu' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='kupon-kodu'){%>style="background:#FF6B00"<%}%>>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        Kupon Kodu
+      </a>
+      <a href="/kupon/indirim" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'indirim' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='indirim'){%>style="background:#FF6B00"<%}%>>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M7 7a1 1 0 110-2 1 1 0 010 2zm10 10a1 1 0 110-2 1 1 0 010 2z"/></svg>
+        İndirim
+      </a>
+      <a href="/kupon/hediye" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'hediye' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='hediye'){%>style="background:#FF6B00"<%}%>>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+        Hediye
+      </a>
+      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'ucretsiz-kargo' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='ucretsiz-kargo'){%>style="background:#FF6B00"<%}%>>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0H3m14 0h2"/></svg>
+        Ücretsiz Kargo
+      </a>
+      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition <%= typeSlug === 'banka-kampanyalari' ? 'text-white' : 'text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" <% if(typeSlug==='banka-kampanyalari'){%>style="background:#FF6B00"<%}%>>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        Banka Kampanyaları
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="py-8 px-4 bg-gray-50 min-h-[50vh]">
+  <div class="max-w-6xl mx-auto">
+    <% if (coupons && coupons.length > 0) { %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <% coupons.forEach(function(coupon) { %>
+      <a href="/kupon/<%= coupon.id %>-<%= (coupon.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40) %>" class="group bg-white rounded-2xl border border-gray-100 hover:shadow-lg hover:border-orange-200 transition overflow-hidden flex flex-col">
+        <div class="px-5 pt-5 pb-4 flex-1">
+          <div class="flex items-start gap-3 mb-3">
+            <div class="relative w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
+              <div class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold" style="background:#FF6B00;"><%= (coupon.store_name || 'K').charAt(0).toUpperCase() %></div>
+              <% if (coupon.logo_url) { %>
+              <img src="<%= coupon.logo_url %>" alt="" class="absolute inset-0 w-full h-full object-contain p-1 bg-white" onerror="this.style.display='none'">
+              <% } %>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs text-gray-400 truncate"><%= coupon.store_name %></p>
+              <h3 class="text-sm font-semibold text-gray-800 group-hover:text-orange-600 leading-snug line-clamp-2"><%= coupon.title %></h3>
+            </div>
+          </div>
+          <% if (coupon.code) { %>
+          <div class="flex items-center gap-2 bg-orange-50 rounded-lg px-3 py-2">
+            <span class="text-xs font-bold tracking-widest" style="color:#FF6B00;"><%= coupon.code %></span>
+            <span class="ml-auto text-xs text-gray-400">Kodu Kopyala</span>
+          </div>
+          <% } else if (coupon.discount_value) { %>
+          <div class="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
+            <span class="text-sm font-bold text-green-700">
+              <% if (coupon.discount_type === 'percent') { %>%<%= coupon.discount_value %> İndirim<% } else if (coupon.discount_type === 'fixed') { %><%= coupon.discount_value %> TL İndirim<% } else { %><%= coupon.discount_type === 'free_shipping' ? 'Ücretsiz Kargo' : coupon.discount_type === 'gift' ? 'Hediye' : coupon.discount_type === 'bank' ? 'Banka Kampanyası' : 'İndirim' %><% } %>
+            </span>
+          </div>
+          <% } %>
+        </div>
+        <div class="px-5 pb-4 flex items-center justify-between">
+          <% if (coupon.is_verified) { %>
+          <span class="flex items-center gap-1 text-xs text-green-600 font-semibold">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Doğrulandı
+          </span>
+          <% } else { %>
+          <span class="text-xs text-gray-400">Kullanıcı Kuponu</span>
+          <% } %>
+          <span class="text-xs text-gray-400"><%= coupon.use_count || 0 %> kullanım</span>
+        </div>
+      </a>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div class="text-center py-20">
+      <svg class="w-16 h-16 mx-auto mb-4 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+      <p class="text-gray-400 text-lg font-medium">Bu kategoride henüz kupon bulunmuyor.</p>
+      <a href="/" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold hover:underline" style="color:#FF6B00;">Tüm Kupona Bak</a>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+</body>
+</html>
