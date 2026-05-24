@@ -184,6 +184,21 @@ function runMigrations(db) {
 
   const sliderCount = db.prepare('SELECT COUNT(*) as c FROM sliders').get().c;
   if (sliderCount === 0) seedSliders(db);
+
+  // Add extra Trendyol coupons if fewer than 8 exist
+  const trendyolCount = db.prepare("SELECT COUNT(*) as c FROM coupons WHERE store_id = (SELECT id FROM stores WHERE slug = 'trendyol')").get();
+  if (trendyolCount && trendyolCount.c < 8) {
+    const trendyolStore = db.prepare("SELECT id FROM stores WHERE slug = 'trendyol'").get();
+    if (trendyolStore) {
+      const ins = db.prepare(`INSERT INTO coupons (store_id, title, code, description, discount_type, discount_value, expiry_date, is_verified, is_exclusive, view_count, use_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+      try { ins.run(trendyolStore.id, 'Giyim Ürünlerinde %25 İndirim', 'TY25GIYIM', 'Seçili giyim ürünlerinde geçerli', 'percent', '25', '2026-10-31', 1, 0, 2100, 630); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Elektronik Ürünlerde %10 İndirim', 'TY10ELEK', 'Trendyol elektronik kategorisinde geçerli', 'percent', '10', '2026-09-30', 1, 0, 1800, 540); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Kozmetik Alışverişte 50 TL İndirim', 'TY50KOZMET', '200 TL üzeri kozmetik alışverişlerde geçerli', 'fixed', '50', '2026-08-31', 0, 0, 950, 285); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Ayakkabı Kategorisinde Ücretsiz Kargo', 'TYYAKKARGO', 'Seçili ayakkabı ürünlerinde ücretsiz kargo', 'free_shipping', null, '2026-12-31', 1, 0, 1350, 405); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Ev & Yaşam Ürünlerinde %15 İndirim', 'TYEV15', 'Ev ve yaşam kategorisinde geçerli', 'percent', '15', '2026-11-30', 0, 0, 760, 228); } catch(e) {}
+      db.prepare("UPDATE stores SET coupon_count = (SELECT COUNT(*) FROM coupons WHERE store_id = stores.id) WHERE slug = 'trendyol'").run();
+    }
+  }
 }
 
 function seedSliders(db) {
@@ -220,7 +235,7 @@ function seedData(db) {
     { name: 'Zara', slug: 'zara', desc: 'Uluslararası moda markası', logo: 'https://logo.clearbit.com/zara.com', url: 'https://zara.com', cat: 1, featured: 1 },
     { name: 'LC Waikiki', slug: 'lc-waikiki', desc: 'Uygun fiyatlı moda markası', logo: 'https://logo.clearbit.com/lcwaikiki.com', url: 'https://lcwaikiki.com', cat: 1, featured: 1 },
     { name: 'Boyner', slug: 'boyner', desc: "Türkiye'nin köklü perakende markası", logo: 'https://logo.clearbit.com/boyner.com.tr', url: 'https://boyner.com.tr', cat: 1, featured: 1 },
-    { name: 'Koton', slug: 'koton', desc: 'Şık ve uygun fiyatlı giyim markası', logo: 'https://logo.clearbit.com/koton.com', url: 'https://koton.com', cat: 1, featured: 0 },
+    { name: 'Koton', slug: 'koton', desc: 'Şik ve uygun fiyatlı giyim markası', logo: 'https://logo.clearbit.com/koton.com', url: 'https://koton.com', cat: 1, featured: 0 },
     { name: 'Defacto', slug: 'defacto', desc: 'Günlük ve trend giyim markası', logo: 'https://logo.clearbit.com/defacto.com.tr', url: 'https://defacto.com.tr', cat: 1, featured: 1 },
     { name: 'MediaMarkt', slug: 'mediamarkt', desc: 'Elektronik ve teknoloji ürünleri mağazası', logo: 'https://logo.clearbit.com/mediamarkt.com.tr', url: 'https://mediamarkt.com.tr', cat: 2, featured: 1 },
     { name: 'Teknosa', slug: 'teknosa', desc: 'Elektronik ve teknoloji perakendecisi', logo: 'https://logo.clearbit.com/teknosa.com', url: 'https://teknosa.com', cat: 2, featured: 0 },
@@ -240,7 +255,7 @@ function seedData(db) {
   stores.forEach(s => insertStore.run(s.name, s.slug, s.desc, s.logo, s.url, s.cat, s.featured));
 
   const coupons = [
-    { store_id: 1, title: 'İlk Siparişte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparişinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
+    { store_id: 1, title: 'İlk Siparışte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparışinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 1, title: '150 TL ve Üzeri Alışverişte 30 TL İndirim', code: 'TY30INDIRIM', desc: '150 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-08-31', verified: 1, exclusive: 0 },
     { store_id: 1, title: 'Ücretsiz Kargo', code: 'TYKARGO', desc: 'Seçili ürünlerde ücretsiz kargo fırsatı', type: 'free_shipping', value: null, expiry: '2026-07-15', verified: 0, exclusive: 0 },
     { store_id: 2, title: 'Elektronik Ürünlerde %15 İndirim', code: 'HBTECH15', desc: 'Tüm elektronik kategorisinde geçerli', type: 'percent', value: '15', expiry: '2026-09-30', verified: 1, exclusive: 0 },
@@ -252,7 +267,7 @@ function seedData(db) {
     { store_id: 7, title: "Online'a Özel %20 İndirim", code: 'DFCONLINE20', desc: 'Sadece online alışverişlerde geçerli', type: 'percent', value: '20', expiry: '2026-10-31', verified: 1, exclusive: 1 },
     { store_id: 8, title: 'Laptop ve Bilgisayarlarda %12 İndirim', code: 'MMLAPTOP12', desc: 'Seçili laptop modellerinde geçerli', type: 'percent', value: '12', expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 8, title: '500 TL Üzeri 75 TL İndirim', code: 'MM500AL75', desc: '500 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '75', expiry: '2026-08-31', verified: 0, exclusive: 0 },
-    { store_id: 10, title: 'İlk Siparişe %40 İndirim', code: 'YS40ILK', desc: 'Yeni kullanıcılara özel ilk sipariş indirimi', type: 'percent', value: '40', expiry: '2026-12-31', verified: 1, exclusive: 1 },
+    { store_id: 10, title: 'İlk Siparışe %40 İndirim', code: 'YS40ILK', desc: 'Yeni kullanıcılara özel ilk sipariş indirimi', type: 'percent', value: '40', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 10, title: 'Ücretsiz Teslimat', code: 'YSKARGOBED', desc: 'Seçili restoranlardan ücretsiz teslimat', type: 'free_shipping', value: null, expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 11, title: 'Market Alışverişinde 30 TL İndirim', code: 'GETIR30', desc: '150 TL üzeri marketten alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-09-30', verified: 1, exclusive: 0 },
     { store_id: 12, title: 'Online Alışverişte Ücretsiz Kargo', code: 'MIGROSKARGO', desc: '200 TL üzeri alışverişlerde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },
