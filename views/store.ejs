@@ -2,18 +2,30 @@
 <%- include('partials/navbar') %>
 
 <%
-  var codeCoupons = (coupons || []).filter(function(c){ return c.type === 'code'; });
-  var campaignCoupons = (coupons || []).filter(function(c){ return c.type === 'campaign'; });
-  var otherCoupons = (coupons || []).filter(function(c){ return c.type !== 'code' && c.type !== 'campaign'; });
+  var expiredCoupons = (coupons||[]).filter(function(c){ return c.expires_at && new Date(c.expires_at) < new Date(); });
+  var codeCoupons = (coupons || []).filter(function(c){ return c.type === 'code' && (!c.expires_at || new Date(c.expires_at) >= new Date()); });
+  var campaignCoupons = (coupons || []).filter(function(c){ return c.type === 'campaign' && (!c.expires_at || new Date(c.expires_at) >= new Date()); });
+  var otherCoupons = (coupons || []).filter(function(c){ return c.type !== 'code' && c.type !== 'campaign' && (!c.expires_at || new Date(c.expires_at) >= new Date()); });
   var rating = parseFloat(avgRating) || 0;
   var fullStars = Math.floor(rating);
   var nowMs = Date.now();
 %>
 
-<div class="max-w-6xl mx-auto px-4 py-8">
+<!-- BREADCRUMB -->
+<div class="max-w-6xl mx-auto px-4 pt-4 pb-0">
+  <nav class="text-sm text-gray-500 flex items-center gap-1.5 flex-wrap">
+    <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <a href="/magazalar" class="hover:text-orange-600 transition">Ma&#x11F;azalar</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-gray-800 font-medium"><%= store.name %></span>
+  </nav>
+</div>
+
+<div class="max-w-6xl mx-auto px-4 py-6">
 
   <!-- HAKKINDA (TOP) -->
-  <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+  <section class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 p-6 mb-6">
     <h2 class="text-lg font-bold text-gray-800 mb-3"><%= store.name %> Hakk&#x131;nda</h2>
     <% if (store.description) { %>
       <% var desc = store.description; var short = desc.length > 280; %>
@@ -30,7 +42,7 @@
   </section>
 
   <!-- STORE HEADER -->
-  <section class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-6">
+  <section class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden mb-6">
     <div class="h-14 w-full" style="background:linear-gradient(135deg,#FF6B00,#ff8c00);"></div>
     <div class="px-6 pb-5">
       <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-10">
@@ -88,17 +100,26 @@
     <div class="flex-1 min-w-0 space-y-6">
 
       <!-- FILTER BAR -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+      <div class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 p-4">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap gap-1.5">
-            <button onclick="filterBadge('all')" data-badge="all" class="badge-filter active-badge px-3 py-1.5 rounded-lg text-xs font-semibold border transition">T&#xFC;m&#xFC; (<%= (coupons||[]).length %>)</button>
-            <button onclick="filterBadge('code')" data-badge="code" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border transition">Kodlar (<%= codeCoupons.length %>)</button>
-            <button onclick="filterBadge('campaign')" data-badge="campaign" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border transition">Kampanyalar (<%= campaignCoupons.length %>)</button>
-            <button onclick="filterBadge('verified')" data-badge="verified" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border transition">&#x2713; Edit&#xF6;r Onayl&#x131;</button>
-            <button onclick="filterBadge('expiring')" data-badge="expiring" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border transition">&#x1F525; T&#xFC;kenmek &#xDC;zere</button>
-            <button onclick="filterBadge('isnew')" data-badge="isnew" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border transition">&#x1F195; En Yeni</button>
+            <button onclick="filterBadge('all')" data-badge="all" class="badge-filter active-badge px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition">T&#xFC;m&#xFC; (<%= (coupons||[]).length %>)</button>
+            <button onclick="filterBadge('code')" data-badge="code" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition">Kodlar (<%= codeCoupons.length %>)</button>
+            <button onclick="filterBadge('campaign')" data-badge="campaign" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition">Kampanyalar (<%= campaignCoupons.length %>)</button>
+            <button onclick="filterBadge('verified')" data-badge="verified" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Edit&#xF6;r Onayl&#x131;
+            </button>
+            <button onclick="filterBadge('expiring')" data-badge="expiring" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition flex items-center gap-1">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/></svg>
+              T&#xFC;kenmek &#xDC;zere
+            </button>
+            <button onclick="filterBadge('isnew')" data-badge="isnew" class="badge-filter px-3 py-1.5 rounded-lg text-xs font-semibold border-2 transition flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              En Yeni
+            </button>
           </div>
-          <select id="couponSort" onchange="sortAllCoupons(this.value)" class="text-xs border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-300 bg-white">
+          <select id="couponSort" onchange="sortAllCoupons(this.value)" class="text-xs border-2 border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-300 bg-white">
             <option value="default">Varsay&#x131;lan</option>
             <option value="most_used">En &#xC7;ok Kullan&#x131;lan</option>
             <option value="newest">En Yeni</option>
@@ -122,7 +143,7 @@
             var dt = coupon.discount_type;
             var displayTitle = coupon.title || (dv && dt==='percentage' ? '%'+dv+' '+store.name+' İndirim Kodu' : dv ? store.name+' '+dv+' TL İndirim Kodu' : store.name+' İndirim Kodu');
           %>
-          <article class="coupon-card bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition overflow-hidden"
+          <article class="coupon-card bg-white rounded-2xl border-2 border-gray-100 shadow-sm hover:shadow-md hover:border-orange-200 transition overflow-hidden"
             data-type="code"
             data-use-count="<%= coupon.use_count||0 %>"
             data-created-at="<%= coupon.created_at||'' %>"
@@ -133,9 +154,9 @@
             <div class="p-4">
               <div class="flex flex-wrap gap-1 mb-2">
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#fff3e6;color:#FF6B00;">KOD</span>
-                <% if(isVerified){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700">&#x2713; Edit&#xF6;r Onayl&#x131;</span><%}%>
-                <% if(isExpiring){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600">&#x1F525; T&#xFC;kenmek &#xDC;zere</span><%}%>
-                <% if(isNew){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">&#x1F195; En Yeni</span><%}%>
+                <% if(isVerified){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Edit&#xF6;r Onayl&#x131;</span><%}%>
+                <% if(isExpiring){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/></svg> T&#xFC;kenmek &#xDC;zere</span><%}%>
+                <% if(isNew){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg> En Yeni</span><%}%>
               </div>
               <h3 class="font-bold text-gray-800 text-sm leading-snug mb-1"><%= displayTitle %></h3>
               <% if(coupon.description){%><p class="text-xs text-gray-500 leading-relaxed mb-2 line-clamp-2"><%= coupon.description %></p><%}%>
@@ -144,11 +165,11 @@
                 <% if(coupon.expires_at){%><span>Son: <%= new Date(coupon.expires_at).toLocaleDateString('tr-TR') %></span><%}%>
               </div>
               <div class="flex items-center gap-2">
-                <div class="flex-1 bg-gray-50 border border-dashed border-gray-300 rounded-xl px-3 py-2 text-center overflow-hidden">
+                <div class="flex-1 bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl px-3 py-2 text-center overflow-hidden">
                   <span class="text-sm font-extrabold tracking-widest text-gray-700"><%= coupon.code %></span>
                 </div>
-                <button onclick="openCouponModal('<%= coupon.id %>','<%= (coupon.code||'').replace(/'/g,"\\'") %>','<%= displayTitle.replace(/'/g,"\\'").replace(/"/g,'&quot;') %>','<%= store.website_url||'' %>','<%= (store.name||'').replace(/'/g,"\\'") %>','<%= store.id %>')"
-                  class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-bold text-xs transition hover:opacity-90 whitespace-nowrap flex-shrink-0"
+                <button onclick="openCouponModal('<%= coupon.id %>','<%= (coupon.code||'').replace(/'/g,&quot;\\&#39;&quot;) %>','<%= displayTitle.replace(/'/g,&quot;\\&#39;&quot;).replace(/&quot;/g,'&amp;quot;') %>','<%= store.website_url||'' %>','<%= (store.name||'').replace(/'/g,&quot;\\&#39;&quot;) %>','<%= store.id %>')"
+                  class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-white font-bold text-xs transition hover:opacity-90 whitespace-nowrap flex-shrink-0"
                   style="background:#FF6B00;">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                   Kodu Al
@@ -176,7 +197,7 @@
             var dv = coupon.discount_value;
             var displayTitle = coupon.title || (dv ? store.name+' '+dv+(coupon.discount_type==='percentage'?'%':' TL')+' Kampanyası' : store.name+' Kampanyası');
           %>
-          <article class="coupon-card bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition overflow-hidden"
+          <article class="coupon-card bg-white rounded-2xl border-2 border-gray-100 shadow-sm hover:shadow-md hover:border-blue-200 transition overflow-hidden"
             data-type="campaign"
             data-use-count="<%= coupon.use_count||0 %>"
             data-created-at="<%= coupon.created_at||'' %>"
@@ -187,9 +208,9 @@
             <div class="p-4">
               <div class="flex flex-wrap gap-1 mb-2">
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">KAMPANYA</span>
-                <% if(isVerified){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700">&#x2713; Edit&#xF6;r Onayl&#x131;</span><%}%>
-                <% if(isExpiring){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600">&#x1F525; T&#xFC;kenmek &#xDC;zere</span><%}%>
-                <% if(isNew){%><span class="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">&#x1F195; En Yeni</span><%}%>
+                <% if(isVerified){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Edit&#xF6;r Onayl&#x131;</span><%}%>
+                <% if(isExpiring){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/></svg> T&#xFC;kenmek &#xDC;zere</span><%}%>
+                <% if(isNew){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg> En Yeni</span><%}%>
               </div>
               <h3 class="font-bold text-gray-800 text-sm leading-snug mb-1"><%= displayTitle %></h3>
               <% if(coupon.description){%><p class="text-xs text-gray-500 leading-relaxed mb-2 line-clamp-2"><%= coupon.description %></p><%}%>
@@ -198,7 +219,7 @@
                 <% if(coupon.expires_at){%><span>Son: <%= new Date(coupon.expires_at).toLocaleDateString('tr-TR') %></span><%}%>
               </div>
               <a href="<%= store.website_url||'#' %>" target="_blank" rel="nofollow noopener"
-                class="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl text-white font-bold text-xs transition hover:opacity-90"
+                class="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl text-white font-bold text-xs transition hover:opacity-90"
                 style="background:#16a34a;">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                 Kampanyaya Git
@@ -210,21 +231,29 @@
       </section>
       <% } %>
 
-      <% if ((coupons||[]).length === 0) { %>
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+      <% if ((coupons||[]).filter(function(c){return !c.expires_at||new Date(c.expires_at)>=new Date();}).length === 0) { %>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-12 text-center">
         <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Hen&#xFC;z Kupon Yok</h3>
-        <p class="text-gray-500 text-sm">Bu ma&#x11F;aza i&#xE7;in &#x15F;u an aktif kupon bulunmamaktad&#x131;r.</p>
+        <p class="text-gray-500 text-sm">Bu ma&#x11F;aza i&#xE7;in şu an aktif kupon bulunmamaktadır.</p>
       </div>
       <% } %>
 
+      <!-- BANNER SLOT 1 (between coupons and FAQ) -->
+      <div class="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden" style="min-height:90px;">
+        <div class="text-center py-4 px-6">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Reklam Alanı</p>
+          <p class="text-xs text-gray-300 mt-0.5">728 &times; 90 &mdash; <%= store.name %> Banner</p>
+        </div>
+      </div>
+
       <!-- FAQ - SEO Schema -->
-      <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <section class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 p-6">
         <h2 class="text-xl font-bold text-gray-800 mb-5"><%= store.name %> S&#x131;k&#xE7;a Sorulan Sorular</h2>
         <div class="space-y-2" itemscope itemtype="https://schema.org/FAQPage">
 
           <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-            <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+            <details class="bg-gray-50 rounded-xl border-2 border-gray-100 group">
               <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none" itemprop="name">
                 <span class="font-semibold text-gray-800 text-sm"><%= store.name %> indirim kodu nas&#x131;l kullan&#x131;l&#x131;r?</span>
                 <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -236,7 +265,7 @@
           </div>
 
           <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-            <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+            <details class="bg-gray-50 rounded-xl border-2 border-gray-100 group">
               <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none" itemprop="name">
                 <span class="font-semibold text-gray-800 text-sm"><%= store.name %> kuponlar&#x131; ger&#xE7;ekten &#xE7;al&#x131;&#x15F;&#x131;yor mu?</span>
                 <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -248,25 +277,25 @@
           </div>
 
           <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-            <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+            <details class="bg-gray-50 rounded-xl border-2 border-gray-100 group">
               <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none" itemprop="name">
                 <span class="font-semibold text-gray-800 text-sm"><%= store.name %> yeni kuponlar&#x131;ndan nas&#x131;l haberdar olabilirim?</span>
                 <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-5 pb-4" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                <p itemprop="text" class="text-gray-600 text-sm leading-relaxed">Bu sayfadaki &ldquo;Bildirim Al&rdquo; formuna e-posta adresinizi girerek <%= store.name %>'a &#xF6;zel yeni kupon bildirimlerine abone olabilirsiniz. Ayr&#x131;ca Telegram ve WhatsApp kanallar&#x131;m&#x131;z&#x131; takip ederek anl&#x131;k fırsatlardan haberdar olabilirsiniz.</p>
+                <p itemprop="text" class="text-gray-600 text-sm leading-relaxed">Bu sayfadaki &ldquo;Bildirim Al&rdquo; formuna e-posta adresinizi girerek <%= store.name %>'a &#xF6;zel yeni kupon bildirimlerine abone olabilirsiniz. Ayr&#x131;ca Telegram ve WhatsApp kanallar&#x131;m&#x131;z&#x131; takip ederek an&#x131;nda f&#x131;rsatlardan haberdar olabilirsiniz.</p>
               </div>
             </details>
           </div>
 
           <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-            <details class="bg-gray-50 rounded-xl border border-gray-100 group">
+            <details class="bg-gray-50 rounded-xl border-2 border-gray-100 group">
               <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none" itemprop="name">
                 <span class="font-semibold text-gray-800 text-sm"><%= store.name %>'da en fazla ne kadar indirim yap&#x131;l&#x131;yor?</span>
                 <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-5 pb-4" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                <p itemprop="text" class="text-gray-600 text-sm leading-relaxed"><%= store.name %>'da indirim oranlar&#x131; kampanyaya g&#xF6;re de&#x11F;i&#x15F;mektedir. &#x15E;u an sitemizdeki <%= totalCoupons %> kupon ile toplam <%= totalUses %> kullan&#x131;m ger&#xE7;ekle&#x15F;tirilmi&#x15F;tir. En g&#xFC;ncel kampanyalar i&#xE7;in bu sayfay&#x131; takip edin.</p>
+                <p itemprop="text" class="text-gray-600 text-sm leading-relaxed"><%= store.name %>'da indirim oranlar&#x131; kampanyaya g&#xF6;re de&#x11F;i&#x15F;mektedir. Şu an sitemizdeki <%= totalCoupons %> kupon ile toplam <%= totalUses %> kullan&#x131;m ger&#xE7;ekle&#x15F;tirilmi&#x15F;tir. En g&#xFC;ncel kampanyalar i&#xE7;in bu sayfay&#x131; takip edin.</p>
               </div>
             </details>
           </div>
@@ -274,12 +303,20 @@
         </div>
       </section>
 
-      <!-- USER REVIEWS (bottom) -->
-      <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <!-- BANNER SLOT 2 (between FAQ and reviews) -->
+      <div class="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden" style="min-height:90px;">
+        <div class="text-center py-4 px-6">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Reklam Alanı</p>
+          <p class="text-xs text-gray-300 mt-0.5">300 &times; 250 &mdash; <%= store.name %> Banner</p>
+        </div>
+      </div>
+
+      <!-- USER REVIEWS -->
+      <section class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 p-6">
         <h2 class="text-xl font-bold text-gray-800 mb-1">Kullan&#x131;c&#x131; Yorumlar&#x131;</h2>
         <p class="text-sm text-gray-500 mb-5"><%= store.name %> kuponlar&#x131;n&#x131; kullanan ki&#x15F;ilerin deneyimleri.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <div class="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
             <div class="flex gap-0.5 mb-2"><% for(var ri=0;ri<5;ri++){%><svg class="w-4 h-4" style="color:#FF6B00" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><%}%></div>
             <p class="text-gray-600 text-sm leading-relaxed mb-3">&ldquo;<%= store.name %> kupon kodunu kulland&#x131;m, sepetimden g&#xFC;zel bir indirim ald&#x131;m. Ger&#xE7;ekten &#xE7;al&#x131;&#x15F;&#x131;yor!&rdquo;</p>
             <div class="flex items-center gap-2">
@@ -287,7 +324,7 @@
               <div><p class="text-xs font-semibold text-gray-700">Ay&#x15F;e K.</p><p class="text-xs text-gray-400">2 g&#xFC;n &#xF6;nce</p></div>
             </div>
           </div>
-          <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <div class="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
             <div class="flex gap-0.5 mb-2"><% for(var ri=0;ri<5;ri++){%><svg class="w-4 h-4" style="color:#FF6B00" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><%}%></div>
             <p class="text-gray-600 text-sm leading-relaxed mb-3">&ldquo;Kampanya haberi almak i&#xE7;in abone oldum, ilk bildirimde hemen kulland&#x131;m. &#xC7;ok i&#x15F;e yarar bir site!&rdquo;</p>
             <div class="flex items-center gap-2">
@@ -297,6 +334,39 @@
           </div>
         </div>
       </section>
+
+      <!-- EXPIRED COUPONS (very bottom, grayed out) -->
+      <% if (expiredCoupons.length > 0) { %>
+      <section class="opacity-50 pointer-events-none select-none">
+        <h2 class="text-base font-bold text-gray-500 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          S&#xFC;resi Dolmu&#x15F; Kuponlar (<%= expiredCoupons.length %>)
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <% expiredCoupons.forEach(function(coupon) {
+            var displayTitle = coupon.title || (store.name + ' İndirim Kodu');
+          %>
+          <article class="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden">
+            <div class="h-1 w-full bg-gray-300"></div>
+            <div class="p-4">
+              <div class="flex flex-wrap gap-1 mb-2">
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500"><%= coupon.type === 'code' ? 'KOD' : 'KAMPANYA' %></span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-400">S&#xFC;resi Doldu</span>
+              </div>
+              <h3 class="font-bold text-gray-500 text-sm leading-snug mb-2"><%= displayTitle %></h3>
+              <% if(coupon.expires_at){%><p class="text-xs text-gray-400">Son: <%= new Date(coupon.expires_at).toLocaleDateString('tr-TR') %></p><%}%>
+              <div class="mt-3 flex items-center gap-2">
+                <div class="flex-1 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl px-3 py-2 text-center">
+                  <span class="text-sm font-extrabold tracking-widest text-gray-400"><%= coupon.code || '—' %></span>
+                </div>
+                <div class="px-4 py-2 rounded-xl bg-gray-100 text-gray-400 font-bold text-xs whitespace-nowrap">S&#xFC;resi Doldu</div>
+              </div>
+            </div>
+          </article>
+          <% }); %>
+        </div>
+      </section>
+      <% } %>
 
     </div><!-- /main -->
 
@@ -314,24 +384,35 @@
       <a href="https://wa.me/905000000000" target="_blank" rel="noopener" class="block rounded-2xl p-5 text-white text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all" style="background:linear-gradient(135deg,#25d366,#128c7e);">
         <svg class="w-10 h-10 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         <div class="font-bold text-sm">WhatsApp'ta Bize Kat&#x131;l</div>
-        <div class="text-xs mt-1 opacity-80">Anl&#x131;k bildirimler</div>
+        <div class="text-xs mt-1 opacity-80">An&#x131;nda bildirimler</div>
       </a>
 
       <!-- Subscribe -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-        <h3 class="font-bold text-gray-800 text-sm mb-1">&#x1F4EC; Bildirim Al</h3>
+      <div class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 p-5">
+        <h3 class="font-bold text-gray-800 text-sm mb-1 flex items-center gap-1.5">
+          <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Bildirim Al
+        </h3>
         <p class="text-xs text-gray-500 mb-3"><%= store.name %> i&#xE7;in yeni kuponlar gelince haberdar ol.</p>
         <form id="storeSubForm" class="space-y-2">
           <input type="hidden" name="store_id" value="<%= store.id %>"/>
-          <input type="email" name="email" placeholder="E-posta adresiniz" required value="<%= currentUser?currentUser.email:'' %>" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <input type="email" name="email" placeholder="E-posta adresiniz" required value="<%= currentUser?currentUser.email:'' %>" class="w-full px-3 py-2 rounded-xl border-2 border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"/>
           <button type="submit" class="w-full text-white text-sm font-semibold px-4 py-2 rounded-xl transition hover:opacity-90" style="background:#FF6B00;">Abone Ol</button>
         </form>
         <p id="storeSubMsg" class="text-xs mt-1.5 hidden"></p>
       </div>
 
+      <!-- Sidebar Banner -->
+      <div class="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex items-center justify-center" style="min-height:250px;">
+        <div class="text-center">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Sidebar Reklam</p>
+          <p class="text-xs text-gray-300 mt-0.5">300 &times; 250</p>
+        </div>
+      </div>
+
       <!-- Related Stores -->
       <% if (relatedStores && relatedStores.length > 0) { %>
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-sm border-2 border-gray-100 overflow-hidden">
         <div class="px-4 py-3 border-b border-gray-100" style="background:#FF6B00;">
           <h3 class="text-white font-bold text-sm">Benzer Ma&#x11F;azalar</h3>
         </div>
@@ -378,11 +459,17 @@
         </div>
         <p id="copyMsg" class="text-xs text-green-600 mt-1 hidden">Kod kopyaland&#x131;!</p>
       </div>
-      <div class="bg-gray-50 rounded-xl p-4">
+      <div class="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
         <p class="text-sm font-semibold text-gray-700 mb-3">Bu kuponu kullanabildiniz mi?</p>
         <div class="flex gap-3">
-          <button onclick="submitFeedback(true)" id="feedbackYes" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl border-2 border-green-200 text-green-700 font-semibold text-sm hover:bg-green-50 transition">&#x1F44D; Evet</button>
-          <button onclick="submitFeedback(false)" id="feedbackNo" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl border-2 border-red-200 text-red-600 font-semibold text-sm hover:bg-red-50 transition">&#x1F44E; Hay&#x131;r</button>
+          <button onclick="submitFeedback(true)" id="feedbackYes" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-green-200 text-green-700 font-semibold text-sm hover:bg-green-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
+            Evet
+          </button>
+          <button onclick="submitFeedback(false)" id="feedbackNo" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-red-200 text-red-600 font-semibold text-sm hover:bg-red-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.095c.5 0 .905-.405.905-.905 0-.714.211-1.412.608-2.006L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
+            Hay&#x131;r
+          </button>
         </div>
         <p id="feedbackMsg" class="text-xs text-center mt-2 hidden"></p>
       </div>
@@ -390,11 +477,11 @@
         <p class="text-xs text-gray-500 font-medium mb-2">Arkada&#x15F;lar&#x131;nla payla&#x15F;</p>
         <div class="flex gap-2">
           <a id="shareWhatsapp" href="#" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold" style="background:#25D366;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
-          <a id="shareTwitter" href="#" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold" style="background:#1DA1F2;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X / Twitter</a>
-          <button onclick="copyShareLink()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-600 text-xs font-semibold hover:bg-gray-50 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Link</button>
+          <a id="shareTwitter" href="#" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold" style="background:#1DA1F2;"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Twitter</a>
+          <button onclick="copyShareLink()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-gray-200 text-gray-600 text-xs font-semibold hover:bg-gray-50 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Link</button>
         </div>
       </div>
-      <div class="bg-blue-50 rounded-xl p-4">
+      <div class="bg-blue-50 rounded-xl p-4 border-2 border-blue-100">
         <p class="text-xs font-bold text-blue-700 mb-2">Nas&#x131;l Kullan&#x131;l&#x131;r?</p>
         <ol class="text-xs text-blue-600 space-y-1 list-none">
           <li class="flex items-start gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-200 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span> Kodu kopyalay&#x131;n.</li>
@@ -410,7 +497,7 @@
         <p class="text-xs text-gray-500 mb-2">Yeni kuponlardan haberdar olmak ister misiniz?</p>
         <form id="modalSubForm" class="flex gap-2">
           <input type="hidden" name="store_id" id="modalStoreId" value=""/>
-          <input type="email" name="email" placeholder="E-posta adresiniz" required value="<%= currentUser?currentUser.email:'' %>" class="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-300"/>
+          <input type="email" name="email" placeholder="E-posta adresiniz" required value="<%= currentUser?currentUser.email:'' %>" class="flex-1 px-3 py-2 rounded-xl border-2 border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-300"/>
           <button type="submit" class="text-white text-xs font-semibold px-4 py-2 rounded-xl hover:opacity-90 whitespace-nowrap transition" style="background:#FF6B00;">Abone Ol</button>
         </form>
         <p id="modalSubMsg" class="text-xs mt-1 hidden"></p>
