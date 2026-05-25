@@ -1,6 +1,24 @@
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
+<%
+var catIconMap = {
+  'moda-giyim':        '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>',
+  'elektronik':        '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
+  'yemek-restoran':    '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+  'seyahat':           '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>',
+  'kozmetik-guzellik': '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+  'ev-yasam':          '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"/></svg>',
+  'spor-outdoor':      '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
+  'kitap-egitim':      '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+  'oyun-eglence':      '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>',
+  'market-supermarket':'<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>',
+  'sigorta-finans':    '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
+  'teknoloji-yazilim': '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>'
+};
+var defaultIcon = '<svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>';
+%>
+
 <div class="max-w-6xl mx-auto px-4 py-10">
 
   <!-- Breadcrumb -->
@@ -13,22 +31,22 @@
   </nav>
 
   <!-- Category Header -->
-  <div class="rounded-2xl overflow-hidden shadow-lg mb-10">
-    <div class="h-1.5" style="background: <%= category.color || '#FF6B00' %>;"></div>
+  <div class="rounded-2xl overflow-hidden shadow-lg mb-10 border-2 border-gray-200">
+    <div class="h-1.5 w-full" style="background:#FF6B00;"></div>
     <div class="bg-white px-8 py-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
-      <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-extrabold flex-shrink-0" style="background: <%= category.color || '#FF6B00' %>;">
-        <%= category.name ? category.name.charAt(0).toUpperCase() : 'K' %>
+      <div class="w-18 h-18 rounded-2xl flex items-center justify-center flex-shrink-0" style="width:72px;height:72px;background:#FFF3E8;">
+        <%- catIconMap[category.slug] || defaultIcon %>
       </div>
       <div>
         <h1 class="text-3xl font-extrabold text-gray-900 mb-2"><%= category.name %></h1>
         <% if (category.description) { %><p class="text-gray-500 mb-3"><%= category.description %></p><% } %>
         <div class="flex flex-wrap gap-5">
           <div class="flex items-center gap-2 text-sm font-semibold text-gray-600">
-            <svg class="w-4 h-4" style="color:<%= category.color||'#FF6B00'%>" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-            <strong><%= (stores && stores.length) || 0 %></strong> Mağaza
+            <svg class="w-4 h-4" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <strong><%= (stores && stores.length) || 0 %></strong> Ma&#x11F;aza
           </div>
           <div class="flex items-center gap-2 text-sm font-semibold text-gray-600">
-            <svg class="w-4 h-4" style="color:<%= category.color||'#FF6B00'%>" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+            <svg class="w-4 h-4" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
             <strong><%= (coupons && coupons.length) || 0 %></strong> Kupon
           </div>
         </div>
@@ -38,17 +56,17 @@
 
   <!-- Stores in Category -->
   <% if (stores && stores.length > 0) { %>
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold text-gray-800 mb-5"><%= category.name %> Mağazaları</h2>
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-800 mb-4"><%= category.name %> Ma&#x11F;azalar&#x131;</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
       <% stores.forEach(function(store) { %>
-      <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border border-gray-100 hover:border-orange-200 p-4 flex flex-col items-center text-center group">
-        <div class="relative w-12 h-12 rounded-xl overflow-hidden mb-2 border border-gray-100">
-          <div class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold" style="background: <%= category.color || '#FF6B00' %>;">
-            <%= (store.name || '?').charAt(0).toUpperCase() %>
+      <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border-2 border-gray-200 hover:border-orange-300 p-4 flex flex-col items-center text-center group">
+        <div class="relative w-14 h-14 rounded-xl overflow-hidden mb-2 flex-shrink-0" style="background:#FF6B00;">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-white text-xl font-bold"><%= (store.name||'?').charAt(0).toUpperCase() %></span>
           </div>
           <% if (store.logo_url) { %>
-          <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain p-1 bg-white" onerror="this.style.display='none'"/>
+          <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="this.style.display='none'" />
           <% } %>
         </div>
         <span class="text-xs font-semibold text-gray-700 group-hover:text-orange-600 transition truncate w-full text-center"><%= store.name %></span>
@@ -62,7 +80,7 @@
   <!-- Coupons in Category -->
   <% if (coupons && coupons.length > 0) { %>
   <section>
-    <h2 class="text-2xl font-bold text-gray-800 mb-5"><%= category.name %> Kuponları</h2>
+    <h2 class="text-xl font-bold text-gray-800 mb-4"><%= category.name %> Kuponlar&#x131;</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
       <% coupons.forEach(function(coupon) { %><%- include('partials/coupon-card', { coupon: coupon }) %><% }); %>
     </div>
@@ -70,11 +88,11 @@
   <% } %>
 
   <% if ((!coupons || coupons.length === 0) && (!stores || stores.length === 0)) { %>
-  <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
+  <div class="bg-white rounded-2xl border-2 border-gray-200 shadow p-16 text-center">
     <svg class="w-14 h-14 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-    <h3 class="text-xl font-semibold text-gray-700 mb-2">Bu Kategoride Henüz İçerik Yok</h3>
-    <p class="text-gray-500 mb-4">Yakında bu kategoride kuponlar eklenecek.</p>
-    <a href="/kategoriler" class="inline-block px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Diğer Kategoriler</a>
+    <h3 class="text-xl font-semibold text-gray-700 mb-2">Bu Kategoride Hen&#xFC;z &#x130;&#xE7;erik Yok</h3>
+    <p class="text-gray-500 mb-4">Yak&#x131;nda bu kategoride kuponlar eklenecek.</p>
+    <a href="/kategoriler" class="inline-block px-6 py-2.5 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#1a1a2e;">Di&#x11F;er Kategoriler</a>
   </div>
   <% } %>
 

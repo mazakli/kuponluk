@@ -191,26 +191,26 @@ function initDb() {
 
 function runMigrations(db) {
   const logoMap = [
-    ['trendyol', 'https://logo.clearbit.com/trendyol.com'],
-    ['hepsiburada', 'https://logo.clearbit.com/hepsiburada.com'],
-    ['zara', 'https://logo.clearbit.com/zara.com'],
-    ['lc-waikiki', 'https://logo.clearbit.com/lcwaikiki.com'],
-    ['boyner', 'https://logo.clearbit.com/boyner.com.tr'],
-    ['koton', 'https://logo.clearbit.com/koton.com'],
-    ['defacto', 'https://logo.clearbit.com/defacto.com.tr'],
-    ['mediamarkt', 'https://logo.clearbit.com/mediamarkt.com.tr'],
-    ['teknosa', 'https://logo.clearbit.com/teknosa.com'],
-    ['yemeksepeti', 'https://logo.clearbit.com/yemeksepeti.com'],
-    ['getir', 'https://logo.clearbit.com/getir.com'],
-    ['migros', 'https://logo.clearbit.com/migros.com.tr'],
-    ['booking', 'https://logo.clearbit.com/booking.com'],
-    ['nike', 'https://logo.clearbit.com/nike.com'],
-    ['adidas', 'https://logo.clearbit.com/adidas.com'],
-    ['sephora', 'https://logo.clearbit.com/sephora.com'],
-    ['morhipo', 'https://logo.clearbit.com/morhipo.com'],
-    ['amazon', 'https://logo.clearbit.com/amazon.com.tr'],
-    ['n11', 'https://logo.clearbit.com/n11.com'],
-    ['flo', 'https://logo.clearbit.com/flo.com.tr'],
+    ['trendyol',    'https://unavatar.io/trendyol.com'],
+    ['hepsiburada', 'https://unavatar.io/hepsiburada.com'],
+    ['zara',        'https://unavatar.io/zara.com'],
+    ['lc-waikiki',  'https://unavatar.io/lcwaikiki.com'],
+    ['boyner',      'https://unavatar.io/boyner.com.tr'],
+    ['koton',       'https://unavatar.io/koton.com'],
+    ['defacto',     'https://unavatar.io/defacto.com.tr'],
+    ['mediamarkt',  'https://unavatar.io/mediamarkt.com.tr'],
+    ['teknosa',     'https://unavatar.io/teknosa.com'],
+    ['yemeksepeti', 'https://unavatar.io/yemeksepeti.com'],
+    ['getir',       'https://unavatar.io/getir.com'],
+    ['migros',      'https://unavatar.io/migros.com.tr'],
+    ['booking',     'https://unavatar.io/booking.com'],
+    ['nike',        'https://unavatar.io/nike.com'],
+    ['adidas',      'https://unavatar.io/adidas.com'],
+    ['sephora',     'https://unavatar.io/sephora.com'],
+    ['morhipo',     'https://unavatar.io/morhipo.com'],
+    ['amazon',      'https://unavatar.io/amazon.com.tr'],
+    ['n11',         'https://unavatar.io/n11.com'],
+    ['flo',         'https://unavatar.io/flo.com.tr'],
   ];
   const update = db.prepare('UPDATE stores SET logo_url = ? WHERE slug = ?');
   logoMap.forEach(([slug, url]) => update.run(url, slug));
@@ -225,8 +225,8 @@ function runMigrations(db) {
       const ins = db.prepare(`INSERT INTO coupons (store_id, title, code, description, discount_type, discount_value, expiry_date, is_verified, is_exclusive, view_count, use_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
       try { ins.run(trendyolStore.id, 'Giyim Ürünlerinde %25 İndirim', 'TY25GIYIM', 'Seçili giyim ürünlerinde geçerli', 'percent', '25', '2026-10-31', 1, 0, 2100, 630); } catch(e) {}
       try { ins.run(trendyolStore.id, 'Elektronik Ürünlerde %10 İndirim', 'TY10ELEK', 'Trendyol elektronik kategorisinde geçerli', 'percent', '10', '2026-09-30', 1, 0, 1800, 540); } catch(e) {}
-      try { ins.run(trendyolStore.id, 'Kozmetik Alışverişte 50 TL İndirim', 'TY50KOZMET', '200 TL üzeri kozmetik alışverişlerde geçerli', 'fixed', '50', '2026-08-31', 0, 0, 950, 285); } catch(e) {}
-      try { ins.run(trendyolStore.id, 'Ayakkabı Kategorisinde Ücretsiz Kargo', 'TYYAKKARGO', 'Seçili ayakkabı ürünlerinde ücretsiz kargo', 'free_shipping', null, '2026-12-31', 1, 0, 1350, 405); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Kozmetik Alışverişte 50 TL İndirim', 'TY50KOZMET', '200 TL üzer kozmetik alışverişlerde geçerli', 'fixed', '50', '2026-08-31', 0, 0, 950, 285); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Ayakkabı Kategorisinde Ücretsız Kargo', 'TYYAKKARGO', 'Seçili ayakkabı ürünlerinde ücretsiz kargo', 'free_shipping', null, '2026-12-31', 1, 0, 1350, 405); } catch(e) {}
       try { ins.run(trendyolStore.id, 'Ev & Yaşam Ürünlerinde %15 İndirim', 'TYEV15', 'Ev ve yaşam kategorisinde geçerli', 'percent', '15', '2026-11-30', 0, 0, 760, 228); } catch(e) {}
       db.prepare("UPDATE stores SET coupon_count = (SELECT COUNT(*) FROM coupons WHERE store_id = stores.id) WHERE slug = 'trendyol'").run();
     }
@@ -236,8 +236,8 @@ function runMigrations(db) {
     const listingCount = db.prepare('SELECT COUNT(*) as c FROM listings').get();
     if (listingCount && listingCount.c === 0) {
       const insL = db.prepare('INSERT INTO listings (title, coupon_code, store_name, category, is_free, description, expires_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-      insL.run('Trendyol %20 İndirim Kodu Paylaşıyorum', 'TRENDYOL20', 'Trendyol', 'Moda & Giyim', 1, "Trendyol'da ilk alışverişlerde geçerli %20 indirim kodu. Denedim çalışıyor!", '2026-12-31', 'approved');
-      insL.run('Hepsiburada Elektronik 50 TL İndirim', 'HBTECH50', 'Hepsiburada', 'Elektronik', 1, '300 TL üzeri elektronik alışverişlerde 50 TL indirim. Kampanya süreli!', '2026-09-30', 'approved');
+      insL.run('Trendyol %20 İndirim Kodu Payılaşıyorum', 'TRENDYOL20', 'Trendyol', 'Moda & Giyim', 1, "Trendyol'da ilk alışverişlerde geçerli %20 indirim kodu. Denedim çalışıyor!", '2026-12-31', 'approved');
+      insL.run('Hepsiburada Elektronik 50 TL İndirim', 'HBTECH50', 'Hepsiburada', 'Elektronik', 1, '300 TL üzerim elektronik alışverişlerinde 50 TL indirim. Kampanya süreli!', '2026-09-30', 'approved');
       insL.run('Yemeksepeti İlk Sipariş %40 İndirim', 'YS40ILK', 'Yemeksepeti', 'Yemek & Restoran', 1, "Yemeksepeti'nde ilk siparişe özel %40 indirim. Hızlı yararlanın!", '2026-12-31', 'approved');
       insL.run('Nike Yaz Koleksiyonu %20 İndirim', 'NIKEYAZ20', 'Nike', 'Spor & Outdoor', 1, 'Nike yaz koleksiyonunda seçili ürünlerde %20 indirim. Spor ayakkabı dahil.', '2026-08-31', 'approved');
       insL.run('LC Waikiki Çocuk Giyimde %25 İndirim', 'LCWCOCUK25', 'LC Waikiki', 'Moda & Giyim', 1, 'Tüm çocuk giyim ürünlerinde %25 indirim. Okul alışverişi için ideal!', '2026-08-15', 'approved');
@@ -245,7 +245,6 @@ function runMigrations(db) {
     }
   } catch(e) {}
 
-  // Seed demo user and assign anonymous listings to them
   try {
     let demoUser = db.prepare("SELECT id FROM users WHERE email = 'demo@kuponluk.com'").get();
     if (!demoUser) {
@@ -273,49 +272,49 @@ function seedData(db) {
   if (catCount > 0) return;
 
   const categories = [
-    { name: 'Moda & Giyim', slug: 'moda-giyim', icon: '', color: '#e91e63' },
-    { name: 'Elektronik', slug: 'elektronik', icon: '', color: '#2196f3' },
-    { name: 'Yemek & Restoran', slug: 'yemek-restoran', icon: '', color: '#ff5722' },
-    { name: 'Seyahat', slug: 'seyahat', icon: '', color: '#00bcd4' },
-    { name: 'Kozmetik & Güzellik', slug: 'kozmetik-guzellik', icon: '', color: '#9c27b0' },
-    { name: 'Ev & Yaşam', slug: 'ev-yasam', icon: '', color: '#4caf50' },
-    { name: 'Spor & Outdoor', slug: 'spor-outdoor', icon: '', color: '#ff9800' },
-    { name: 'Kitap & Eğitim', slug: 'kitap-egitim', icon: '', color: '#795548' },
-    { name: 'Oyun & Eğlence', slug: 'oyun-eglence', icon: '', color: '#607d8b' },
-    { name: 'Market & Süpermarket', slug: 'market-supermarket', icon: '', color: '#f44336' },
-    { name: 'Sigorta & Finans', slug: 'sigorta-finans', icon: '', color: '#3f51b5' },
-    { name: 'Teknoloji & Yazılım', slug: 'teknoloji-yazilim', icon: '', color: '#009688' },
+    { name: 'Moda & Giyim', slug: 'moda-giyim', icon: '', color: '#FF6B00' },
+    { name: 'Elektronik', slug: 'elektronik', icon: '', color: '#FF6B00' },
+    { name: 'Yemek & Restoran', slug: 'yemek-restoran', icon: '', color: '#FF6B00' },
+    { name: 'Seyahat', slug: 'seyahat', icon: '', color: '#FF6B00' },
+    { name: 'Kozmetik & Güzellik', slug: 'kozmetik-guzellik', icon: '', color: '#FF6B00' },
+    { name: 'Ev & Yaşam', slug: 'ev-yasam', icon: '', color: '#FF6B00' },
+    { name: 'Spor & Outdoor', slug: 'spor-outdoor', icon: '', color: '#FF6B00' },
+    { name: 'Kitap & Eğitim', slug: 'kitap-egitim', icon: '', color: '#FF6B00' },
+    { name: 'Oyun & Eğlence', slug: 'oyun-eglence', icon: '', color: '#FF6B00' },
+    { name: 'Market & Süpermarket', slug: 'market-supermarket', icon: '', color: '#FF6B00' },
+    { name: 'Sigorta & Finans', slug: 'sigorta-finans', icon: '', color: '#FF6B00' },
+    { name: 'Teknoloji & Yazılım', slug: 'teknoloji-yazilim', icon: '', color: '#FF6B00' },
   ];
   const insertCat = db.prepare('INSERT INTO categories (name, slug, icon, color) VALUES (?, ?, ?, ?)');
   categories.forEach(c => insertCat.run(c.name, c.slug, c.icon, c.color));
 
   const stores = [
-    { name: 'Trendyol', slug: 'trendyol', desc: "Türkiye'nin en büyük online moda ve alışveriş platformu", logo: 'https://logo.clearbit.com/trendyol.com', url: 'https://trendyol.com', cat: 1, featured: 1 },
-    { name: 'Hepsiburada', slug: 'hepsiburada', desc: 'Elektronik, giyim ve daha fazlası için alışveriş sitesi', logo: 'https://logo.clearbit.com/hepsiburada.com', url: 'https://hepsiburada.com', cat: 2, featured: 1 },
-    { name: 'Zara', slug: 'zara', desc: 'Uluslararası moda markası', logo: 'https://logo.clearbit.com/zara.com', url: 'https://zara.com', cat: 1, featured: 1 },
-    { name: 'LC Waikiki', slug: 'lc-waikiki', desc: 'Uygun fiyatlı moda markası', logo: 'https://logo.clearbit.com/lcwaikiki.com', url: 'https://lcwaikiki.com', cat: 1, featured: 1 },
-    { name: 'Boyner', slug: 'boyner', desc: "Türkiye'nin köklü perakende markası", logo: 'https://logo.clearbit.com/boyner.com.tr', url: 'https://boyner.com.tr', cat: 1, featured: 1 },
-    { name: 'Koton', slug: 'koton', desc: 'Şik ve uygun fiyatlı giyim markası', logo: 'https://logo.clearbit.com/koton.com', url: 'https://koton.com', cat: 1, featured: 0 },
-    { name: 'Defacto', slug: 'defacto', desc: 'Günlük ve trend giyim markası', logo: 'https://logo.clearbit.com/defacto.com.tr', url: 'https://defacto.com.tr', cat: 1, featured: 1 },
-    { name: 'MediaMarkt', slug: 'mediamarkt', desc: 'Elektronik ve teknoloji ürünleri mağazası', logo: 'https://logo.clearbit.com/mediamarkt.com.tr', url: 'https://mediamarkt.com.tr', cat: 2, featured: 1 },
-    { name: 'Teknosa', slug: 'teknosa', desc: 'Elektronik ve teknoloji perakendecisi', logo: 'https://logo.clearbit.com/teknosa.com', url: 'https://teknosa.com', cat: 2, featured: 0 },
-    { name: 'Yemeksepeti', slug: 'yemeksepeti', desc: 'Online yemek sipariş platformu', logo: 'https://logo.clearbit.com/yemeksepeti.com', url: 'https://yemeksepeti.com', cat: 3, featured: 1 },
-    { name: 'Getir', slug: 'getir', desc: 'Dakikalar içinde teslimat platformu', logo: 'https://logo.clearbit.com/getir.com', url: 'https://getir.com', cat: 3, featured: 1 },
-    { name: 'Migros', slug: 'migros', desc: 'Online süpermarket alışverişi', logo: 'https://logo.clearbit.com/migros.com.tr', url: 'https://migros.com.tr', cat: 10, featured: 1 },
-    { name: 'Booking.com', slug: 'booking', desc: 'Dünya genelinde otel rezervasyon platformu', logo: 'https://logo.clearbit.com/booking.com', url: 'https://booking.com', cat: 4, featured: 1 },
-    { name: 'Nike', slug: 'nike', desc: 'Dünyaca ünlü spor markası', logo: 'https://logo.clearbit.com/nike.com', url: 'https://nike.com/tr', cat: 7, featured: 1 },
-    { name: 'Adidas', slug: 'adidas', desc: 'Küresel spor giyim ve ayakkabı markası', logo: 'https://logo.clearbit.com/adidas.com', url: 'https://adidas.com.tr', cat: 7, featured: 1 },
-    { name: 'Sephora', slug: 'sephora', desc: 'Kozmetik ve güzellik ürünleri markası', logo: 'https://logo.clearbit.com/sephora.com', url: 'https://sephora.com.tr', cat: 5, featured: 0 },
-    { name: 'Morhipo', slug: 'morhipo', desc: 'Outlet moda alışveriş sitesi', logo: 'https://logo.clearbit.com/morhipo.com', url: 'https://morhipo.com', cat: 1, featured: 0 },
-    { name: 'Amazon Türkiye', slug: 'amazon', desc: "Dünyanın en büyük e-ticaret platformu", logo: 'https://logo.clearbit.com/amazon.com.tr', url: 'https://amazon.com.tr', cat: 2, featured: 1 },
-    { name: 'N11', slug: 'n11', desc: "Türkiye'nin köklü online alışveriş platformu", logo: 'https://logo.clearbit.com/n11.com', url: 'https://n11.com', cat: 2, featured: 0 },
-    { name: 'Flo', slug: 'flo', desc: 'Ayakkabı ve aksesuar mağazası', logo: 'https://logo.clearbit.com/flo.com.tr', url: 'https://flo.com.tr', cat: 1, featured: 1 },
+    { name: 'Trendyol', slug: 'trendyol', desc: "Türkiye'nin en büyük online moda ve alışveriş platformu", logo: 'https://unavatar.io/trendyol.com', url: 'https://trendyol.com', cat: 1, featured: 1 },
+    { name: 'Hepsiburada', slug: 'hepsiburada', desc: 'Elektronik, giyim ve daha fazlası için alışveriş sitesi', logo: 'https://unavatar.io/hepsiburada.com', url: 'https://hepsiburada.com', cat: 2, featured: 1 },
+    { name: 'Zara', slug: 'zara', desc: 'Uluslararası moda markası', logo: 'https://unavatar.io/zara.com', url: 'https://zara.com', cat: 1, featured: 1 },
+    { name: 'LC Waikiki', slug: 'lc-waikiki', desc: 'Uygun fiyatlı moda markası', logo: 'https://unavatar.io/lcwaikiki.com', url: 'https://lcwaikiki.com', cat: 1, featured: 1 },
+    { name: 'Boyner', slug: 'boyner', desc: "Türkiye'nin köklü perakende markası", logo: 'https://unavatar.io/boyner.com.tr', url: 'https://boyner.com.tr', cat: 1, featured: 1 },
+    { name: 'Koton', slug: 'koton', desc: 'Şk ve uygun fiyatlı giyim markası', logo: 'https://unavatar.io/koton.com', url: 'https://koton.com', cat: 1, featured: 0 },
+    { name: 'Defacto', slug: 'defacto', desc: 'Günlük ve trend giyim markası', logo: 'https://unavatar.io/defacto.com.tr', url: 'https://defacto.com.tr', cat: 1, featured: 1 },
+    { name: 'MediaMarkt', slug: 'mediamarkt', desc: 'Elektronik ve teknoloji ürünleri mağazası', logo: 'https://unavatar.io/mediamarkt.com.tr', url: 'https://mediamarkt.com.tr', cat: 2, featured: 1 },
+    { name: 'Teknosa', slug: 'teknosa', desc: 'Elektronik ve teknoloji perakendecisi', logo: 'https://unavatar.io/teknosa.com', url: 'https://teknosa.com', cat: 2, featured: 0 },
+    { name: 'Yemeksepeti', slug: 'yemeksepeti', desc: 'Online yemek sipariş platformu', logo: 'https://unavatar.io/yemeksepeti.com', url: 'https://yemeksepeti.com', cat: 3, featured: 1 },
+    { name: 'Getir', slug: 'getir', desc: 'Dakikalar içinde teslimat platformu', logo: 'https://unavatar.io/getir.com', url: 'https://getir.com', cat: 3, featured: 1 },
+    { name: 'Migros', slug: 'migros', desc: 'Online süpermarket alışverişi', logo: 'https://unavatar.io/migros.com.tr', url: 'https://migros.com.tr', cat: 10, featured: 1 },
+    { name: 'Booking.com', slug: 'booking', desc: 'Dünya genelinde otel rezervasyon platformu', logo: 'https://unavatar.io/booking.com', url: 'https://booking.com', cat: 4, featured: 1 },
+    { name: 'Nike', slug: 'nike', desc: 'Dünyaca ünlü spor markası', logo: 'https://unavatar.io/nike.com', url: 'https://nike.com/tr', cat: 7, featured: 1 },
+    { name: 'Adidas', slug: 'adidas', desc: 'Küresel spor giyim ve ayakkabı markası', logo: 'https://unavatar.io/adidas.com', url: 'https://adidas.com.tr', cat: 7, featured: 1 },
+    { name: 'Sephora', slug: 'sephora', desc: 'Kozmetik ve güzellik ürünleri markası', logo: 'https://unavatar.io/sephora.com', url: 'https://sephora.com.tr', cat: 5, featured: 0 },
+    { name: 'Morhipo', slug: 'morhipo', desc: 'Outlet moda alışveriş sitesi', logo: 'https://unavatar.io/morhipo.com', url: 'https://morhipo.com', cat: 1, featured: 0 },
+    { name: 'Amazon Türkiye', slug: 'amazon', desc: "Dünyanın en büyük e-ticaret platformu", logo: 'https://unavatar.io/amazon.com.tr', url: 'https://amazon.com.tr', cat: 2, featured: 1 },
+    { name: 'N11', slug: 'n11', desc: "Türkiye'nin köklü online alışveriş platformu", logo: 'https://unavatar.io/n11.com', url: 'https://n11.com', cat: 2, featured: 0 },
+    { name: 'Flo', slug: 'flo', desc: 'Ayakkabı ve aksesuar mağazası', logo: 'https://unavatar.io/flo.com.tr', url: 'https://flo.com.tr', cat: 1, featured: 1 },
   ];
   const insertStore = db.prepare('INSERT INTO stores (name, slug, description, logo_url, website_url, category_id, is_featured) VALUES (?, ?, ?, ?, ?, ?, ?)');
   stores.forEach(s => insertStore.run(s.name, s.slug, s.desc, s.logo, s.url, s.cat, s.featured));
 
   const coupons = [
-    { store_id: 1, title: 'İlk Siparışte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparışinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
+    { store_id: 1, title: 'İlk Siparişte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparişinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 1, title: '150 TL ve Üzeri Alışverişte 30 TL İndirim', code: 'TY30INDIRIM', desc: '150 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-08-31', verified: 1, exclusive: 0 },
     { store_id: 1, title: 'Ücretsiz Kargo', code: 'TYKARGO', desc: 'Seçili ürünlerde ücretsiz kargo fırsatı', type: 'free_shipping', value: null, expiry: '2026-07-15', verified: 0, exclusive: 0 },
     { store_id: 2, title: 'Elektronik Ürünlerde %15 İndirim', code: 'HBTECH15', desc: 'Tüm elektronik kategorisinde geçerli', type: 'percent', value: '15', expiry: '2026-09-30', verified: 1, exclusive: 0 },
@@ -327,7 +326,7 @@ function seedData(db) {
     { store_id: 7, title: "Online'a Özel %20 İndirim", code: 'DFCONLINE20', desc: 'Sadece online alışverişlerde geçerli', type: 'percent', value: '20', expiry: '2026-10-31', verified: 1, exclusive: 1 },
     { store_id: 8, title: 'Laptop ve Bilgisayarlarda %12 İndirim', code: 'MMLAPTOP12', desc: 'Seçili laptop modellerinde geçerli', type: 'percent', value: '12', expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 8, title: '500 TL Üzeri 75 TL İndirim', code: 'MM500AL75', desc: '500 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '75', expiry: '2026-08-31', verified: 0, exclusive: 0 },
-    { store_id: 10, title: 'İlk Siparışe %40 İndirim', code: 'YS40ILK', desc: 'Yeni kullanıcılara özel ilk sipariş indirimi', type: 'percent', value: '40', expiry: '2026-12-31', verified: 1, exclusive: 1 },
+    { store_id: 10, title: 'İlk Siparişe %40 İndirim', code: 'YS40ILK', desc: 'Yeni kullanıcılara özel ilk sipariş indirimi', type: 'percent', value: '40', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 10, title: 'Ücretsiz Teslimat', code: 'YSKARGOBED', desc: 'Seçili restoranlardan ücretsiz teslimat', type: 'free_shipping', value: null, expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 11, title: 'Market Alışverişinde 30 TL İndirim', code: 'GETIR30', desc: '150 TL üzeri marketten alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-09-30', verified: 1, exclusive: 0 },
     { store_id: 12, title: 'Online Alışverişte Ücretsiz Kargo', code: 'MIGROSKARGO', desc: '200 TL üzeri alışverişlerde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },

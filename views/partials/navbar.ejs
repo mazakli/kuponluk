@@ -16,20 +16,20 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
           <% if (typeof unreadMessages !== 'undefined' && unreadMessages > 0) { %><span class="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-bold flex items-center justify-center leading-none"><%= unreadMessages > 9 ? '9+' : unreadMessages %></span><% } %>
         </a>
-        <a href="/cikis" class="hover:text-orange-400 transition">Çıkış</a>
+        <a href="/cikis" class="hover:text-orange-400 transition">&#xC7;&#x131;k&#x131;&#x15F;</a>
       <% } else { %>
-        <a href="/giris" class="hover:text-orange-400 transition">Giriş Yap</a>
+        <a href="/giris" class="hover:text-orange-400 transition">Giri&#x15F; Yap</a>
         <span class="text-gray-500">|</span>
-        <a href="/kayit" class="hover:text-orange-400 transition font-semibold">Üye Ol</a>
+        <a href="/kayit" class="hover:text-orange-400 transition font-semibold">&#xDC;ye Ol</a>
       <% } %>
     </div>
   </div>
 </div>
 
-<!-- Main Navbar (not sticky) -->
+<!-- Main Navbar -->
 <nav class="bg-white shadow-md" id="mainNav">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-10">
+    <div class="flex items-center gap-4 h-16">
 
       <!-- Logo -->
       <a href="/" class="flex items-center gap-2 flex-shrink-0">
@@ -51,11 +51,12 @@
       </a>
 
       <!-- Desktop Search -->
-      <form action="/arama" method="GET" class="hidden md:flex flex-1 max-w-xl mx-6">
+      <form action="/arama" method="GET" class="hidden md:flex flex-1 max-w-xl">
         <div class="relative w-full">
-          <input type="text" name="q" placeholder="Kupon kodu, mağaza veya indirim ara..."
+          <input type="text" name="q" id="navSearchInput"
             value="<%= typeof q !== 'undefined' ? q : '' %>"
-            class="w-full border-2 border-gray-200 rounded-xl pl-4 pr-12 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 transition">
+            class="w-full border-2 border-gray-200 rounded-xl pl-4 pr-12 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
+            autocomplete="off">
           <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
@@ -63,7 +64,7 @@
       </form>
 
       <!-- Right actions -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 ml-auto">
         <button id="mobileSearchBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </button>
@@ -73,10 +74,7 @@
         </a>
         <button onclick="toggleRightSidebar()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold border-2 border-gray-200 hover:bg-gray-50 transition text-gray-700">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span class="hidden sm:inline">Menü</span>
-        </button>
-        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <span class="hidden sm:inline">Men&#xFC;</span>
         </button>
       </div>
     </div>
@@ -89,7 +87,7 @@
       </a>
       <a href="/kupon/indirim" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M7 7a1 1 0 110-2 1 1 0 010 2zm10 10a1 1 0 110-2 1 1 0 010 2z"/></svg>
-        İndirim
+        &#x130;ndirim
       </a>
       <a href="/kupon/hediye" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
@@ -97,15 +95,15 @@
       </a>
       <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0H3m14 0h2"/></svg>
-        Ücretsiz Kargo
+        &#xDC;cretsiz Kargo
       </a>
       <a href="/kupon/banka-kampanyalari" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        Banka Kampanyaları
+        Banka Kampanyalar&#x131;
       </a>
       <a href="/ilanlar" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition font-bold hover:text-orange-600" style="color:#FF6B00;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        İlanlar
+        &#x130;lanlar
       </a>
     </div>
   </div>
@@ -113,48 +111,30 @@
   <!-- Mobile search bar -->
   <div id="mobileSearchBar" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-2">
     <form action="/arama" method="GET">
-      <input type="text" name="q" placeholder="Kupon veya mağaza ara..." class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+      <input type="text" name="q" placeholder="Kupon veya ma&#x11F;aza ara..." class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
     </form>
   </div>
 
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-3">
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Kupon Türleri</p>
+    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Kupon T&#xFC;rleri</p>
     <div class="grid grid-cols-2 gap-2 text-sm mb-3">
-      <a href="/kupon/kupon-kodu" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">
-        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-        Kupon Kodu
-      </a>
-      <a href="/kupon/indirim" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">
-        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M7 7a1 1 0 110-2 1 1 0 010 2zm10 10a1 1 0 110-2 1 1 0 010 2z"/></svg>
-        İndirim
-      </a>
-      <a href="/kupon/hediye" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">
-        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
-        Hediye
-      </a>
-      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">
-        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0H3m14 0h2"/></svg>
-        Ücretsiz Kargo
-      </a>
-      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">
-        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        Banka Kamp.
-      </a>
-      <a href="/ilanlar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-bold border-2 border-orange-200" style="color:#FF6B00;">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        İlanlar
-      </a>
+      <a href="/kupon/kupon-kodu" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Kupon Kodu</a>
+      <a href="/kupon/indirim" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">&#x130;ndirim</a>
+      <a href="/kupon/hediye" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Hediye</a>
+      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">&#xDC;cr. Kargo</a>
+      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Banka Kamp.</a>
+      <a href="/ilanlar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-bold border-2 border-orange-200" style="color:#FF6B00;">&#x130;lanlar</a>
     </div>
     <div class="border-t border-gray-100 pt-3 grid grid-cols-2 gap-2 text-sm">
       <a href="/kategoriler" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700">Kategoriler</a>
-      <a href="/magazalar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700">Mağazalar</a>
+      <a href="/magazalar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700">Ma&#x11F;azalar</a>
       <a href="/kupon-gonder" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-white font-semibold col-span-2 justify-center" style="background:#FF6B00">Kupon Gönder</a>
     </div>
   </div>
 </nav>
 
-<!-- Announcement Bar (sticky - follows on scroll) -->
+<!-- Announcement Bar -->
 <div class="sticky top-0 z-50 border-b border-orange-100 overflow-hidden flex items-center h-9" style="background:#fff8f0;">
   <div class="flex items-center gap-2 px-3 flex-shrink-0">
     <span class="w-2 h-2 rounded-full flex-shrink-0 animate-pulse" style="background:#FF6B00;"></span>
@@ -162,7 +142,7 @@
   </div>
   <div class="flex-1 overflow-hidden relative">
     <div class="ticker-inner text-xs text-gray-700 font-medium">
-      Trendyol'da yeni sezon indirimleri başladı! En güncel Trendyol kupon kodları burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp; Trendyol'da yeni sezon indirimleri başladı! En güncel Trendyol kupon kodları burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+      Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! En güncel Trendyol kupon kodlar&#x131; burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp; Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! En güncel Trendyol kupon kodlar&#x131; burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     </div>
   </div>
   <a href="/magaza/trendyol" class="flex-shrink-0 mx-3 text-xs font-bold text-white px-3 py-1 rounded-lg hover:opacity-90 transition whitespace-nowrap" style="background:#FF6B00;">Git &rarr;</a>
@@ -171,60 +151,46 @@
 <!-- Right Sidebar -->
 <div id="rightSidebar" class="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-[9999] transform translate-x-full transition-transform duration-300" style="border-left:2px solid #FF6B00;">
   <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100" style="background:#1a1a2e;">
-    <span class="font-bold text-white text-lg">Menü</span>
+    <span class="font-bold text-white text-lg">Men&#xFC;</span>
     <button onclick="toggleRightSidebar()" class="text-gray-400 hover:text-white transition p-1">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
   </div>
   <div class="overflow-y-auto pb-32" style="height:calc(100% - 4rem);">
     <div class="px-4 py-4">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Kategoriler &amp; Mağazalar</p>
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Kategoriler &amp; Ma&#x11F;azalar</p>
       <a href="/kategoriler" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
         <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
         Kategoriler
       </a>
       <a href="/magazalar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
         <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        Mağazalar
+        Ma&#x11F;azalar
       </a>
-      <a href="/kupon/son-eklenenler" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
-        <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Son Eklenen Kuponlar
-      </a>
-      <a href="/kupon/populer" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
-        <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
-        Popüler Kuponlar
-      </a>
-      <a href="/ilanlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold transition mb-0.5" style="color:#FF6B00;">
+      <a href="/ilanlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold transition mb-4" style="color:#FF6B00;">
         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        İlanlar
+        &#x130;lanlar
       </a>
       <% if (currentUser) { %>
       <a href="/mesajlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-4">
         <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-        Mesajlarım
+        Mesajlar&#x131;m
         <% if (typeof unreadMessages !== 'undefined' && unreadMessages > 0) { %><span class="ml-auto w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center"><%= unreadMessages > 9 ? '9+' : unreadMessages %></span><% } %>
       </a>
-      <% } else { %>
-      <div class="mb-4"></div>
       <% } %>
       <div class="border-t border-gray-100 pt-4">
-        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Diğer</p>
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Di&#x11F;er</p>
         <a href="/telegram" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
           <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-          Telegram Kanalı
+          Telegram Kanal&#x131;
         </a>
         <a href="/kupon-gonder" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
           <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
           Kupon Gönder
         </a>
-        <a href="/hakkimizda" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
-          <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Hakkımızda
-        </a>
         <a href="/iletisim" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition">
           <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          İletişim
+          &#x130;leti&#x15F;im
         </a>
       </div>
     </div>
@@ -232,10 +198,10 @@
   <div class="absolute bottom-0 left-0 right-0 px-4 py-4 bg-white border-t border-gray-100">
     <% if (currentUser) { %>
       <a href="/profil" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm mb-2 border-2 border-gray-200 hover:bg-gray-50 transition text-gray-700"><%= currentUser.username %> &mdash; Profil</a>
-      <a href="/cikis" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#1a1a2e">Çıkış Yap</a>
+      <a href="/cikis" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#1a1a2e">&#xC7;&#x131;k&#x131;&#x15F; Yap</a>
     <% } else { %>
-      <a href="/giris" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm mb-2 border-2 transition hover:bg-orange-50" style="border-color:#FF6B00;color:#FF6B00;">Giriş Yap</a>
-      <a href="/kayit" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#FF6B00">Üye Ol</a>
+      <a href="/giris" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm mb-2 border-2 transition hover:bg-orange-50" style="border-color:#FF6B00;color:#FF6B00;">Giri&#x15F; Yap</a>
+      <a href="/kayit" class="block w-full text-center px-4 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#FF6B00">&#xDC;ye Ol</a>
     <% } %>
   </div>
 </div>
@@ -252,4 +218,39 @@ var mobileMenuBtn = document.getElementById('mobileMenuBtn');
 if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', function() { var m = document.getElementById('mobileMenu'); if (m) m.classList.toggle('hidden'); });
 var mobileSearchBtn = document.getElementById('mobileSearchBtn');
 if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', function() { var s = document.getElementById('mobileSearchBar'); if (s) { s.classList.toggle('hidden'); var inp = s.querySelector('input'); if (inp) inp.focus(); } });
+
+// Animated search placeholder
+(function() {
+  var inp = document.getElementById('navSearchInput');
+  if (!inp || inp.value) return;
+  var suggestions = [
+    'Trendyol indirim kodu ara…',
+    'Amazon kupon kodu…',
+    'Hepsiburada fırsatı ara…',
+    'Nike %20 indirim…',
+    'Yemeksepeti kupon…',
+    'Getir promosyon kodu…'
+  ];
+  var si = 0, ci = 0, deleting = false, timer;
+  function tick() {
+    var s = suggestions[si];
+    if (!deleting && ci <= s.length) {
+      inp.placeholder = s.substring(0, ci++);
+      timer = setTimeout(tick, 70);
+    } else if (!deleting && ci > s.length) {
+      deleting = true;
+      timer = setTimeout(tick, 1800);
+    } else if (deleting && ci > 0) {
+      inp.placeholder = s.substring(0, ci--);
+      timer = setTimeout(tick, 35);
+    } else {
+      deleting = false;
+      si = (si + 1) % suggestions.length;
+      timer = setTimeout(tick, 300);
+    }
+  }
+  tick();
+  inp.addEventListener('focus', function() { clearTimeout(timer); inp.placeholder = 'Kupon kodu, mağaza veya indirim ara…'; });
+  inp.addEventListener('blur', function() { if (!inp.value) { ci = 0; deleting = false; tick(); } });
+})();
 </script>
