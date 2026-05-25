@@ -1,0 +1,416 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="max-w-7xl mx-auto px-4 pt-4 pb-0">
+  <nav class="text-sm text-gray-500 flex items-center gap-1.5">
+    <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-gray-800 font-medium">Kupon Kodu Olu&#x15F;turucu</span>
+  </nav>
+</div>
+
+<!-- Hero -->
+<div class="py-10 px-4 mt-4" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-4" style="background:rgba(255,107,0,0.2);color:#FF6B00;">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+      &#xDC;cretsiz Ara&#x00E7;
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Kupon Kodu Olu&#x15F;turucu</h1>
+    <p class="text-gray-300 text-lg max-w-2xl mx-auto">&#x130;&#x15F;letmeniz i&#x00E7;in saniyeler i&#x00E7;inde benzersiz kupon kodlar&#x131; olu&#x15F;turun. Toplu olu&#x15F;turma, CSV i&#x15F;ndirme ve canl&#x131; &#xF6;nizleme deste&#x11F;i ile.</p>
+  </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Settings (left 2 cols) -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- Card 1: Kod Yap&#x131;s&#x131; -->
+      <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6">
+        <h2 class="font-bold text-gray-800 text-base mb-5 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:#FF6B00;">1</span>
+          Kod Yap&#x131;s&#x131;
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">&#xD6;n Ek (Prefix)</label>
+            <input type="text" id="prefix" maxlength="10" placeholder="&#xD6;rn: YENI"
+              class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono uppercase focus:outline-none focus:border-orange-300 transition"
+              oninput="this.value=this.value.toUpperCase();updatePreview()">
+            <p class="text-xs text-gray-400 mt-1">Maks. 10 karakter</p>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Son Ek (Suffix)</label>
+            <input type="text" id="suffix" maxlength="10" placeholder="&#xD6;rn: 2026"
+              class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono uppercase focus:outline-none focus:border-orange-300 transition"
+              oninput="this.value=this.value.toUpperCase();updatePreview()">
+            <p class="text-xs text-gray-400 mt-1">Maks. 10 karakter</p>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Rastgele B&#xF6;l&#xFC;m Uzunlu&#x11F;u: <span id="randLengthVal" class="font-bold" style="color:#FF6B00;">8</span> karakter</label>
+            <input type="range" id="randLength" min="4" max="20" value="8"
+              class="w-full accent-orange-500" oninput="updatePreview()">
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>4</span><span>20</span></div>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-3">Karakter Seti</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <label class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-orange-300 transition">
+                <input type="checkbox" id="chkUpper" checked class="accent-orange-500" onchange="updatePreview()">
+                <div><div class="text-sm font-semibold text-gray-700">B&#xFC;y&#xFC;k Harf</div><div class="text-xs text-gray-400">A-Z</div></div>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-orange-300 transition">
+                <input type="checkbox" id="chkDigits" checked class="accent-orange-500" onchange="updatePreview()">
+                <div><div class="text-sm font-semibold text-gray-700">Rakamlar</div><div class="text-xs text-gray-400">0-9</div></div>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-orange-300 transition">
+                <input type="checkbox" id="chkLower" class="accent-orange-500" onchange="updatePreview()">
+                <div><div class="text-sm font-semibold text-gray-700">K&#xFC;&#x00E7;&#xFC;k Harf</div><div class="text-xs text-gray-400">a-z</div></div>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-orange-300 transition">
+                <input type="checkbox" id="chkSpecial" class="accent-orange-500" onchange="updatePreview()">
+                <div><div class="text-sm font-semibold text-gray-700">&#xD6;zel</div><div class="text-xs text-gray-400">-_#@</div></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Kampanya Bilgileri -->
+      <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6">
+        <h2 class="font-bold text-gray-800 text-base mb-5 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:#FF6B00;">2</span>
+          Kampanya Bilgileri
+        </h2>
+
+        <label class="block text-sm font-semibold text-gray-700 mb-3">Kupon Tipi</label>
+        <input type="hidden" id="selectedType" value="promosyon">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5" id="typePicker">
+          <div class="type-card cursor-pointer rounded-xl border-2 p-4 text-center transition" data-type="promosyon" onclick="selectCouponType('promosyon',this)" style="border-color:#FF6B00;background:#fff8f2;">
+            <div class="text-2xl mb-1">&#x1F3F7;&#xFE0F;</div>
+            <div class="type-label text-sm font-bold" style="color:#FF6B00;">Promosyon</div>
+            <div class="text-xs text-gray-400 mt-1">Genel indirim</div>
+          </div>
+          <div class="type-card cursor-pointer rounded-xl border-2 border-gray-200 p-4 text-center transition" data-type="hediye" onclick="selectCouponType('hediye',this)">
+            <div class="text-2xl mb-1">&#x1F381;</div>
+            <div class="type-label text-sm font-bold text-gray-700">Hediye &#x00C7;eki</div>
+            <div class="text-xs text-gray-400 mt-1">Hediye kartlar&#x131;</div>
+          </div>
+          <div class="type-card cursor-pointer rounded-xl border-2 border-gray-200 p-4 text-center transition" data-type="sadakat" onclick="selectCouponType('sadakat',this)">
+            <div class="text-2xl mb-1">&#x2B50;</div>
+            <div class="type-label text-sm font-bold text-gray-700">Sadakat</div>
+            <div class="text-xs text-gray-400 mt-1">Sadik m&#xFC;&#x15F;teri</div>
+          </div>
+          <div class="type-card cursor-pointer rounded-xl border-2 border-gray-200 p-4 text-center transition" data-type="tavsiye" onclick="selectCouponType('tavsiye',this)">
+            <div class="text-2xl mb-1">&#x1F4E3;</div>
+            <div class="type-label text-sm font-bold text-gray-700">Tavsiye</div>
+            <div class="text-xs text-gray-400 mt-1">Referans kodu</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">&#x130;ndirim T&#xFC;r&#xFC;</label>
+            <select id="discountType" onchange="toggleDiscountValue()" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-300 transition bg-white">
+              <option value="percent">Y&#xFC;zde (%)</option>
+              <option value="fixed">Sabit Tutar (TL)</option>
+              <option value="free_shipping">&#xDC;cretsiz Kargo</option>
+              <option value="gift">Bedava &#xDC;r&#xFC;n</option>
+            </select>
+          </div>
+          <div id="discountValueWrapper">
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">&#x130;ndirim De&#x11F;eri</label>
+            <div class="relative">
+              <input type="number" id="discountValue" min="0" max="100" placeholder="&#xD6;rn: 20"
+                class="w-full border-2 border-gray-200 rounded-xl pl-4 pr-10 py-2.5 text-sm focus:outline-none focus:border-orange-300 transition">
+              <span id="discountUnit" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-bold">%</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Min. Sepet Tutar&#x131; (TL)</label>
+            <input type="number" id="minCart" min="0" placeholder="&#xD6;rn: 150"
+              class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-300 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ge&#x00E7;erlilik Biti&#x15F; Tarihi</label>
+            <input type="date" id="expiryDate"
+              class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-300 transition">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Toplu Olu&#x15F;turma -->
+      <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6">
+        <h2 class="font-bold text-gray-800 text-base mb-5 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:#FF6B00;">3</span>
+          Toplu Olu&#x15F;turma
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Olu&#x15F;turulacak Adet <span class="text-gray-400 font-normal">(1-500)</span></label>
+            <input type="number" id="quantity" min="1" max="500" value="1" oninput="updateQuantityHint()"
+              class="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-300 transition">
+            <p id="quantityHint" class="text-xs text-gray-400 mt-1">1 adet kupon kodu olu&#x15F;turulacak</p>
+          </div>
+          <div class="flex flex-col justify-center gap-3">
+            <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border-2 border-gray-200 hover:border-orange-300 transition">
+              <input type="checkbox" id="chkUnique" checked class="accent-orange-500">
+              <div>
+                <div class="text-sm font-semibold text-gray-700">Benzersiz Kodlar</div>
+                <div class="text-xs text-gray-400">Her kod tekrars&#x131;z olsun</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Preview + Generate (sticky) -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6 sticky top-16">
+        <h2 class="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Canl&#x131; &#xD6;nizleme
+        </h2>
+
+        <div class="bg-orange-50 border-2 border-dashed border-orange-300 rounded-xl p-5 text-center mb-4">
+          <p class="text-xs text-gray-500 mb-2">&#xD6;rnek Kod</p>
+          <span id="codePreview" class="text-xl font-extrabold tracking-widest block" style="color:#FF6B00;">XXXX-YYYY</span>
+        </div>
+
+        <div id="previewDetails" class="text-xs text-gray-500 bg-gray-50 rounded-xl p-3 mb-5 leading-relaxed">Ayarlar&#x131; de&#x11F;i&#x15F;tirerek &#xF6;nizlemeyi g&#xFC;ncelleyin</div>
+
+        <button onclick="generateAndShow()"
+          class="w-full py-4 rounded-xl text-white font-extrabold text-base transition hover:opacity-90 active:scale-95 flex items-center justify-center gap-2"
+          style="background:#FF6B00;">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Kupon Kodu Olu&#x15F;tur
+        </button>
+
+        <div id="actionBtns" class="hidden mt-3 grid grid-cols-2 gap-2">
+          <button onclick="copyAll()" class="py-2.5 rounded-xl border-2 border-orange-300 text-orange-600 font-semibold text-sm hover:bg-orange-50 transition">T&#xFC;m&#xFC;n&#xFC; Kopyala</button>
+          <button onclick="exportCSV()" class="py-2.5 rounded-xl border-2 border-gray-200 text-gray-600 font-semibold text-sm hover:bg-gray-50 transition">CSV &#x130;ndir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div id="resultsSection" class="hidden mt-8">
+    <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-bold text-gray-800 text-lg">Olu&#x15F;turulan Kupon Kodlar&#x131;</h2>
+        <span id="countBadge" class="text-xs font-bold px-3 py-1 rounded-full text-white" style="background:#FF6B00;">0 kod</span>
+      </div>
+      <textarea id="codesOutput" class="w-full h-48 font-mono text-sm border-2 border-gray-200 rounded-xl p-4 focus:outline-none focus:border-orange-300 resize-y" readonly placeholder="Kodlar burada g&#xF6;r&#xFC;nece&#x11F;k..."></textarea>
+      <p class="text-xs text-gray-400 mt-2">Her sat&#x131;rda bir kod bulunmaktad&#x131;r. Kopyalayabilir veya CSV olarak indirebilirsiniz.</p>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <section class="mt-14">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-extrabold text-gray-900 mb-2">Nas&#x131;l &#x00C7;al&#x131;&#x15F;&#x131;r?</h2>
+      <p class="text-gray-500">Kupon kodunuzu olu&#x15F;turmak i&#x00E7;in sadece birka&#x00E7; ad&#x131;m</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">1</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Kod Yap&#x131;s&#x131;n&#x131; Belirleyin</h3>
+        <p class="text-xs text-gray-500">&#xD6;n ek, son ek ve rastgele b&#xF6;l&#xFC;m uzunlu&#x11F;unu ayarlay&#x131;n</p>
+      </div>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">2</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Karakter Setini Se&#x00E7;in</h3>
+        <p class="text-xs text-gray-500">B&#xFC;y&#xFC;k harf, rakam, k&#xFC;&#x00E7;&#xFC;k harf veya &#xF6;zel karakter kombinasyonu</p>
+      </div>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">3</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Kampanya Bilgilerini Girin</h3>
+        <p class="text-xs text-gray-500">&#x130;ndirim t&#xFC;r&#xFC;, de&#x11F;eri ve ge&#x00E7;erlilik tarihini belirleyin</p>
+      </div>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">4</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Adet Se&#x00E7;in</h3>
+        <p class="text-xs text-gray-500">1 ile 500 arasında benzersiz kupon kodu olu&#x15F;turun</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">5</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Olu&#x15F;tur Butonuna T&#x131;klay&#x131;n</h3>
+        <p class="text-xs text-gray-500">Saniyeler i&#x00E7;inde t&#xFC;m kodlar haz&#x131;rlan&#x131;r</p>
+      </div>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">6</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Kopyalay&#x131;n veya CSV &#x130;ndirin</h3>
+        <p class="text-xs text-gray-500">T&#xFC;m kodlar&#x131; panoya kopyalay&#x131;n ya da CSV dosyas&#x131; olarak kaydedin</p>
+      </div>
+      <div class="bg-white rounded-2xl border-2 border-gray-100 p-5 text-center">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-white mx-auto mb-3" style="background:#FF6B00;">7</div>
+        <h3 class="font-bold text-gray-800 text-sm mb-1">Sisteminize Aktar&#x131;n</h3>
+        <p class="text-xs text-gray-500">E-ticaret panelinize, m&#xFC;&#x15F;terilerinize veya pazarlama ara&#x00E7;lar&#x131;n&#x131;za ekleyin</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content area (editable) -->
+  <section class="mt-14 bg-white rounded-2xl border-2 border-dashed border-gray-200 p-8">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-bold px-2 py-1 rounded-lg bg-yellow-100 text-yellow-700 flex-shrink-0">D&#xDC;ZENLENEB&#x130;L&#x130;R</span>
+      <div>
+        <h2 class="text-xl font-extrabold text-gray-900 mb-2">Kupon Kodu Olu&#x15F;turucu Nedir?</h2>
+        <p class="text-gray-600 text-sm leading-relaxed mb-3">Kuponluk.com'un &#xFC;cretsiz kupon kodu olu&#x15F;turucusu, e-ticaret i&#x15F;letmelerinin ve pazarlamac&#x131;lar&#x131;n saniyeler i&#x00E7;inde benzersiz, profesyonel kupon kodlar&#x131; olu&#x15F;turmas&#x131;n&#x131; sa&#x11F;lar.</p>
+        <p class="text-gray-600 text-sm leading-relaxed mb-3">&#x130;ster tek bir promosyon kodu ister 500 adetlik toplu kampanya kodu olu&#x15F;turun; t&#xFC;m kodlar&#x131;n&#x131;z&#x131; CSV format&#x131;nda indirip do&#x11F;rudan e-ticaret platformunuza aktarabilirsiniz.</p>
+        <p class="text-gray-600 text-sm leading-relaxed"><strong>&#xD6;zellikler:</strong> Toplu olu&#x15F;turma (1-500 adet), &#xF6;zel &#xF6;n ek/son ek, esnek karakter seti, kampanya t&#xFC;r&#xFC; se&#x00E7;imi, CSV d&#x131;&#x15F;a aktarma, canl&#x131; &#xF6;nizleme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="mt-10 mb-12">
+    <h2 class="text-2xl font-extrabold text-gray-900 mb-6 text-center">S&#x131;k&#x00E7;a Sorulan Sorular</h2>
+    <div class="space-y-3 max-w-3xl mx-auto">
+      <details class="bg-white rounded-xl border-2 border-gray-100 group">
+        <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none">
+          <span class="font-semibold text-gray-800 text-sm">Olu&#x15F;turulan kodlar ger&#x00E7;ekten benzersiz mi?</span>
+          <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">Evet. &#x22;Benzersiz Kodlar&#x22; se&#x00E7;ene&#x11F;i aktifken ara&#x00E7;, olu&#x15F;turulan her kodu ayr&#x131; bir Set veri yap&#x131;s&#x131;nda takip eder ve ayn&#x131; kodu tekrar eklemez. Ancak &#x00E7;ok k&#x131;sa uzunluk ve dar karakter seti kombinasyonunda teorik benzersizlik s&#x131;n&#x131;r&#x131;na ula&#x15F;&#x131;labilir.</div>
+      </details>
+      <details class="bg-white rounded-xl border-2 border-gray-100 group">
+        <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none">
+          <span class="font-semibold text-gray-800 text-sm">Kodlar sunucuya kaydediliyor mu?</span>
+          <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">Hay&#x131;r. T&#xFC;m i&#x15F;lemler tamamen taray&#x131;c&#x131;n&#x131;zda ger&#x00E7;ekle&#x15F;ir. Hi&#x00E7;bir kod sunucuya g&#xF6;nderilmez veya kaydedilmez. Verileriniz tamamen gizlidir.</div>
+      </details>
+      <details class="bg-white rounded-xl border-2 border-gray-100 group">
+        <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none">
+          <span class="font-semibold text-gray-800 text-sm">Hangi e-ticaret platformlar&#x131;yla uyumlu?</span>
+          <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">CSV format&#x131;nda indirdi&#x11F;iniz kodlar&#x131; Trendyol Sat&#x131;c&#x131; Paneli, Shopify, WooCommerce, Ikas, T-Soft ve di&#x11F;er t&#xFC;m e-ticaret platformlar&#x131;na aktarabilirsiniz. Platform&#x131;n&#x131;z&#x131;n &#x22;Toplu Kupon Y&#xFC;kleme&#x22; &#xF6;zellikini kullan&#x131;n.</div>
+      </details>
+      <details class="bg-white rounded-xl border-2 border-gray-100 group">
+        <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none">
+          <span class="font-semibold text-gray-800 text-sm">Maksimum ka&#x00E7; kod olu&#x15F;turulabilir?</span>
+          <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">Tek seferinde 500 adede kadar kod olu&#x15F;turabilirsiniz. Daha fazlas&#x131;na ihtiya&#x00E7; duyulursa ayn&#x131; ayarlarla birden fazla olu&#x15F;turma yapabilirsiniz.</div>
+      </details>
+      <details class="bg-white rounded-xl border-2 border-gray-100 group">
+        <summary class="flex items-center justify-between px-5 py-4 cursor-pointer list-none">
+          <span class="font-semibold text-gray-800 text-sm">Kupon kodlar&#x131;m&#x131; Kuponluk.com'da yay&#x131;nlayabilir miyim?</span>
+          <svg class="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">Evet! Olu&#x15F;turdu&#x11F;unuz kodlar&#x131; <a href="/kupon-gonder" class="font-semibold hover:underline" style="color:#FF6B00;">Kupon G&#xF6;nder</a> sayfas&#x131;ndan bize iletebilir veya <a href="/ilanlar/olustur" class="font-semibold hover:underline" style="color:#FF6B00;">&#x130;lan Ver</a> sayfas&#x131;ndan toplulukla payla&#x15F;abilirsiniz.</div>
+      </details>
+    </div>
+  </section>
+</div>
+
+<script>
+function getCharset(){
+  var c='';
+  if(document.getElementById('chkUpper').checked)c+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if(document.getElementById('chkDigits').checked)c+='0123456789';
+  if(document.getElementById('chkLower').checked)c+='abcdefghijklmnopqrstuvwxyz';
+  if(document.getElementById('chkSpecial').checked)c+='-_#@$';
+  return c||'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+}
+function makeCode(prefix,suffix,len,charset){
+  var r=prefix;
+  for(var i=0;i<len;i++)r+=charset[Math.floor(Math.random()*charset.length)];
+  return r+suffix;
+}
+function updatePreview(){
+  var prefix=(document.getElementById('prefix').value||'').toUpperCase();
+  var suffix=(document.getElementById('suffix').value||'').toUpperCase();
+  var len=parseInt(document.getElementById('randLength').value)||8;
+  document.getElementById('randLengthVal').textContent=len;
+  var charset=getCharset();
+  var sample=makeCode(prefix,suffix,len,charset);
+  document.getElementById('codePreview').textContent=sample;
+  var info='Toplam uzunluk: '+(prefix.length+len+suffix.length)+' karakter';
+  if(prefix)info+=' | Ön ek: '+prefix;
+  if(suffix)info+=' | Son ek: '+suffix;
+  document.getElementById('previewDetails').textContent=info;
+}
+function selectCouponType(type,el){
+  document.querySelectorAll('.type-card').forEach(function(c){
+    c.style.borderColor='#e5e7eb';c.style.background='#fff';
+    c.querySelector('.type-label').style.color='#374151';
+  });
+  el.style.borderColor='#FF6B00';el.style.background='#fff8f2';
+  el.querySelector('.type-label').style.color='#FF6B00';
+  document.getElementById('selectedType').value=type;
+}
+function toggleDiscountValue(){
+  var dt=document.getElementById('discountType').value;
+  var dw=document.getElementById('discountValueWrapper');
+  var du=document.getElementById('discountUnit');
+  if(dt==='free_shipping'||dt==='gift'){dw.style.opacity='0.4';document.getElementById('discountValue').disabled=true;}
+  else{dw.style.opacity='1';document.getElementById('discountValue').disabled=false;}
+  if(dt==='percent')du.textContent='%';
+  else if(dt==='fixed')du.textContent='TL';
+  else du.textContent='';
+}
+function updateQuantityHint(){
+  var n=parseInt(document.getElementById('quantity').value)||1;
+  document.getElementById('quantityHint').textContent=n+' adet kupon kodu oluşturulacak';
+}
+function generateAndShow(){
+  var prefix=(document.getElementById('prefix').value||'').toUpperCase();
+  var suffix=(document.getElementById('suffix').value||'').toUpperCase();
+  var len=parseInt(document.getElementById('randLength').value)||8;
+  var count=Math.min(parseInt(document.getElementById('quantity').value)||1,500);
+  var unique=document.getElementById('chkUnique').checked;
+  var charset=getCharset();
+  var codes=[];
+  var seen={};
+  var attempts=0;var maxA=count*20;
+  while(codes.length<count&&attempts<maxA){
+    var code=makeCode(prefix,suffix,len,charset);
+    if(!unique||!seen[code]){codes.push(code);seen[code]=true;}
+    attempts++;
+  }
+  document.getElementById('codesOutput').value=codes.join('\n');
+  document.getElementById('countBadge').textContent=codes.length+' kod oluşturuldu';
+  document.getElementById('resultsSection').classList.remove('hidden');
+  document.getElementById('actionBtns').classList.remove('hidden');
+  setTimeout(function(){document.getElementById('resultsSection').scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+function copyAll(){
+  var ta=document.getElementById('codesOutput');
+  ta.select();
+  document.execCommand('copy');
+  var btn=event.currentTarget;
+  var orig=btn.textContent;
+  btn.textContent='Kopyalandı!';
+  btn.style.background='#dcfce7';
+  setTimeout(function(){btn.textContent=orig;btn.style.background='';},2000);
+}
+function exportCSV(){
+  var codes=document.getElementById('codesOutput').value.split('\n').filter(Boolean);
+  if(!codes.length)return;
+  var type=document.getElementById('selectedType').value||'promosyon';
+  var dt=document.getElementById('discountType').value;
+  var dv=document.getElementById('discountValue').value;
+  var mc=document.getElementById('minCart').value;
+  var exp=document.getElementById('expiryDate').value;
+  var rows=['Kupon Kodu,Tip,Indirim Turu,Indirim Degeri,Min Sepet,Son Tarih'];
+  codes.forEach(function(c){rows.push([c,type,dt,dv,mc,exp].join(','));});
+  var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='kupon-kodlari.csv';a.click();
+  URL.revokeObjectURL(url);
+}
+updatePreview();
+</script>
+
+<%- include('partials/footer') %>
+</body>
+</html>
