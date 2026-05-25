@@ -101,6 +101,19 @@ router.post('/ilanlar/olustur', (req, res) => {
   res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: true, error: null });
 });
 
+router.get('/ilanlar/:id', (req, res) => {
+  const db = getDb();
+  ensureListingsTable(db);
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(404).render('404', { title: '404 - Kuponluk.com' });
+  const listing = db.prepare(`SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.id = ? AND l.status = 'approved'`).get(id);
+  if (!listing) return res.status(404).render('404', { title: '404 - Kuponluk.com' });
+  res.render('ilan-detay', {
+    title: listing.title + ' - Kuponluk.com',
+    listing,
+  });
+});
+
 router.post('/abone-ol', (req, res) => {
   const db = getDb();
   const { email } = req.body;
