@@ -46,6 +46,10 @@ router.get('/gizlilik-politikasi', (req, res) => res.render('privacy', { title: 
 router.get('/kullanim-kosullari', (req, res) => res.render('terms', { title: 'Kullanım Koşulları - Kuponluk.com' }));
 router.get('/cerez-politikasi', (req, res) => res.render('cookies', { title: 'Çerez Politikası - Kuponluk.com' }));
 
+router.get('/araclar/kupon-kodu-olusturma', (req, res) => {
+  res.render('kupon-olusturucu', { title: 'Ücretsiz Kupon Kodu Oluşturucu - Kuponluk.com' });
+});
+
 router.get('/ilanlar', (req, res) => {
   const db = getDb();
   ensureListingsTable(db);

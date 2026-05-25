@@ -150,6 +150,21 @@ function initDb() {
       active INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS listings (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      title TEXT NOT NULL,
+      coupon_code TEXT,
+      store_name TEXT NOT NULL,
+      category TEXT,
+      price REAL,
+      is_free INTEGER DEFAULT 0,
+      description TEXT,
+      expires_at TEXT,
+      status TEXT DEFAULT 'pending',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   seedData(db);
@@ -185,7 +200,6 @@ function runMigrations(db) {
   const sliderCount = db.prepare('SELECT COUNT(*) as c FROM sliders').get().c;
   if (sliderCount === 0) seedSliders(db);
 
-  // Add extra Trendyol coupons if fewer than 8 exist
   const trendyolCount = db.prepare("SELECT COUNT(*) as c FROM coupons WHERE store_id = (SELECT id FROM stores WHERE slug = 'trendyol')").get();
   if (trendyolCount && trendyolCount.c < 8) {
     const trendyolStore = db.prepare("SELECT id FROM stores WHERE slug = 'trendyol'").get();
@@ -199,6 +213,19 @@ function runMigrations(db) {
       db.prepare("UPDATE stores SET coupon_count = (SELECT COUNT(*) FROM coupons WHERE store_id = stores.id) WHERE slug = 'trendyol'").run();
     }
   }
+
+  try {
+    const listingCount = db.prepare('SELECT COUNT(*) as c FROM listings').get();
+    if (listingCount && listingCount.c === 0) {
+      const insL = db.prepare('INSERT INTO listings (title, coupon_code, store_name, category, is_free, description, expires_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+      insL.run('Trendyol %20 İndirim Kodu Paylaşıyorum', 'TRENDYOL20', 'Trendyol', 'Moda & Giyim', 1, "Trendyol'da ilk alışverişlerde geçerli %20 indirim kodu. Denedim çalışıyor!", '2026-12-31', 'approved');
+      insL.run('Hepsiburada Elektronik 50 TL İndirim', 'HBTECH50', 'Hepsiburada', 'Elektronik', 1, '300 TL üzeri elektronik alışverişlerde 50 TL indirim. Kampanya süreli!', '2026-09-30', 'approved');
+      insL.run('Yemeksepeti İlk Sipariş %40 İndirim', 'YS40ILK', 'Yemeksepeti', 'Yemek & Restoran', 1, "Yemeksepeti'nde ilk siparişe özel %40 indirim. Hızlı yararlanın!", '2026-12-31', 'approved');
+      insL.run('Nike Yaz Koleksiyonu %20 İndirim', 'NIKEYAZ20', 'Nike', 'Spor & Outdoor', 1, 'Nike yaz koleksiyonunda seçili ürünlerde %20 indirim. Spor ayakkabı dahil.', '2026-08-31', 'approved');
+      insL.run('LC Waikiki Çocuk Giyimde %25 İndirim', 'LCWCOCUK25', 'LC Waikiki', 'Moda & Giyim', 1, 'Tüm çocuk giyim ürünlerinde %25 indirim. Okul alışverişi için ideal!', '2026-08-15', 'approved');
+      insL.run('Booking.com Otel Rezervasyonunda %10 İndirim', 'BOOK10TR', 'Booking.com', 'Seyahat', 1, 'Türkiye otelleri için rezervasyonda %10 indirim kodu.', '2026-12-31', 'approved');
+    }
+  } catch(e) {}
 }
 
 function seedSliders(db) {
