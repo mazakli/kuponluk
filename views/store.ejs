@@ -443,14 +443,14 @@
 
 <!-- MODAL -->
 <div id="couponModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background:rgba(0,0,0,0.55);">
-  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between" style="background:linear-gradient(135deg,#FF6B00,#ff8c00);">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative flex flex-col" style="max-height:90vh;">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0" style="background:linear-gradient(135deg,#FF6B00,#ff8c00);">
       <h3 class="text-white font-bold text-lg" id="modalTitle">&#x130;ndirim Kodu</h3>
       <button onclick="closeCouponModal()" class="text-white hover:text-orange-200 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="p-6 space-y-4">
+    <div class="p-6 space-y-4 overflow-y-auto">
       <div>
         <p class="text-xs text-gray-500 mb-1.5 font-medium">&#x130;ndirim Kodunuz</p>
         <div class="flex items-center gap-2">
