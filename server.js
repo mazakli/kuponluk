@@ -47,6 +47,7 @@ app.use('/kategoriler', require('./routes/categories'));
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/user'));
 app.use('/', require('./routes/pages'));
+app.use('/mesajlar', require('./routes/messages'));
 
 // Sitemap
 app.get('/sitemap.xml', (req, res) => {
