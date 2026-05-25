@@ -43,6 +43,18 @@ router.get('/', (req, res) => {
     LIMIT 12
   `).all();
 
+  let featuredListings = [];
+  try {
+    featuredListings = db.prepare(`
+      SELECT l.*, u.username as seller_name
+      FROM listings l
+      LEFT JOIN users u ON l.user_id = u.id
+      WHERE l.status = 'approved'
+      ORDER BY l.created_at DESC
+      LIMIT 6
+    `).all();
+  } catch(e) {}
+
   const stats = {
     totalCoupons: db.prepare('SELECT COUNT(*) as c FROM coupons').get().c,
     totalStores: db.prepare('SELECT COUNT(*) as c FROM stores').get().c,
@@ -56,6 +68,7 @@ router.get('/', (req, res) => {
     popularBrands,
     newBrands,
     expiringBrands,
+    featuredListings,
     stats,
   });
 });

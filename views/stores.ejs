@@ -7,50 +7,35 @@
   <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-6">
     <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
     <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-    <span class="text-gray-800 font-medium">Mağazalar</span>
+    <span class="text-gray-800 font-medium">Ma&#x11F;azalar</span>
   </nav>
 
   <!-- Page Header -->
   <div class="mb-8">
-    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Tüm Mağazalar</h1>
-    <p class="text-gray-500">Yüzlerce mağazanın indirim kuponlarına göz atın.</p>
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">T&#xFC;m Ma&#x11F;azalar</h1>
+    <p class="text-gray-500">Y&#xFC;zlerce ma&#x11F;azan&#x131;n indirim kuponlar&#x131;na g&#xF6;z at&#x131;n.</p>
   </div>
 
-  <!-- Filters Row -->
-  <div class="bg-white rounded-2xl shadow border-2 border-gray-100 p-5 mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-    <% if (categories && categories.length > 0) { %>
+  <!-- Category Filters -->
+  <% if (categories && categories.length > 0) { %>
+  <div class="bg-white rounded-2xl shadow border-2 border-gray-200 p-5 mb-8">
     <div class="flex items-center gap-2 flex-wrap">
       <span class="text-sm font-semibold text-gray-600">Kategori:</span>
-      <a href="/magazalar" class="text-xs px-3 py-1.5 rounded-full font-medium transition <%= !catSlug ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" style="<%= !catSlug ? 'background:#FF6B00;' : '' %>">Tümü</a>
+      <a href="/magazalar" class="text-xs px-3 py-1.5 rounded-full font-medium transition <%= !catSlug ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" style="<%= !catSlug ? 'background:#FF6B00;' : '' %>">T&#xFC;m&#xFC;</a>
       <% categories.forEach(function(cat) { %>
       <a href="/magazalar?kategori=<%= cat.slug %>" class="text-xs px-3 py-1.5 rounded-full font-medium transition <%= catSlug === cat.slug ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" style="<%= catSlug === cat.slug ? 'background:#FF6B00;' : '' %>">
         <%= cat.name %>
       </a>
       <% }); %>
     </div>
-    <% } %>
   </div>
-
-  <!-- Alphabet Filter -->
-  <div class="bg-white rounded-2xl shadow border-2 border-gray-100 px-5 py-4 mb-8">
-    <div class="flex flex-wrap gap-1">
-      <a href="/magazalar<%= catSlug ? '?kategori=' + catSlug : '' %>" class="w-9 h-9 flex items-center justify-center rounded-lg text-sm font-bold transition <%= !letter ? 'text-white' : 'text-gray-600 hover:bg-orange-100 hover:text-orange-600' %>" style="<%= !letter ? 'background:#FF6B00;' : 'background:#f3f4f6;' %>">
-        Tümü
-      </a>
-      <% var turkishAlpha = ['A','B','C','Ç','D','E','F','G','Ğ','H','I','İ','J','K','L','M','N','O','Ö','P','R','S','Ş','T','U','Ü','V','Y','Z']; %>
-      <% turkishAlpha.forEach(function(l) { %>
-      <a href="/magazalar?harf=<%= l %><%= catSlug ? '&kategori=' + catSlug : '' %>" class="w-9 h-9 flex items-center justify-center rounded-lg text-sm font-bold transition <%= letter === l ? 'text-white' : 'text-gray-600 hover:bg-orange-100 hover:text-orange-600' %>" style="<%= letter === l ? 'background:#FF6B00;' : 'background:#f3f4f6;' %>">
-        <%= l %>
-      </a>
-      <% }); %>
-    </div>
-  </div>
+  <% } %>
 
   <!-- Stores Grid -->
   <% if (stores && stores.length > 0) { %>
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
     <% stores.forEach(function(store) { %>
-    <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border-2 border-gray-100 hover:border-orange-200 p-4 flex flex-col items-center text-center group">
+    <a href="/magaza/<%= store.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition border-2 border-gray-200 hover:border-orange-300 p-4 flex flex-col items-center text-center group">
       <% if (store.logo_url) { %>
       <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="w-14 h-14 object-contain rounded-xl mb-3 border border-gray-100" />
       <% } else { %>
@@ -67,11 +52,11 @@
     <% }); %>
   </div>
   <% } else { %>
-  <div class="bg-white rounded-2xl border-2 border-gray-100 shadow p-16 text-center">
+  <div class="bg-white rounded-2xl border-2 border-gray-200 shadow p-16 text-center">
     <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1v5m4 0H9"/></svg>
-    <h3 class="text-xl font-semibold text-gray-700 mb-2">Mağaza Bulunamadı</h3>
-    <p class="text-gray-500">Seçili filtreler için mağaza bulunamadı.</p>
-    <a href="/magazalar" class="inline-block mt-4 px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Tüm Mağazalar</a>
+    <h3 class="text-xl font-semibold text-gray-700 mb-2">Ma&#x11F;aza Bulunamad&#x131;</h3>
+    <p class="text-gray-500">Se&#xE7;ili filtreler i&#xE7;in ma&#x11F;aza bulunamad&#x131;.</p>
+    <a href="/magazalar" class="inline-block mt-4 px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">T&#xFC;m Ma&#x11F;azalar</a>
   </div>
   <% } %>
 </div>
