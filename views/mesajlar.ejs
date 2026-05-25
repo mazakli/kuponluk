@@ -1,0 +1,60 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-extrabold text-gray-900">Mesajlarım</h1>
+    <span class="text-sm text-gray-500"><%= convs.length %> konuşma</span>
+  </div>
+
+  <% if (convs.length === 0) { %>
+  <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-12 text-center">
+    <div class="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+    </div>
+    <h2 class="font-bold text-gray-800 text-lg mb-2">Henüz mesajınız yok</h2>
+    <p class="text-gray-500 text-sm mb-4">İlanlar sayfasından satıcılara mesaj göndererek alışverişe başlayabilirsiniz.</p>
+    <a href="/ilanlar" class="inline-block px-6 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00;">İlanlara Göz At</a>
+  </div>
+  <% } else { %>
+  <div class="space-y-2">
+    <% convs.forEach(function(c) {
+      var otherName = c.user1_id === uid ? c.user2_name : c.user1_name;
+      var initial = otherName ? otherName.charAt(0).toUpperCase() : '?';
+      var preview = c.last_body ? (c.last_body.length > 60 ? c.last_body.substring(0,60) + '…' : c.last_body) : 'Henüz mesaj yok';
+      var isOwn = c.last_sender_id === uid;
+      var dateStr = '';
+      if (c.last_at) {
+        var d = new Date(c.last_at);
+        var now = new Date();
+        if (d.toDateString() === now.toDateString()) {
+          dateStr = d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+        } else {
+          dateStr = d.toLocaleDateString('tr-TR', {day:'2-digit',month:'short'});
+        }
+      }
+    %>
+    <a href="/mesajlar/<%= c.id %>" class="flex items-center gap-4 bg-white rounded-2xl border-2 shadow-sm p-4 hover:border-orange-200 transition <%= c.unread > 0 ? 'border-orange-200 bg-orange-50' : 'border-gray-100' %>">
+      <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-lg font-bold text-white" style="background:#FF6B00;"><%= initial %></div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between mb-0.5">
+          <span class="font-bold text-gray-900 text-sm"><%= otherName %></span>
+          <span class="text-xs text-gray-400 flex-shrink-0 ml-2"><%= dateStr %></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <% if (c.listing_id) { %><span class="text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-600 font-semibold flex-shrink-0">İlan</span><% } %>
+          <p class="text-sm text-gray-500 truncate"><% if (isOwn) { %><span class="text-gray-400">Siz: </span><% } %><%= preview %></p>
+        </div>
+      </div>
+      <% if (c.unread > 0) { %>
+      <span class="flex-shrink-0 w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center"><%= c.unread > 9 ? '9+' : c.unread %></span>
+      <% } %>
+    </a>
+    <% }); %>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-6">
+    <a href="/mesajlar" class="p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </a>
+    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0" style="background:#FF6B00;"><%= otherUser ? otherUser.username.charAt(0).toUpperCase() : '?' %></div>
+    <div>
+      <h1 class="font-bold text-gray-900"><%= otherUser ? otherUser.username : 'Kullanıcı' %></h1>
+      <% if (listing) { %><p class="text-xs text-gray-500">İlan: <%= listing.title %></p><% } %>
+    </div>
+  </div>
+
+  <!-- Listing Banner -->
+  <% if (listing) { %>
+  <div class="flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-xl p-3 mb-4">
+    <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+    <div class="flex-1 min-w-0">
+      <p class="text-xs font-bold text-orange-700">İlan Hakkında</p>
+      <p class="text-sm font-semibold text-gray-800 truncate"><%= listing.title %></p>
+    </div>
+    <a href="/ilanlar/<%= listing.id %>" class="text-xs font-bold px-3 py-1.5 rounded-lg hover:opacity-90 transition text-white flex-shrink-0" style="background:#FF6B00;">Görüntüle</a>
+  </div>
+  <% } %>
+
+  <!-- Messages -->
+  <div id="msgThread" class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-4 mb-4 overflow-y-auto" style="max-height:500px;">
+    <% if (msgs.length === 0) { %>
+    <p class="text-center text-gray-400 text-sm py-8">Henüz mesaj yok. İlk mesajı siz gönderin!</p>
+    <% } else { %>
+    <div class="space-y-3">
+      <% msgs.forEach(function(m) {
+        var isOwn = m.sender_id === uid;
+        var timeStr = new Date(m.created_at).toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
+        var dateStr = new Date(m.created_at).toLocaleDateString('tr-TR', {day:'2-digit',month:'short'});
+      %>
+      <div class="flex <%= isOwn ? 'justify-end' : 'justify-start' %>">
+        <div class="max-w-[75%]">
+          <% if (isOwn) { %>
+          <div class="px-4 py-2.5 rounded-2xl rounded-br-sm text-sm leading-relaxed whitespace-pre-wrap break-words text-white" style="background:#FF6B00;">
+            <%= m.body %>
+          </div>
+          <% } else { %>
+          <div class="px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed whitespace-pre-wrap break-words bg-gray-100 text-gray-800">
+            <%= m.body %>
+          </div>
+          <% } %>
+          <p class="text-[10px] text-gray-400 mt-1 <%= isOwn ? 'text-right' : 'text-left' %>"><%= dateStr %> <%= timeStr %></p>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- Reply Form -->
+  <form method="POST" action="/mesajlar/<%= conv.id %>/gonder" class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-4">
+    <textarea name="body" rows="3" placeholder="Mesajınızı yazın..." required maxlength="2000"
+      class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-300 transition mb-3"></textarea>
+    <div class="flex justify-end">
+      <button type="submit" class="px-6 py-2.5 rounded-xl text-white font-bold text-sm hover:opacity-90 transition flex items-center gap-2" style="background:#FF6B00;">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        Gönder
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  var thread = document.getElementById('msgThread');
+  if (thread) thread.scrollTop = thread.scrollHeight;
+</script>
+
+<%- include('partials/footer') %>
+</body>
+</html>
