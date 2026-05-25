@@ -244,6 +244,21 @@ function runMigrations(db) {
       insL.run('Booking.com Otel Rezervasyonunda %10 İndirim', 'BOOK10TR', 'Booking.com', 'Seyahat', 1, 'Türkiye otelleri için rezervasyonda %10 indirim kodu.', '2026-12-31', 'approved');
     }
   } catch(e) {}
+
+  // Seed demo user and assign anonymous listings to them
+  try {
+    let demoUser = db.prepare("SELECT id FROM users WHERE email = 'demo@kuponluk.com'").get();
+    if (!demoUser) {
+      const hash = bcrypt.hashSync('Demo123456!', 10);
+      const r = db.prepare("INSERT OR IGNORE INTO users (username, email, password_hash, is_admin) VALUES ('kuponluk_demo', 'demo@kuponluk.com', ?, 0)").run(hash);
+      const insertedId = r.lastInsertRowid ? parseInt(r.lastInsertRowid) : null;
+      if (insertedId) demoUser = { id: insertedId };
+      else demoUser = db.prepare("SELECT id FROM users WHERE email = 'demo@kuponluk.com'").get();
+    }
+    if (demoUser) {
+      db.prepare('UPDATE listings SET user_id = ? WHERE user_id IS NULL').run(parseInt(demoUser.id));
+    }
+  } catch(e) {}
 }
 
 function seedSliders(db) {

@@ -28,7 +28,7 @@ function ensureTables(db) {
 router.get('/', requireAuth, (req, res) => {
   const db = getDb();
   ensureTables(db);
-  const uid = req.session.user.id;
+  const uid = parseInt(req.session.user.id);
   const convs = db.prepare(`
     SELECT c.*,
       u1.username as user1_name,
@@ -49,22 +49,47 @@ router.get('/', requireAuth, (req, res) => {
   res.render('mesajlar', { title: 'Mesajlar - Kuponluk.com', convs, uid });
 });
 
+// New conversation page — MUST be before /:id
+router.get('/yeni', requireAuth, (req, res) => {
+  const db = getDb();
+  ensureTables(db);
+  const uid = parseInt(req.session.user.id);
+  const q = (req.query.q || '').trim();
+  const toUsername = req.query.to || null;
+
+  let users = [];
+  let toUser = null;
+
+  if (q.length >= 2) {
+    users = db.prepare(
+      "SELECT id, username FROM users WHERE (username LIKE ? OR email LIKE ?) AND id != ? LIMIT 20"
+    ).all(`%${q}%`, `%${q}%`, uid);
+  }
+
+  if (toUsername) {
+    toUser = db.prepare('SELECT id, username FROM users WHERE username = ?').get(toUsername);
+    if (toUser && parseInt(toUser.id) === uid) toUser = null;
+  }
+
+  res.render('mesaj-yeni', { title: 'Yeni Mesaj - Kuponluk.com', users, toUser, q });
+});
+
 // Conversation detail
 router.get('/:id', requireAuth, (req, res) => {
   const db = getDb();
   ensureTables(db);
-  const uid = req.session.user.id;
+  const uid = parseInt(req.session.user.id);
   const cid = parseInt(req.params.id);
   if (isNaN(cid)) return res.status(404).render('404', { title: '404 - Kuponluk.com' });
 
   const conv = db.prepare('SELECT * FROM conversations WHERE id = ?').get(cid);
-  if (!conv || (conv.user1_id !== uid && conv.user2_id !== uid)) {
+  if (!conv || (parseInt(conv.user1_id) !== uid && parseInt(conv.user2_id) !== uid)) {
     return res.status(403).render('404', { title: '403 - Kuponluk.com' });
   }
 
   db.prepare('UPDATE messages SET is_read = 1 WHERE conversation_id = ? AND sender_id != ?').run(cid, uid);
 
-  const otherId = conv.user1_id === uid ? conv.user2_id : conv.user1_id;
+  const otherId = parseInt(conv.user1_id) === uid ? conv.user2_id : conv.user1_id;
   const otherUser = db.prepare('SELECT id, username FROM users WHERE id = ?').get(otherId);
   const msgs = db.prepare(`
     SELECT m.*, u.username as sender_name
@@ -83,18 +108,27 @@ router.get('/:id', requireAuth, (req, res) => {
   });
 });
 
-// Start new conversation
+// Start new conversation (from ilan-detay form or direct message page)
 router.post('/yeni', requireAuth, (req, res) => {
   const db = getDb();
   ensureTables(db);
-  const uid = req.session.user.id;
+  const uid = parseInt(req.session.user.id);
   const toId = parseInt(req.body.to_user_id);
   const body = (req.body.body || '').trim().substring(0, 2000);
   const listIdRaw = req.body.listing_id ? parseInt(req.body.listing_id) : null;
   const listId = (listIdRaw && !isNaN(listIdRaw)) ? listIdRaw : null;
+  const fromIlan = req.body.from_ilan ? req.body.from_ilan : null;
 
-  if (isNaN(toId) || toId === uid || !body) return res.redirect('back');
-  if (!db.prepare('SELECT id FROM users WHERE id = ?').get(toId)) return res.redirect('back');
+  if (isNaN(toId) || toId === uid) {
+    return res.redirect('/mesajlar/yeni');
+  }
+  if (!body) {
+    const back = fromIlan ? '/ilanlar/' + fromIlan : '/mesajlar/yeni';
+    return res.redirect(back);
+  }
+  if (!db.prepare('SELECT id FROM users WHERE id = ?').get(toId)) {
+    return res.redirect('/mesajlar/yeni');
+  }
 
   let conv;
   if (listId) {
@@ -117,12 +151,14 @@ router.post('/yeni', requireAuth, (req, res) => {
 router.post('/:id/gonder', requireAuth, (req, res) => {
   const db = getDb();
   ensureTables(db);
-  const uid = req.session.user.id;
+  const uid = parseInt(req.session.user.id);
   const cid = parseInt(req.params.id);
   if (isNaN(cid)) return res.redirect('/mesajlar');
 
   const conv = db.prepare('SELECT * FROM conversations WHERE id = ?').get(cid);
-  if (!conv || (conv.user1_id !== uid && conv.user2_id !== uid)) return res.redirect('/mesajlar');
+  if (!conv || (parseInt(conv.user1_id) !== uid && parseInt(conv.user2_id) !== uid)) {
+    return res.redirect('/mesajlar');
+  }
 
   const body = (req.body.body || '').trim().substring(0, 2000);
   if (!body) return res.redirect('/mesajlar/' + cid);
