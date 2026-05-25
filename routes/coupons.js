@@ -10,7 +10,7 @@ function turkishSlugify(text) {
 }
 
 const COUPON_SELECT = `
-  SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url,
+  SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url, s.website_url,
          c.name as category_name, c.slug as category_slug
   FROM coupons cp
   JOIN stores s ON cp.store_id = s.id
@@ -128,13 +128,11 @@ router.post('/:id/yorum', (req, res) => {
   const rating = parseInt(req.body.rating);
   const comment = (req.body.comment || '').trim();
   if (!rating || rating < 1 || rating > 5 || !comment) return res.redirect('/kupon/' + req.params.id);
-
   const db = getDb();
   try {
-    db.prepare(`
-      INSERT INTO coupon_reviews (coupon_id, user_id, rating, comment) VALUES (?, ?, ?, ?)
-      ON CONFLICT(user_id, coupon_id) DO UPDATE SET rating = excluded.rating, comment = excluded.comment, created_at = CURRENT_TIMESTAMP
-    `).run(req.params.id, req.session.user.id, rating, comment);
+    db.prepare(`INSERT INTO coupon_reviews (coupon_id, user_id, rating, comment) VALUES (?, ?, ?, ?)
+      ON CONFLICT(user_id, coupon_id) DO UPDATE SET rating = excluded.rating, comment = excluded.comment, created_at = CURRENT_TIMESTAMP`
+    ).run(req.params.id, req.session.user.id, rating, comment);
   } catch (e) {}
   res.redirect('/kupon/' + req.params.id + '#yorumlar');
 });
@@ -174,6 +172,13 @@ router.post('/:id/puan', (req, res) => {
 router.post('/:id/kullan', (req, res) => {
   const db = getDb();
   db.prepare('UPDATE coupons SET use_count = use_count + 1 WHERE id = ?').run(req.params.id);
+  res.json({ success: true });
+});
+
+router.post('/:id/geri-bildirim', (req, res) => {
+  const db = getDb();
+  const pos = req.body.positive === '1';
+  if (pos) db.prepare('UPDATE coupons SET use_count = use_count + 1 WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
 

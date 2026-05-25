@@ -31,7 +31,7 @@
             <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700"><%= listing.price %> TL De&#x11F;erinde</span>
             <% } %>
             <% if (listing.coupon_code) { %>
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:#fff3e6;color:#FF6B00;">&#x130;nd&#x130;r&#x130;m KODU</span>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:#fff3e6;color:#FF6B00;">&#x130;ND&#x130;R&#x130;M KODU</span>
             <% } %>
           </div>
           <h1 class="text-2xl font-extrabold text-gray-900 mb-2"><%= listing.title %></h1>
@@ -42,23 +42,20 @@
         </div>
       </div>
 
-      <!-- Coupon Code Band -->
+      <!-- Coupon Code - Locked -->
       <% if (listing.coupon_code) { %>
       <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-6">
         <h2 class="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
           <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           &#x130;ndirim Kodu
         </h2>
-        <div id="codeBand" class="relative overflow-hidden rounded-2xl border-2 border-dashed border-orange-300 cursor-pointer select-none"
-          style="background:linear-gradient(90deg,#fff8f0,#ffede0);" onclick="revealCode(this,'<%= listing.coupon_code %>')">          <div class="px-6 py-5 text-center" style="visibility:hidden;">
-            <span class="text-2xl font-extrabold tracking-widest text-gray-800"><%= listing.coupon_code %></span>
+        <div class="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center">
+          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mx-auto mb-3">
+            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
           </div>
-          <div id="bandOverlay" class="absolute inset-0 flex items-center justify-center gap-2">
-            <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-            <span class="font-bold text-base" style="color:#FF6B00;">T&#x131;klay&#x131;n, kodu g&#xF6;r&#xFC;n ve kopyalay&#x131;n</span>
-          </div>
+          <p class="font-bold text-gray-700 mb-1">Kupon Kodu Kilitli</p>
+          <p class="text-sm text-gray-500">Satıcı ile iletişime geçip satın alma işlemini tamamladıktan sonra kupon kodu size iletilecektir.</p>
         </div>
-        <p id="copyConfirm" class="text-center text-sm text-green-600 font-semibold mt-3 hidden">&#x2713; Kod kopyaland&#x131;!</p>
       </div>
       <% } %>
 
@@ -106,52 +103,31 @@
           <div class="flex justify-between text-sm">
             <dt class="text-gray-500">De&#x11F;er</dt>
             <dd class="font-semibold text-gray-800">
-              <% if (listing.is_free) { %>
-              <span class="text-green-600">&#xDC;cretsiz</span>
-              <% } else if (listing.price) { %>
-              <%= listing.price %> TL
-              <% } else { %>
-              Belirtilmemi&#x15F;
-              <% } %>
+              <% if (listing.is_free) { %><span class="text-green-600">&#xDC;cretsiz</span>
+              <% } else if (listing.price) { %><%= listing.price %> TL
+              <% } else { %>Belirtilmemi&#x15F;<% } %>
             </dd>
           </div>
         </dl>
       </div>
 
-      <!-- Back Button -->
-      <a href="/ilanlar" class="flex items-center justify-center gap-2 w-full py-3 rounded-2xl border-2 border-gray-200 text-gray-600 font-semibold text-sm hover:border-orange-300 hover:text-orange-600 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        T&#xFC;m &#x130;lanlara D&#xF6;n
-      </a>
-
-      <!-- Post Listing CTA -->
+      <!-- Contact CTA -->
       <div class="bg-white rounded-2xl border-2 border-orange-100 shadow-sm p-5 text-center">
-        <svg class="w-10 h-10 mx-auto mb-3" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-        <h4 class="font-bold text-gray-800 text-sm mb-1">Siz de ilan verin!</h4>
-        <p class="text-xs text-gray-500 mb-3">Kupon veya indirim kodunuzu payla&#x15F;&#x131;n.</p>
-        <a href="/ilanlar/olustur" class="inline-block w-full py-2.5 rounded-xl text-white font-bold text-sm hover:opacity-90 transition" style="background:#FF6B00;">&#x130;lan Olu&#x15F;tur</a>
+        <svg class="w-10 h-10 mx-auto mb-3" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <h4 class="font-bold text-gray-800 text-sm mb-1">Satıcıya Ulaşın</h4>
+        <p class="text-xs text-gray-500 mb-3">Kupon kodu için satıcıyla iletişime geçin.</p>
+        <a href="/ilanlar" class="inline-block w-full py-2.5 rounded-xl border-2 font-bold text-sm transition hover:bg-orange-50" style="border-color:#FF6B00;color:#FF6B00;">&#x130;lanlara Dön</a>
       </div>
+
+      <!-- Post CTA -->
+      <a href="/ilanlar/olustur" class="flex items-center justify-center gap-2 w-full py-3 rounded-2xl text-white font-bold text-sm hover:opacity-90 transition" style="background:#FF6B00;">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        &#x130;lan Olu&#x15F;tur
+      </a>
 
     </aside>
   </div>
 </div>
-
-<script>
-function revealCode(el, code) {
-  var overlay = document.getElementById('bandOverlay');
-  var inner = el.querySelector('.px-6');
-  overlay.style.display = 'none';
-  inner.style.visibility = 'visible';
-  el.style.cursor = 'default';
-  el.onclick = null;
-  if (navigator.clipboard && code) {
-    navigator.clipboard.writeText(code).then(function() {
-      var msg = document.getElementById('copyConfirm');
-      if (msg) { msg.classList.remove('hidden'); setTimeout(function(){ msg.classList.add('hidden'); }, 3000); }
-    }).catch(function(){});
-  }
-}
-</script>
 
 <%- include('partials/footer') %>
 </body>
