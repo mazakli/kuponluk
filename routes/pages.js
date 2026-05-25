@@ -96,7 +96,7 @@ router.post('/ilanlar/olustur', (req, res) => {
   if (!title || !store_name) {
     return res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: false, error: 'Başlık ve mağaza adı zorunludur.' });
   }
-  db.prepare(`INSERT INTO listings (user_id, title, coupon_code, store_name, category, price, is_free, description, expires_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`)
+  db.prepare(`INSERT INTO listings (user_id, title, coupon_code, store_name, category, price, is_free, description, expires_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'approved')`)
     .run(req.session.user.id, title, coupon_code || null, store_name, category || null, price ? parseFloat(price) : null, is_free ? 1 : 0, description || null, expires_at || null);
   res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: true, error: null });
 });
@@ -106,12 +106,15 @@ router.get('/ilanlar/:id', (req, res) => {
   ensureListingsTable(db);
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(404).render('404', { title: '404 - Kuponluk.com' });
-  const listing = db.prepare(`SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.id = ? AND l.status = 'approved'`).get(id);
+  const ownerId = req.session && req.session.user ? parseInt(req.session.user.id) : null;
+  let listing;
+  if (ownerId) {
+    listing = db.prepare(`SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.id = ? AND (l.status = 'approved' OR l.user_id = ?)`).get(id, ownerId);
+  } else {
+    listing = db.prepare(`SELECT l.*, u.username FROM listings l LEFT JOIN users u ON l.user_id = u.id WHERE l.id = ? AND l.status = 'approved'`).get(id);
+  }
   if (!listing) return res.status(404).render('404', { title: '404 - Kuponluk.com' });
-  res.render('ilan-detay', {
-    title: listing.title + ' - Kuponluk.com',
-    listing,
-  });
+  res.render('ilan-detay', { title: listing.title + ' - Kuponluk.com', listing });
 });
 
 router.post('/abone-ol', (req, res) => {

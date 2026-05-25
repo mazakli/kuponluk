@@ -4,7 +4,10 @@
 <div class="max-w-3xl mx-auto px-4 py-8">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-extrabold text-gray-900">Mesajlarım</h1>
-    <span class="text-sm text-gray-500"><%= convs.length %> konuşma</span>
+    <a href="/mesajlar/yeni" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00;">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Yeni Mesaj
+    </a>
   </div>
 
   <% if (convs.length === 0) { %>
@@ -13,8 +16,16 @@
       <svg class="w-8 h-8" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
     </div>
     <h2 class="font-bold text-gray-800 text-lg mb-2">Henüz mesajınız yok</h2>
-    <p class="text-gray-500 text-sm mb-4">İlanlar sayfasından satıcılara mesaj göndererek alışverişe başlayabilirsiniz.</p>
-    <a href="/ilanlar" class="inline-block px-6 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00;">İlanlara Göz At</a>
+    <p class="text-gray-500 text-sm mb-5">İlanlar sayfasından satıcılara mesaj gönderin ya da yeni bir sohbet başlatın.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/mesajlar/yeni" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00;">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Yeni Mesaj Başlat
+      </a>
+      <a href="/ilanlar" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border-2 font-semibold text-sm hover:bg-orange-50 transition" style="border-color:#FF6B00;color:#FF6B00;">
+        İlanlara Göz At
+      </a>
+    </div>
   </div>
   <% } else { %>
   <div class="space-y-2">

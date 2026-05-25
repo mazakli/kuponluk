@@ -1,0 +1,79 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-6">
+    <a href="/mesajlar" class="p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </a>
+    <h1 class="text-xl font-extrabold text-gray-900">Yeni Mesaj</h1>
+  </div>
+
+  <!-- Search form -->
+  <div class="bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-5 mb-5">
+    <p class="text-sm text-gray-500 mb-3">Mesaj göndermek istediğiniz kullanıcının adını arayın.</p>
+    <form method="GET" action="/mesajlar/yeni" class="flex gap-2">
+      <input type="text" name="q" value="<%= q %>" placeholder="Kullanıcı adı ile ara..." autofocus
+        class="flex-1 border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-300 transition">
+      <button type="submit" class="px-5 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00;">Ara</button>
+    </form>
+  </div>
+
+  <!-- Selected user — DM compose form -->
+  <% if (toUser) { %>
+  <div class="bg-white rounded-2xl border-2 border-orange-200 shadow-sm p-5 mb-5">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0" style="background:#FF6B00;">
+        <%= toUser.username.charAt(0).toUpperCase() %>
+      </div>
+      <div>
+        <p class="font-bold text-gray-900"><%= toUser.username %></p>
+        <p class="text-xs text-gray-400">Bu kullanıcıya mesaj gönderilecek</p>
+      </div>
+    </div>
+    <form method="POST" action="/mesajlar/yeni">
+      <input type="hidden" name="to_user_id" value="<%= toUser.id %>">
+      <textarea name="body" rows="4" required maxlength="2000"
+        placeholder="Mesajınızı buraya yazın..."
+        class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-300 transition mb-3"></textarea>
+      <button type="submit" class="w-full py-2.5 rounded-xl text-white font-bold text-sm hover:opacity-90 transition flex items-center justify-center gap-2" style="background:#FF6B00;">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        Mesaj Gönder
+      </button>
+    </form>
+  </div>
+  <% } %>
+
+  <!-- Search results -->
+  <% if (users.length > 0) { %>
+  <div class="space-y-2">
+    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2"><%= users.length %> kullanıcı bulundu</p>
+    <% users.forEach(function(u) { %>
+    <div class="flex items-center gap-3 bg-white rounded-2xl border-2 border-gray-100 shadow-sm p-4 hover:border-orange-200 transition">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0" style="background:#FF6B00;">
+        <%= u.username.charAt(0).toUpperCase() %>
+      </div>
+      <span class="flex-1 font-semibold text-gray-800"><%= u.username %></span>
+      <a href="/mesajlar/yeni?to=<%= encodeURIComponent(u.username) %>" class="px-4 py-2 rounded-xl text-white text-sm font-semibold hover:opacity-90 transition flex-shrink-0" style="background:#FF6B00;">Mesaj Gönder</a>
+    </div>
+    <% }); %>
+  </div>
+  <% } else if (q && q.length >= 2) { %>
+  <div class="text-center py-10">
+    <svg class="w-12 h-12 mx-auto mb-3 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    <p class="text-gray-400 text-sm">&quot;<%= q %>&quot; için kayıtlı kullanıcı bulunamadı.</p>
+  </div>
+  <% } else if (!toUser) { %>
+  <div class="text-center py-10">
+    <svg class="w-14 h-14 mx-auto mb-3 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <p class="text-gray-400 text-sm">Araştırmak için en az 2 karakter girin.</p>
+  </div>
+  <% } %>
+
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>
