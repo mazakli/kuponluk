@@ -12,6 +12,10 @@
     <div class="flex items-center gap-3">
       <% if (currentUser) { %>
         <a href="/profil" class="hover:text-orange-400 transition"><strong class="text-orange-400"><%= currentUser.username %></strong></a>
+        <a href="/mesajlar" class="relative inline-flex items-center hover:text-orange-400 transition" title="Mesajlar">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          <% if (typeof unreadMessages !== 'undefined' && unreadMessages > 0) { %><span class="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-bold flex items-center justify-center leading-none"><%= unreadMessages > 9 ? '9+' : unreadMessages %></span><% } %>
+        </a>
         <a href="/cikis" class="hover:text-orange-400 transition">Çıkış</a>
       <% } else { %>
         <a href="/giris" class="hover:text-orange-400 transition">Giriş Yap</a>
@@ -191,10 +195,19 @@
         <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
         Popüler Kuponlar
       </a>
-      <a href="/ilanlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold transition mb-4" style="color:#FF6B00;">
+      <a href="/ilanlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold transition mb-0.5" style="color:#FF6B00;">
         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         İlanlar
       </a>
+      <% if (currentUser) { %>
+      <a href="/mesajlar" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-4">
+        <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        Mesajlarım
+        <% if (typeof unreadMessages !== 'undefined' && unreadMessages > 0) { %><span class="ml-auto w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center"><%= unreadMessages > 9 ? '9+' : unreadMessages %></span><% } %>
+      </a>
+      <% } else { %>
+      <div class="mb-4"></div>
+      <% } %>
       <div class="border-t border-gray-100 pt-4">
         <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Diğer</p>
         <a href="/telegram" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
