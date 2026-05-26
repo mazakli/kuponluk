@@ -37,6 +37,7 @@
         <% }) %>
       </div>
     </div>
+    <p class="text-xs text-gray-400 text-center mt-2">&#xD6;nerilen slider g&#xF6;rsel boyutu: <strong>1400 &times; 520 px</strong> &mdash; JPEG veya WebP format&#x131;, maks. 200 KB</p>
   </div>
 </section>
 <% } %>
@@ -101,7 +102,7 @@
         <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 border-2 border-transparent hover:border-orange-200 transition">
           <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
             <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="this.style.display='none'"/><%}%>
+            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
           </div>
           <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
           <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
@@ -116,7 +117,7 @@
         <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 border-2 border-transparent hover:border-orange-200 transition">
           <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
             <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="this.style.display='none'"/><%}%>
+            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
           </div>
           <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
           <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
@@ -133,7 +134,7 @@
           <span class="absolute top-1.5 right-1.5 text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded-full" style="font-size:8px;">Son</span>
           <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
             <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="this.style.display='none'"/><%}%>
+            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
           </div>
           <span class="text-xs font-semibold text-gray-800 text-center truncate w-full"><%= store.name %></span>
           <span class="text-xs text-red-400 mt-0.5"><% if(store.earliest_expiry){%><%= new Date(store.earliest_expiry).toLocaleDateString('tr-TR') %><%}%></span>
@@ -227,6 +228,10 @@
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" fill="url(#igG)"/><defs><linearGradient id="igG" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><path d="M12 7a5 5 0 100 10A5 5 0 0012 7zm0 8a3 3 0 110-6 3 3 0 010 6zm5.2-8.8a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" fill="white"/></svg>
             <span class="text-sm font-semibold text-pink-600">Instagram</span>
           </a>
+          <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-red-50 hover:bg-red-100 transition">
+            <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            <span class="text-sm font-semibold text-red-700">YouTube</span>
+          </a>
         </div>
       </div>
     </div>
@@ -245,7 +250,7 @@
       <div class="flex flex-col items-center">
         <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg></div>
         <h3 class="font-bold text-gray-800 text-sm mb-0.5">Marka Bildirimleri</h3>
-        <p class="text-xs text-gray-500">Yeni kupon gelince anında haber al.</p>
+        <p class="text-xs text-gray-500">Yeni kupon gelince an&#x131;nda haber al.</p>
       </div>
       <div class="flex flex-col items-center">
         <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
@@ -255,7 +260,7 @@
       <div class="flex flex-col items-center">
         <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
         <h3 class="font-bold text-gray-800 text-sm mb-0.5">Tamamen &#xDC;cretsiz</h3>
-        <p class="text-xs text-gray-500">Kayıt olmadan da kullanabilirsiniz.</p>
+        <p class="text-xs text-gray-500">Kay&#x131;t olmadan da kullanabilirsiniz.</p>
       </div>
     </div>
   </div>

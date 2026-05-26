@@ -40,7 +40,7 @@
           <span class="text-white text-2xl font-bold"><%= (store.name||'?').charAt(0).toUpperCase() %></span>
         </div>
         <% if (store.logo_url) { %>
-        <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-2" onerror="this.style.display='none'" />
+        <img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-2" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}" />
         <% } %>
       </div>
       <span class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 transition truncate w-full text-center"><%= store.name %></span>

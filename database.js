@@ -215,6 +215,15 @@ function runMigrations(db) {
   const update = db.prepare('UPDATE stores SET logo_url = ? WHERE slug = ?');
   logoMap.forEach(([slug, url]) => update.run(url, slug));
 
+  // Set demo slider images (Unsplash) if not already set
+  const sliderImgData = [
+    [1, 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&h=520&fit=crop&auto=format'],
+    [2, 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1400&h=520&fit=crop&auto=format'],
+    [3, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1400&h=520&fit=crop&auto=format'],
+  ];
+  const updateSliderImg = db.prepare("UPDATE sliders SET image_url = ? WHERE order_index = ? AND (image_url IS NULL OR image_url = '')");
+  sliderImgData.forEach(([idx, url]) => updateSliderImg.run(url, idx));
+
   const sliderCount = db.prepare('SELECT COUNT(*) as c FROM sliders').get().c;
   if (sliderCount === 0) seedSliders(db);
 
@@ -226,7 +235,7 @@ function runMigrations(db) {
       try { ins.run(trendyolStore.id, 'Giyim Ürünlerinde %25 İndirim', 'TY25GIYIM', 'Seçili giyim ürünlerinde geçerli', 'percent', '25', '2026-10-31', 1, 0, 2100, 630); } catch(e) {}
       try { ins.run(trendyolStore.id, 'Elektronik Ürünlerde %10 İndirim', 'TY10ELEK', 'Trendyol elektronik kategorisinde geçerli', 'percent', '10', '2026-09-30', 1, 0, 1800, 540); } catch(e) {}
       try { ins.run(trendyolStore.id, 'Kozmetik Alışverişte 50 TL İndirim', 'TY50KOZMET', '200 TL üzer kozmetik alışverişlerde geçerli', 'fixed', '50', '2026-08-31', 0, 0, 950, 285); } catch(e) {}
-      try { ins.run(trendyolStore.id, 'Ayakkabı Kategorisinde Ücretsız Kargo', 'TYYAKKARGO', 'Seçili ayakkabı ürünlerinde ücretsiz kargo', 'free_shipping', null, '2026-12-31', 1, 0, 1350, 405); } catch(e) {}
+      try { ins.run(trendyolStore.id, 'Ayakkabı Kategorisinde Ücretsiz Kargo', 'TYYAKKARGO', 'Seçili ayakkabı ürünlerinde ücretsiz kargo', 'free_shipping', null, '2026-12-31', 1, 0, 1350, 405); } catch(e) {}
       try { ins.run(trendyolStore.id, 'Ev & Yaşam Ürünlerinde %15 İndirim', 'TYEV15', 'Ev ve yaşam kategorisinde geçerli', 'percent', '15', '2026-11-30', 0, 0, 760, 228); } catch(e) {}
       db.prepare("UPDATE stores SET coupon_count = (SELECT COUNT(*) FROM coupons WHERE store_id = stores.id) WHERE slug = 'trendyol'").run();
     }
@@ -261,10 +270,10 @@ function runMigrations(db) {
 }
 
 function seedSliders(db) {
-  const ins = db.prepare('INSERT INTO sliders (title, subtitle, link_url, bg_color, order_index) VALUES (?, ?, ?, ?, ?)');
-  ins.run('Trendyol Özel İndirim Kodları', 'İlk siparişinize özel indirim kuponu ile büyük tasarruf edin', '/magaza/trendyol', '#FF6B00', 1);
-  ins.run('Hepsiburada Fırsatları', 'Elektronik, giyim ve daha fazlasında yüzlerce indirim', '/magaza/hepsiburada', '#FF8800', 2);
-  ins.run('Yemeksepeti İlk Sipariş', 'İlk siparişinize özel yüzde 40 indirim fırsatı', '/magaza/yemeksepeti', '#CC1111', 3);
+  const ins = db.prepare('INSERT INTO sliders (title, subtitle, image_url, link_url, bg_color, order_index) VALUES (?, ?, ?, ?, ?, ?)');
+  ins.run('Trendyol Özel İndirim Kodları', 'İlk siparişinize özel indirim kuponu ile büyük tasarruf edin', 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&h=520&fit=crop&auto=format', '/magaza/trendyol', '#FF6B00', 1);
+  ins.run('Hepsiburada Fırsatları', 'Elektronik, giyim ve daha fazlasında yüzlerce indirim', 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1400&h=520&fit=crop&auto=format', '/magaza/hepsiburada', '#FF8800', 2);
+  ins.run('Yemeksepeti İlk Sipariş', 'İlk siparişinize özel yüzde 40 indirim fırsatı', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1400&h=520&fit=crop&auto=format', '/magaza/yemeksepeti', '#CC1111', 3);
 }
 
 function seedData(db) {
@@ -314,9 +323,9 @@ function seedData(db) {
   stores.forEach(s => insertStore.run(s.name, s.slug, s.desc, s.logo, s.url, s.cat, s.featured));
 
   const coupons = [
-    { store_id: 1, title: 'İlk Siparişte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparişinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
+    { store_id: 1, title: 'İlk Sipar işte %20 İndirim', code: 'TRENDYOL20', desc: "Trendyol'da ilk siparişinize özel %20 indirim kuponu", type: 'percent', value: '20', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 1, title: '150 TL ve Üzeri Alışverişte 30 TL İndirim', code: 'TY30INDIRIM', desc: '150 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-08-31', verified: 1, exclusive: 0 },
-    { store_id: 1, title: 'Ücretsiz Kargo', code: 'TYKARGO', desc: 'Seçili ürünlerde ücretsiz kargo fırsatı', type: 'free_shipping', value: null, expiry: '2026-07-15', verified: 0, exclusive: 0 },
+    { store_id: 1, title: 'Ücrets iz Kargo', code: 'TYKARGO', desc: 'Seçili ürünlerde ücretsiz kargo fırsatı', type: 'free_shipping', value: null, expiry: '2026-07-15', verified: 0, exclusive: 0 },
     { store_id: 2, title: 'Elektronik Ürünlerde %15 İndirim', code: 'HBTECH15', desc: 'Tüm elektronik kategorisinde geçerli', type: 'percent', value: '15', expiry: '2026-09-30', verified: 1, exclusive: 0 },
     { store_id: 2, title: 'Yeni Üye 50 TL Kupon', code: 'HBYENI50', desc: 'Yeni üyelere özel 50 TL indirim', type: 'fixed', value: '50', expiry: '2026-12-31', verified: 1, exclusive: 1 },
     { store_id: 3, title: 'Outlet Ürünlerde Ekstra %10', code: 'ZARAOUTLET', desc: 'Outlet bölümündeki tüm ürünlerde ekstra indirim', type: 'percent', value: '10', expiry: '2026-06-30', verified: 0, exclusive: 0 },
@@ -327,14 +336,14 @@ function seedData(db) {
     { store_id: 8, title: 'Laptop ve Bilgisayarlarda %12 İndirim', code: 'MMLAPTOP12', desc: 'Seçili laptop modellerinde geçerli', type: 'percent', value: '12', expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 8, title: '500 TL Üzeri 75 TL İndirim', code: 'MM500AL75', desc: '500 TL ve üzeri alışverişlerde geçerli', type: 'fixed', value: '75', expiry: '2026-08-31', verified: 0, exclusive: 0 },
     { store_id: 10, title: 'İlk Siparişe %40 İndirim', code: 'YS40ILK', desc: 'Yeni kullanıcılara özel ilk sipariş indirimi', type: 'percent', value: '40', expiry: '2026-12-31', verified: 1, exclusive: 1 },
-    { store_id: 10, title: 'Ücretsiz Teslimat', code: 'YSKARGOBED', desc: 'Seçili restoranlardan ücretsiz teslimat', type: 'free_shipping', value: null, expiry: '2026-07-31', verified: 1, exclusive: 0 },
+    { store_id: 10, title: 'Ücrets iz Teslimat', code: 'YSKARGOBED', desc: 'Seçili restoranlardan ücretsiz teslimat', type: 'free_shipping', value: null, expiry: '2026-07-31', verified: 1, exclusive: 0 },
     { store_id: 11, title: 'Market Alışverişinde 30 TL İndirim', code: 'GETIR30', desc: '150 TL üzeri marketten alışverişlerde geçerli', type: 'fixed', value: '30', expiry: '2026-09-30', verified: 1, exclusive: 0 },
-    { store_id: 12, title: 'Online Alışverişte Ücretsiz Kargo', code: 'MIGROSKARGO', desc: '200 TL üzeri alışverişlerde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },
+    { store_id: 12, title: 'Online Alışverişte Ücrets iz Kargo', code: 'MIGROSKARGO', desc: '200 TL üzeri alışverişlerde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },
     { store_id: 13, title: 'Otel Rezervasyonunda %10 İndirim', code: 'BOOK10TR', desc: 'Türkiye otelleri için geçerli', type: 'percent', value: '10', expiry: '2026-12-31', verified: 1, exclusive: 0 },
     { store_id: 14, title: 'Yaz Koleksiyonunda %20 İndirim', code: 'NIKEYAZ20', desc: 'Seçili yaz ürünlerinde indirim', type: 'percent', value: '20', expiry: '2026-08-31', verified: 1, exclusive: 0 },
     { store_id: 15, title: 'Koşu Ayakkabısında %15 İndirim', code: 'ADIDAS15KOS', desc: 'Seçili koşu ayakkabılarında geçerli', type: 'percent', value: '15', expiry: '2026-09-30', verified: 0, exclusive: 0 },
     { store_id: 18, title: 'Prime Üyeliğinde %50 İndirim', code: 'PRIMETR50', desc: 'Prime üyelik aboneliğinde geçerli', type: 'percent', value: '50', expiry: '2026-06-30', verified: 1, exclusive: 1 },
-    { store_id: 18, title: 'Kitaplarda Ücretsiz Kargo', code: 'AZKITAP', desc: 'Tüm kitap alışverişlerinde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },
+    { store_id: 18, title: 'Kitaplarda Ücrets iz Kargo', code: 'AZKITAP', desc: 'Tüm kitap alışverişlerinde ücretsiz kargo', type: 'free_shipping', value: null, expiry: '2026-12-31', verified: 1, exclusive: 0 },
     { store_id: 20, title: 'Spor Ayakkabılarda %20 İndirim', code: 'FLO20SPOR', desc: 'Seçili spor ayakkabı modellerinde geçerli', type: 'percent', value: '20', expiry: '2026-08-31', verified: 1, exclusive: 0 },
   ];
   const insertCoupon = db.prepare(`INSERT INTO coupons (store_id, title, code, description, discount_type, discount_value, expiry_date, is_verified, is_exclusive, rating_sum, rating_count, view_count, use_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
