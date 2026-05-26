@@ -5,14 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin en büyük kupon ve indirim platformu. Yüzlerce marka için güncel kupon kodları ve fırsatlar.' %>">
+  <meta name="keywords" content="kupon kodu, indirim kodu, promosyon kodu, trendyol kupon, hepsiburada indirim, amazon kupon, ücretsiz kargo, banka kampanyaları, kupon, indirim, fiyat düşürüm">
   <meta name="robots" content="index, follow">
+  <meta name="author" content="Kuponluk.com">
   <meta property="og:title" content="<%= title %>">
   <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin kupon merkezi' %>">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="/img/og-image.png">
+  <meta property="og:image" content="https://kuponluk.com/img/og-image.png">
+  <meta property="og:url" content="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
+  <meta property="og:site_name" content="Kuponluk.com">
+  <meta property="og:locale" content="tr_TR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin en büyük kupon ve indirim platformu.' %>">
+  <meta name="twitter:image" content="https://kuponluk.com/img/og-image.png">
   <link rel="canonical" href="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
-  <!-- Tailwind CSS -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kuponluk.com",
+    "url": "https://kuponluk.com",
+    "description": "Türkiye'nin en büyük kupon ve indirim platformu",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://kuponluk.com/arama?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,9 +51,6 @@
       }
     }
   </script>
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/kuponluk.css">
-  <!-- Google AdSense placeholder (activate when approved) -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">

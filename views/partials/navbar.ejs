@@ -3,7 +3,7 @@
   0%   { transform: translateX(100vw); }
   100% { transform: translateX(-100%); }
 }
-.ticker-inner { display:inline-block; white-space:nowrap; animation: tickerScroll 30s linear infinite; }
+.ticker-inner { display:inline-block; white-space:nowrap; animation: tickerScroll 38s linear infinite; }
 </style>
 
 <!-- Top Bar -->
@@ -28,8 +28,8 @@
 
 <!-- Main Navbar -->
 <nav class="bg-white shadow-md" id="mainNav">
-  <div class="max-w-7xl mx-auto px-4 sm:px-10">
-    <div class="flex items-center gap-4 h-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center h-16 gap-3">
 
       <!-- Logo -->
       <a href="/" class="flex items-center gap-2 flex-shrink-0">
@@ -51,7 +51,7 @@
       </a>
 
       <!-- Desktop Search -->
-      <form action="/arama" method="GET" class="hidden md:flex flex-1 max-w-xl">
+      <form action="/arama" method="GET" class="hidden md:flex flex-1 mx-4">
         <div class="relative w-full">
           <input type="text" name="q" id="navSearchInput"
             value="<%= typeof q !== 'undefined' ? q : '' %>"
@@ -64,13 +64,13 @@
       </form>
 
       <!-- Right actions -->
-      <div class="flex items-center gap-2 ml-auto">
+      <div class="flex items-center gap-2 flex-shrink-0">
         <button id="mobileSearchBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </button>
         <a href="/kupon-gonder" class="hidden sm:flex items-center gap-1.5 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition" style="background:#FF6B00">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          Kupon Gönder
+          Kupon G&#xF6;nder
         </a>
         <button onclick="toggleRightSidebar()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold border-2 border-gray-200 hover:bg-gray-50 transition text-gray-700">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -79,29 +79,29 @@
       </div>
     </div>
 
-    <!-- Secondary Nav -->
-    <div class="hidden md:flex items-center justify-center gap-1 pb-2 border-t border-gray-100 pt-2 text-sm overflow-x-auto">
-      <a href="/kupon/kupon-kodu" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
+    <!-- Secondary Nav - colored coupon type buttons -->
+    <div class="hidden md:flex items-center justify-center gap-1.5 pb-2 border-t border-gray-100 pt-2 text-sm overflow-x-auto">
+      <a href="/kupon/kupon-kodu" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#FF6B00;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
         Kupon Kodu
       </a>
-      <a href="/kupon/indirim" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
+      <a href="/kupon/indirim" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#F59E0B;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M7 7a1 1 0 110-2 1 1 0 010 2zm10 10a1 1 0 110-2 1 1 0 010 2z"/></svg>
         &#x130;ndirim
       </a>
-      <a href="/kupon/hediye" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
+      <a href="/kupon/hediye" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#EC4899;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
         Hediye
       </a>
-      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
+      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#10B981;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0H3m14 0h2"/></svg>
         &#xDC;cretsiz Kargo
       </a>
-      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition text-gray-700 hover:text-orange-600">
+      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#3B82F6;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
         Banka Kampanyalar&#x131;
       </a>
-      <a href="/ilanlar" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg hover:bg-orange-50 font-medium transition font-bold hover:text-orange-600" style="color:#FF6B00;">
+      <a href="/ilanlar" class="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition text-white hover:opacity-85" style="background:#1a1a2e;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         &#x130;lanlar
       </a>
@@ -119,17 +119,17 @@
   <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-3">
     <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Kupon T&#xFC;rleri</p>
     <div class="grid grid-cols-2 gap-2 text-sm mb-3">
-      <a href="/kupon/kupon-kodu" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Kupon Kodu</a>
-      <a href="/kupon/indirim" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">&#x130;ndirim</a>
-      <a href="/kupon/hediye" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Hediye</a>
-      <a href="/kupon/ucretsiz-kargo" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">&#xDC;cr. Kargo</a>
-      <a href="/kupon/banka-kampanyalari" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700 border-2 border-gray-100">Banka Kamp.</a>
-      <a href="/ilanlar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-bold border-2 border-orange-200" style="color:#FF6B00;">&#x130;lanlar</a>
+      <a href="/kupon/kupon-kodu" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white" style="background:#FF6B00;">Kupon Kodu</a>
+      <a href="/kupon/indirim" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white" style="background:#F59E0B;">&#x130;ndirim</a>
+      <a href="/kupon/hediye" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white" style="background:#EC4899;">Hediye</a>
+      <a href="/kupon/ucretsiz-kargo" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white" style="background:#10B981;">&#xDC;cr. Kargo</a>
+      <a href="/kupon/banka-kampanyalari" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white col-span-2" style="background:#3B82F6;">Banka Kampanyalar&#x131;</a>
     </div>
     <div class="border-t border-gray-100 pt-3 grid grid-cols-2 gap-2 text-sm">
       <a href="/kategoriler" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700">Kategoriler</a>
       <a href="/magazalar" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-orange-50 font-medium text-gray-700">Ma&#x11F;azalar</a>
-      <a href="/kupon-gonder" class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-white font-semibold col-span-2 justify-center" style="background:#FF6B00">Kupon Gönder</a>
+      <a href="/ilanlar" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-white" style="background:#1a1a2e;">&#x130;lanlar</a>
+      <a href="/kupon-gonder" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-white font-semibold" style="background:#FF6B00">Kupon G&#xF6;nder</a>
     </div>
   </div>
 </nav>
@@ -142,10 +142,10 @@
   </div>
   <div class="flex-1 overflow-hidden relative">
     <div class="ticker-inner text-xs text-gray-700 font-medium">
-      Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! En güncel Trendyol kupon kodlar&#x131; burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp; Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! En güncel Trendyol kupon kodlar&#x131; burada. &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+      Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! &nbsp;&bull;&nbsp; Hepsiburada elektronik f&#x131;rsatlar&#x131;nda %15 indirim! &nbsp;&bull;&nbsp; Amazon kitap al&#x131;&#x15F;veri&#x15F;inde &#xFC;cretsiz kargo! &nbsp;&bull;&nbsp; Nike yaz koleksiyonunda %20 indirim! &nbsp;&bull;&nbsp; Yemeksepeti ilk sipari&#x15F;e %40 indirim! &nbsp;&bull;&nbsp; MediaMarkt bilgisayarlarda %12 kampanya! &nbsp;&bull;&nbsp; Trendyol'da yeni sezon indirimleri ba&#x15F;lad&#x131;! &nbsp;&bull;&nbsp; Hepsiburada elektronik f&#x131;rsatlar&#x131;nda %15 indirim! &nbsp;&bull;&nbsp;
     </div>
   </div>
-  <a href="/magaza/trendyol" class="flex-shrink-0 mx-3 text-xs font-bold text-white px-3 py-1 rounded-lg hover:opacity-90 transition whitespace-nowrap" style="background:#FF6B00;">Git &rarr;</a>
+  <a href="/magazalar" class="flex-shrink-0 mx-3 text-xs font-bold text-white px-3 py-1 rounded-lg hover:opacity-90 transition whitespace-nowrap" style="background:#FF6B00;">T&#xFC;m&#xFC; &rarr;</a>
 </div>
 
 <!-- Right Sidebar -->
@@ -186,7 +186,7 @@
         </a>
         <a href="/kupon-gonder" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition mb-0.5">
           <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          Kupon Gönder
+          Kupon G&#xF6;nder
         </a>
         <a href="/iletisim" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 font-semibold text-gray-700 transition">
           <svg class="w-5 h-5 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -219,7 +219,6 @@ if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', function() { var m = 
 var mobileSearchBtn = document.getElementById('mobileSearchBtn');
 if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', function() { var s = document.getElementById('mobileSearchBar'); if (s) { s.classList.toggle('hidden'); var inp = s.querySelector('input'); if (inp) inp.focus(); } });
 
-// Animated search placeholder
 (function() {
   var inp = document.getElementById('navSearchInput');
   if (!inp || inp.value) return;
