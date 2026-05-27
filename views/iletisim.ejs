@@ -1,141 +1,147 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <meta name="description" content="<%= description %>">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.724eczane.com/iletisim">
-  <meta property="og:title" content="<%= title %>">
-  <meta property="og:description" content="<%= description %>">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="724eczane.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="d-flex flex-column min-vh-100">
-
+<%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-<main class="flex-grow-1">
+<div class="max-w-5xl mx-auto px-4 py-8">
 
-<section class="hero-section py-4 text-white text-center">
-  <div class="container">
-    <h1 class="h2 fw-bold mb-2"><i class="fa-solid fa-envelope me-2"></i>İletişim</h1>
-    <p class="lead mb-0">Sorularınız, önerileriniz veya geri bildirimleriniz için bize ulaşın.</p>
+  <!-- Breadcrumb + Title -->
+  <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
+    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+      <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+      <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-gray-800 font-medium">&#x130;leti&#x15F;im</span>
+    </nav>
+    <h1 class="text-gray-900 mb-1">&#x130;leti&#x15F;im</h1>
+    <p class="text-gray-500 text-sm">Sorular&#x131;n&#x131;z, &#xF6;nerileriniz veya geri bildirimleriniz i&#xE7;in bize ula&#x15F;&#x131;n.</p>
   </div>
-</section>
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-
-        <div class="row g-4 mb-5">
-          <div class="col-md-4">
-            <div class="contact-info-card text-center p-4 h-100">
-              <i class="fa-solid fa-globe fa-2x text-danger mb-3"></i>
-              <h3 class="h6 fw-bold">Web Sitesi</h3>
-              <p class="text-muted small mb-0">724eczane.com</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="contact-info-card text-center p-4 h-100">
-              <i class="fa-solid fa-code fa-2x text-danger mb-3"></i>
-              <h3 class="h6 fw-bold">Widget Entegrasyonu</h3>
-              <p class="text-muted small mb-0">Sitenize eczane widgeti eklemek için <a href="/sitene-ekle" class="text-danger text-decoration-none">Sitene Ekle</a> sayfasını ziyaret edin.</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="contact-info-card text-center p-4 h-100">
-              <i class="fa-solid fa-shield-halved fa-2x text-danger mb-3"></i>
-              <h3 class="h6 fw-bold">Veri &amp; Gizlilik</h3>
-              <p class="text-muted small mb-0"><a href="/gizlilik" class="text-danger text-decoration-none">Gizlilik Politikamızı</a> inceleyebilirsiniz.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card shadow-sm border-0">
-          <div class="card-header bg-danger text-white fw-bold">
-            <i class="fa-solid fa-paper-plane me-2"></i>Mesaj Gönderin
-          </div>
-          <div class="card-body p-4">
-            <div id="contactFormWrap">
-              <form id="contactForm" novalidate>
-                <div class="mb-3">
-                  <label class="form-label fw-semibold">Ad Soyad <span class="text-danger">*</span></label>
-                  <input type="text" id="cName" class="form-control" placeholder="Adınız ve soyadınız" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-semibold">E-posta <span class="text-danger">*</span></label>
-                  <input type="email" id="cEmail" class="form-control" placeholder="ornek@eposta.com" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-semibold">Konu <span class="text-danger">*</span></label>
-                  <select id="cSubject" class="form-select" required>
-                    <option value="">— Konu seçin —</option>
-                    <option value="Hata Bildirimi">Hata Bildirimi</option>
-                    <option value="Widget Entegrasyonu">Widget Entegrasyonu</option>
-                    <option value="Referans Ekleme">Referans Ekleme Talebi</option>
-                    <option value="Öneri">Öneri</option>
-                    <option value="Diğer">Diğer</option>
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <label class="form-label fw-semibold">Mesajınız <span class="text-danger">*</span></label>
-                  <textarea id="cMessage" class="form-control" rows="5" placeholder="Mesajınızı buraya yazın..." required></textarea>
-                </div>
-                <div id="formError" class="alert alert-danger d-none"></div>
-                <button type="submit" class="btn btn-danger px-4">
-                  <i class="fa-solid fa-paper-plane me-2"></i>Gönder
-                </button>
-              </form>
-            </div>
-            <div id="contactSuccess" class="text-center py-4 d-none">
-              <i class="fa-solid fa-circle-check fa-3x text-success mb-3"></i>
-              <h4 class="fw-bold">Mesajınız Alındı!</h4>
-              <p class="text-muted">En kısa sürede size geri dönüş yapacağız. Teşekkür ederiz.</p>
-            </div>
-          </div>
-        </div>
-
+  <!-- Info cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-2xl p-5 flex items-start gap-4" style="border: 3px solid #e2e8f0;">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+        <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </div>
+      <div>
+        <h3 class="text-gray-800 mb-0.5">E-posta</h3>
+        <p class="text-sm text-gray-500">info@kuponluk.com</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl p-5 flex items-start gap-4" style="border: 3px solid #e2e8f0;">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+        <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div>
+        <h3 class="text-gray-800 mb-0.5">Konum</h3>
+        <p class="text-sm text-gray-500">&#x130;stanbul, T&#xFC;rkiye</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl p-5 flex items-start gap-4" style="border: 3px solid #e2e8f0;">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+        <svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      </div>
+      <div>
+        <h3 class="text-gray-800 mb-0.5">Telegram</h3>
+        <a href="/telegram" class="text-sm hover:opacity-80 transition font-semibold" style="color:#FF6B00;">Kanalım&#x131;za kat&#x131;l&#x131;n</a>
       </div>
     </div>
   </div>
-</section>
 
-</main>
+  <!-- Form + Map -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-<%- include('partials/footer') %>
+    <!-- Contact form -->
+    <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
+      <div class="flex items-center gap-2 mb-5">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+          <svg class="w-4 h-4" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        </div>
+        <h2 class="text-gray-800">Mesaj G&#xF6;nderin</h2>
+      </div>
+      <div id="contactFormWrap">
+        <form id="contactForm" novalidate class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ad Soyad <span style="color:#FF6B00">*</span></label>
+            <input type="text" id="cName" placeholder="Ad&#x131;n&#x131;z ve soyad&#x131;n&#x131;z" required class="w-full px-3.5 py-2.5 rounded-xl border-2 border-gray-200 text-sm focus:outline-none focus:border-orange-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">E-posta <span style="color:#FF6B00">*</span></label>
+            <input type="email" id="cEmail" placeholder="ornek@eposta.com" required class="w-full px-3.5 py-2.5 rounded-xl border-2 border-gray-200 text-sm focus:outline-none focus:border-orange-400 transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Konu <span style="color:#FF6B00">*</span></label>
+            <select id="cSubject" required class="w-full px-3.5 py-2.5 rounded-xl border-2 border-gray-200 text-sm focus:outline-none focus:border-orange-400 transition bg-white">
+              <option value="">&mdash; Konu se&#xE7;in &mdash;</option>
+              <option value="Kupon Onerisi">Kupon &#xD6;nerisi</option>
+              <option value="Hata Bildirimi">Hata Bildirimi</option>
+              <option value="Magaza Ekleme Talebi">Ma&#x11F;aza Ekleme Talebi</option>
+              <option value="Is Birligi">&#x130;&#x15F; Birli&#x11F;i</option>
+              <option value="Oneri">&#xD6;neri</option>
+              <option value="Diger">Di&#x11F;er</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Mesaj&#x131;n&#x131;z <span style="color:#FF6B00">*</span></label>
+            <textarea id="cMessage" rows="5" placeholder="Mesaj&#x131;n&#x131;z&#x131; buraya yaz&#x131;n..." required class="w-full px-3.5 py-2.5 rounded-xl border-2 border-gray-200 text-sm focus:outline-none focus:border-orange-400 transition resize-none"></textarea>
+          </div>
+          <div id="formError" class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 hidden"></div>
+          <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-white font-semibold text-sm transition hover:opacity-90" style="background:#FF6B00;">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            G&#xF6;nder
+          </button>
+        </form>
+      </div>
+      <div id="contactSuccess" class="hidden text-center py-8">
+        <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style="background:#dcfce7;">
+          <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2 class="text-gray-800 mb-2">Mesaj&#x131;n&#x131;z Al&#x131;nd&#x131;!</h2>
+        <p class="text-gray-500 text-sm">En k&#x131;sa s&#xFC;rede size geri d&#xF6;n&#xFC;&#x15F; yapaca&#x11F;&#x131;z. Te&#x15F;ekk&#xFC;r ederiz.</p>
+      </div>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
+    <!-- Map -->
+    <div class="bg-white rounded-2xl overflow-hidden" style="border: 3px solid #e2e8f0;">
+      <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
+        <svg class="w-4 h-4 flex-shrink-0" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="text-gray-700 text-sm font-semibold">Konum &mdash; &#x130;stanbul</span>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192697.92115055027!2d28.84788!3d41.005495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1685000000000!5m2!1str!2str"
+        width="100%"
+        height="420"
+        style="border:0;display:block;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  var name    = document.getElementById('cName').value.trim();
-  var email   = document.getElementById('cEmail').value.trim();
+  var name = document.getElementById('cName').value.trim();
+  var email = document.getElementById('cEmail').value.trim();
   var subject = document.getElementById('cSubject').value;
   var message = document.getElementById('cMessage').value.trim();
-  var errEl   = document.getElementById('formError');
-  errEl.classList.add('d-none');
+  var errEl = document.getElementById('formError');
+  errEl.classList.add('hidden');
   if (!name || !email || !subject || !message) {
-    errEl.textContent = 'Lütfen tüm alanları doldurun.';
-    errEl.classList.remove('d-none');
+    errEl.textContent = 'L\xFCtfen t\xFCm alanları doldurun.';
+    errEl.classList.remove('hidden');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errEl.textContent = 'Geçerli bir e-posta adresi girin.';
-    errEl.classList.remove('d-none');
+    errEl.textContent = 'Ge\xE7erli bir e-posta adresi girin.';
+    errEl.classList.remove('hidden');
     return;
   }
-  document.getElementById('contactFormWrap').classList.add('d-none');
-  document.getElementById('contactSuccess').classList.remove('d-none');
+  document.getElementById('contactFormWrap').classList.add('hidden');
+  document.getElementById('contactSuccess').classList.remove('hidden');
 });
 </script>
+
+<%- include('partials/footer') %>
 </body>
 </html>
