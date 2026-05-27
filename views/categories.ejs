@@ -21,43 +21,31 @@ var defaultCatIcon = '<svg class="w-7 h-7" style="color:#FF6B00" fill="none" str
 
 <div class="max-w-6xl mx-auto px-4 py-8">
 
-  <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-6">
-    <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
-    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-    <span class="text-gray-800 font-medium">Kategoriler</span>
-  </nav>
-
-  <div class="mb-8 text-center">
-    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">T&#xFC;m Kategoriler</h1>
-    <p class="text-gray-500">Al&#x131;&#x15F;veri&#x15F; yapt&#x131;&#x11F;&#x131;n&#x131;z kategoriyi se&#xE7;in ve en iyi kuponlar&#x131; ke&#x15F;fedin.</p>
+  <!-- Breadcrumb + Title Box -->
+  <div class="bg-white rounded-2xl p-5 mb-6" style="border: 3px solid #e2e8f0;">
+    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3">
+      <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+      <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-gray-800 font-medium">Kategoriler</span>
+    </nav>
+    <h1 class="text-2xl font-extrabold text-gray-900 mb-1">T&#xFC;m Kategoriler</h1>
+    <p class="text-gray-500 text-sm">Al&#x131;&#x15F;veri&#x15F; yapt&#x131;&#x11F;&#x131;n&#x131;z kategoriyi se&#xE7;in ve en iyi f&#x131;rsatlar&#x131; ke&#x15F;fedin.</p>
   </div>
 
   <% if (categories && categories.length > 0) { %>
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
     <% categories.forEach(function(cat) { %>
-    <a href="/kategori/<%= cat.slug %>" class="group rounded-2xl overflow-hidden shadow hover:shadow-xl transition border-2 border-gray-300 hover:border-orange-300 flex flex-col bg-white">
-      <div class="h-1.5 w-full" style="background:#FF6B00;"></div>
-      <div class="flex-1 p-6 flex flex-col items-center text-center">
-        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3" style="background:#FFF3E8;">
-          <%- catIconMap[cat.slug] || defaultCatIcon %>
-        </div>
-        <h3 class="text-base font-bold text-gray-800 group-hover:text-orange-600 transition mb-2"><%= cat.name %></h3>
-        <div class="flex gap-6 mt-1">
-          <div class="text-center">
-            <div class="text-xl font-extrabold" style="color:#1a1a2e;"><%= cat.coupon_count || 0 %></div>
-            <div class="text-xs text-gray-400">Kupon</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xl font-extrabold" style="color:#1a1a2e;"><%= cat.store_count || 0 %></div>
-            <div class="text-xs text-gray-400">Ma&#x11F;aza</div>
-          </div>
-        </div>
+    <a href="/kategori/<%= cat.slug %>" class="bg-white rounded-2xl shadow hover:shadow-lg transition hover:border-orange-300 p-4 flex flex-col items-center text-center group" style="border: 3px solid #e2e8f0;">
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-3 flex-shrink-0" style="background:#FFF3E8;">
+        <%- catIconMap[cat.slug] || defaultCatIcon %>
       </div>
+      <span class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 transition truncate w-full text-center"><%= cat.name %></span>
+      <span class="inline-block mt-2 text-xs font-bold px-2 py-0.5 rounded-full" style="color:#FF6B00;background:#FFF3E8;"><%= cat.store_count || 0 %> ma&#x11F;aza</span>
     </a>
     <% }); %>
   </div>
   <% } else { %>
-  <div class="bg-white rounded-2xl border-2 border-gray-300 shadow p-16 text-center">
+  <div class="bg-white rounded-2xl p-16 text-center" style="border: 3px solid #e2e8f0;">
     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Kategori Bulunamad&#x131;</h3>
     <p class="text-gray-500">Hen&#xFC;z kategori eklenmemi&#x15F;.</p>

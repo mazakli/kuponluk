@@ -3,8 +3,8 @@
 
 <!-- SLIDER -->
 <% if (sliders && sliders.length > 0) { %>
-<section class="py-4 px-4" style="background:#f3f4f6">
-  <div class="max-w-6xl mx-auto">
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
     <div class="relative overflow-hidden rounded-2xl shadow-lg" id="mainSlider" style="height:clamp(220px,30vw,440px);background:#1a1a2e;">
       <div class="flex h-full" id="sliderTrack" style="transition:transform 0.5s ease;">
         <% sliders.forEach(function(slide,idx){ %>
@@ -43,9 +43,9 @@
 <% } %>
 
 <!-- CATEGORIES -->
-<section class="py-4 px-4" style="background:#f3f4f6">
-  <div class="max-w-6xl mx-auto">
-    <div class="bg-white rounded-2xl shadow border-2 border-gray-300 p-5">
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="bg-white rounded-2xl p-5" style="border: 3px solid #e2e8f0;">
       <h2 class="text-base font-bold text-gray-700 mb-4 text-center">Kategoriler</h2>
       <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
         <a href="/kategori/elektronik" class="flex flex-col items-center gap-2 p-2.5 rounded-xl hover:bg-orange-50 transition group">
@@ -86,79 +86,79 @@
 </section>
 
 <!-- MAIN CONTENT -->
-<div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
-
-  <!-- Brand Tabs -->
-  <div class="bg-white rounded-2xl shadow border-2 border-gray-300 p-6">
-    <div class="flex flex-wrap gap-1 mb-6 bg-gray-100 rounded-2xl p-1.5 w-fit">
-      <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-white" data-tab="popular" style="background:#1a1a2e;">Pop&#xFC;ler &#x130;ndirim Kodlar&#x131;</button>
-      <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="new">En Yeni</button>
-      <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="expiring">Ka&#xE7;&#x131;yor</button>
-    </div>
-
-    <div id="tab-popular" class="tab-content">
-      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-        <% (popularBrands||[]).forEach(function(store){ %>
-        <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 border-2 border-transparent hover:border-orange-200 transition">
-          <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
-            <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
-          </div>
-          <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
-          <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
-        </a>
-        <% }) %>
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- Brand Tabs -->
+    <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
+      <div class="flex flex-wrap gap-1 mb-6 bg-gray-100 rounded-2xl p-1.5 w-fit">
+        <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-white" data-tab="popular" style="background:#1a1a2e;">Pop&#xFC;ler &#x130;ndirim Kodlar&#x131;</button>
+        <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="new">En Yeni</button>
+        <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-600" data-tab="expiring">Ka&#xE7;&#x131;yor</button>
       </div>
-    </div>
 
-    <div id="tab-new" class="tab-content hidden">
-      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-        <% (newBrands||[]).forEach(function(store){ %>
-        <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 border-2 border-transparent hover:border-orange-200 transition">
-          <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
-            <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
-          </div>
-          <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
-          <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
-        </a>
-        <% }) %>
+      <div id="tab-popular" class="tab-content">
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+          <% (popularBrands||[]).forEach(function(store){ %>
+          <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 transition" style="border: 2px solid transparent;" onmouseover="this.style.borderColor='#fed7aa'" onmouseout="this.style.borderColor='transparent'">
+            <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
+              <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
+              <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}" /><%}%>
+            </div>
+            <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
+            <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
+          </a>
+          <% }) %>
+        </div>
       </div>
-    </div>
 
-    <div id="tab-expiring" class="tab-content hidden">
-      <% if((expiringBrands||[]).length>0){ %>
-      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-        <% expiringBrands.forEach(function(store){ %>
-        <a href="/magaza/<%= store.slug %>" class="group relative flex flex-col items-center p-3 rounded-2xl bg-gray-50 border-2 border-transparent hover:border-red-200 transition">
-          <span class="absolute top-1.5 right-1.5 text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded-full" style="font-size:8px;">Son</span>
-          <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
-            <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
-            <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}"/><%}%>
-          </div>
-          <span class="text-xs font-semibold text-gray-800 text-center truncate w-full"><%= store.name %></span>
-          <span class="text-xs text-red-400 mt-0.5"><% if(store.earliest_expiry){%><%= new Date(store.earliest_expiry).toLocaleDateString('tr-TR') %><%}%></span>
-        </a>
-        <% }) %>
+      <div id="tab-new" class="tab-content hidden">
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+          <% (newBrands||[]).forEach(function(store){ %>
+          <a href="/magaza/<%= store.slug %>" class="group flex flex-col items-center p-3 rounded-2xl bg-gray-50 hover:bg-orange-50 transition" style="border: 2px solid transparent;" onmouseover="this.style.borderColor='#fed7aa'" onmouseout="this.style.borderColor='transparent'">
+            <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
+              <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
+              <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}" /><%}%>
+            </div>
+            <span class="text-xs font-semibold text-gray-800 group-hover:text-orange-600 text-center truncate w-full leading-tight"><%= store.name %></span>
+            <span class="text-xs text-gray-400 mt-0.5"><%= store.active_coupons||0 %> kupon</span>
+          </a>
+          <% }) %>
+        </div>
       </div>
-      <% }else{ %>
-      <div class="text-center py-10 text-gray-400"><p class="text-sm">Yak&#x131;nda sona erecek kupon bulunmuyor.</p></div>
-      <% } %>
-    </div>
 
-    <div class="mt-6 text-center">
-      <a href="/magazalar" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#1a1a2e;">
-        T&#xFC;m Markalara G&#xF6;z At
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
+      <div id="tab-expiring" class="tab-content hidden">
+        <% if((expiringBrands||[]).length>0){ %>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+          <% expiringBrands.forEach(function(store){ %>
+          <a href="/magaza/<%= store.slug %>" class="group relative flex flex-col items-center p-3 rounded-2xl bg-gray-50 transition" style="border: 2px solid transparent;" onmouseover="this.style.borderColor='#fecaca'" onmouseout="this.style.borderColor='transparent'">
+            <span class="absolute top-1.5 right-1.5 text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded-full" style="font-size:8px;">Son</span>
+            <div class="relative w-12 h-12 rounded-2xl overflow-hidden flex-shrink-0 mb-2" style="background:#FF6B00;">
+              <div class="absolute inset-0 flex items-center justify-center"><span class="text-white text-base font-extrabold"><%= (store.name||'K').charAt(0).toUpperCase() %></span></div>
+              <% if(store.logo_url){ %><img src="<%= store.logo_url %>" alt="<%= store.name %>" class="absolute inset-0 w-full h-full object-contain bg-white p-1.5" onerror="if(this.src.indexOf('unavatar')>-1){this.src='https://www.google.com/s2/favicons?domain='+this.src.replace('https://unavatar.io/','')+'&sz=128';}else{this.style.display='none';}" /><%}%>
+            </div>
+            <span class="text-xs font-semibold text-gray-800 text-center truncate w-full"><%= store.name %></span>
+            <span class="text-xs text-red-400 mt-0.5"><% if(store.earliest_expiry){%><%= new Date(store.earliest_expiry).toLocaleDateString('tr-TR') %><%}%></span>
+          </a>
+          <% }) %>
+        </div>
+        <% }else{ %>
+        <div class="text-center py-10 text-gray-400"><p class="text-sm">Yak&#x131;nda sona erecek kupon bulunmuyor.</p></div>
+        <% } %>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a href="/magazalar" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90" style="background:#1a1a2e;">
+          T&#xFC;m Markalara G&#xF6;z At
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
   </div>
-
-</div>
+</section>
 
 <!-- SOCIAL SECTION -->
-<section class="py-8 px-4" style="background:#f3f4f6">
-  <div class="max-w-6xl mx-auto">
+<section class="py-8">
+  <div class="max-w-6xl mx-auto px-4">
     <h2 class="text-lg font-bold text-gray-700 text-center mb-5">Bize Kat&#x131;l&#x131;n &amp; Takip Edin</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <a href="/telegram" class="flex items-center gap-5 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all" style="background:linear-gradient(135deg,#0088cc,#006699);">
@@ -175,7 +175,7 @@
           <div class="text-sm opacity-80">An&#x131;nda bildirimler</div>
         </div>
       </a>
-      <div class="bg-white rounded-2xl p-6 shadow border-2 border-gray-300">
+      <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
         <p class="text-sm font-bold text-gray-700 mb-4">Bizi Takip Edin</p>
         <div class="flex flex-col gap-3">
           <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-blue-50 hover:bg-blue-100 transition">
@@ -200,29 +200,103 @@
   </div>
 </section>
 
+<!-- CONTENT BOXES -->
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Box 1: How it works -->
+      <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+            <svg class="w-4 h-4" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h2 class="text-base font-bold text-gray-800">Nas&#x131;l &#xC7;al&#x131;&#x15F;&#x131;r?</h2>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5" style="background:#FF6B00;">1</span>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Ma&#x11F;aza veya Kategori Se&#xE7;in</p>
+              <p class="text-xs text-gray-500 mt-0.5">Yap&#x131;&#x15F;lar&#x131;n&#x131;z &#xFC;zerinde, ilgini &#xE7;eken ma&#x11F;azay&#x131; veya kategoriyi se&#xE7;in.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5" style="background:#FF6B00;">2</span>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Kuponu Kopyala</p>
+              <p class="text-xs text-gray-500 mt-0.5">G&#xFC;ncel kuponlar aras&#x131;ndan be&#x11F;endi&#x11F;inizi se&#xE7;in ve tek t&#x131;kla kopyalay&#x131;n.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5" style="background:#FF6B00;">3</span>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">&#xD6;deme S&#x131;ras&#x131;nda Kullan</p>
+              <p class="text-xs text-gray-500 mt-0.5">Kodu &#xF6;deme ad&#x131;m&#x131;nda ilgili alana yap&#x131;&#x15F;t&#x131;r&#x131;n ve tasarrufunuzu g&#xF6;r&#xFC;n.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Box 2: Why us -->
+      <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+            <svg class="w-4 h-4" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h2 class="text-base font-bold text-gray-800">Neden Kuponluk.com?</h2>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Do&#x11F;rulanm&#x131;&#x15F; &amp; G&#xFC;ncel Kuponlar</p>
+              <p class="text-xs text-gray-500 mt-0.5">T&#xFC;m kuponlar ekibimiz taraf&#x131;ndan test edilip do&#x11F;rulanmaktad&#x131;r.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">500+ Marka, Binlerce F&#x131;rsat</p>
+              <p class="text-xs text-gray-500 mt-0.5">T&#xFC;rkiye'nin en b&#xFC;y&#xFC;k markalar&#x131;ndan g&#xFC;ncel indirimler.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Tamamen &#xDC;cretsiz</p>
+              <p class="text-xs text-gray-500 mt-0.5">Kay&#x131;t olmaks&#x131;z&#x131;n t&#xFC;m kuponlara eri&#x15F;in, hi&#xE7;bir gizli &#xFC;cret yok.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FEATURE ICONS -->
-<section class="py-5 px-4 bg-white">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-      <div class="flex flex-col items-center">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
-        <h3 class="font-bold text-gray-800 text-sm mb-0.5">Do&#x11F;rulanm&#x131;&#x15F; Kuponlar</h3>
-        <p class="text-xs text-gray-500">Test edilip onaylanm&#x131;&#x15F; kuponlar.</p>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg></div>
-        <h3 class="font-bold text-gray-800 text-sm mb-0.5">Marka Bildirimleri</h3>
-        <p class="text-xs text-gray-500">Yeni kupon gelince an&#x131;nda haber al.</p>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-        <h3 class="font-bold text-gray-800 text-sm mb-0.5">Kolay Kullan&#x131;m</h3>
-        <p class="text-xs text-gray-500">Bir t&#x131;kla kopyala ve tasarruf et.</p>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
-        <h3 class="font-bold text-gray-800 text-sm mb-0.5">Tamamen &#xDC;cretsiz</h3>
-        <p class="text-xs text-gray-500">Kay&#x131;t olmadan da kullanabilirsiniz.</p>
+<section class="py-5">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="bg-white rounded-2xl p-6" style="border: 3px solid #e2e8f0;">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="flex flex-col items-center">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <h3 class="font-bold text-gray-800 text-sm mb-0.5">Do&#x11F;rulanm&#x131;&#x15F; Kuponlar</h3>
+          <p class="text-xs text-gray-500">Test edilip onaylanm&#x131;&#x15F; kuponlar.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg></div>
+          <h3 class="font-bold text-gray-800 text-sm mb-0.5">Marka Bildirimleri</h3>
+          <p class="text-xs text-gray-500">Yeni kupon gelince an&#x131;nda haber al.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3 class="font-bold text-gray-800 text-sm mb-0.5">Kolay Kullan&#x131;m</h3>
+          <p class="text-xs text-gray-500">Bir t&#x131;kla kopyala ve tasarruf et.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-2" style="background:#FFF3E8;"><svg class="w-5 h-5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+          <h3 class="font-bold text-gray-800 text-sm mb-0.5">Tamamen &#xDC;cretsiz</h3>
+          <p class="text-xs text-gray-500">Kay&#x131;t olmadan da kullanabilirsiniz.</p>
+        </div>
       </div>
     </div>
   </div>
