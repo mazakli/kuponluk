@@ -142,6 +142,8 @@
             var dv = coupon.discount_value;
             var dt = coupon.discount_type;
             var displayTitle = coupon.title || (dv && dt==='percentage' ? '%'+dv+' '+store.name+' İndirim Kodu' : dv ? store.name+' '+dv+' TL İndirim Kodu' : store.name+' İndirim Kodu');
+            var tclr = coupon.type==='indirim'?{bg:'#16a34a',lt:'#dcfce7',bd:'#bbf7d0'}:coupon.type==='hediye'?{bg:'#B33939',lt:'#fef2f2',bd:'#fecaca'}:coupon.type==='ucretsiz-kargo'?{bg:'#0d9488',lt:'#ccfbf1',bd:'#99f6e4'}:coupon.type==='banka-kampanyalari'?{bg:'#1d4ed8',lt:'#dbeafe',bd:'#bfdbfe'}:{bg:'#FF6B00',lt:'#fff8f0',bd:'#fed7aa'};
+            var typeLabel = coupon.type==='indirim'?'İNDİRİM':coupon.type==='hediye'?'HEDİYE':coupon.type==='ucretsiz-kargo'?'KARGO':coupon.type==='banka-kampanyalari'?'BANKA':'KOD';
           %>
           <article class="coupon-card bg-white rounded-2xl border-2 border-gray-100 shadow-sm hover:shadow-md hover:border-orange-200 transition overflow-hidden"
             data-type="code"
@@ -150,10 +152,10 @@
             data-verified="<%= isVerified?'1':'0' %>"
             data-expiring="<%= isExpiring?'1':'0' %>"
             data-new="<%= isNew?'1':'0' %>">
-            <div class="h-1 w-full" style="background:linear-gradient(90deg,#FF6B00,#ff8c00);"></div>
+            <div class="h-1 w-full" style="background:<%=tclr.bg%>;"></div>
             <div class="p-4">
               <div class="flex flex-wrap gap-1 mb-2">
-                <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#fff3e6;color:#FF6B00;">KOD</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:<%=tclr.lt%>;color:<%=tclr.bg%>;"><%=typeLabel%></span>
                 <% if(isVerified){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Edit&#xF6;r Onayl&#x131;</span><%}%>
                 <% if(isExpiring){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/></svg> T&#xFC;kenmek &#xDC;zere</span><%}%>
                 <% if(isNew){%><span class="inline-flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg> En Yeni</span><%}%>
@@ -165,8 +167,8 @@
                 <% if(coupon.expiry_date){%><span>Son: <%= new Date(coupon.expiry_date).toLocaleDateString('tr-TR') %></span><%}%>
               </div>
               <div class="flex items-center gap-2">
-                <div class="flex-1 relative overflow-hidden cursor-pointer rounded-xl border-2 border-dashed border-orange-200 code-band"
-                  style="background:linear-gradient(90deg,#fff8f0,#ffede0);"
+                <div class="flex-1 relative overflow-hidden cursor-pointer rounded-xl border-2 border-dashed code-band"
+                  style="background:<%=tclr.lt%>;border-color:<%=tclr.bd%>;"
                   onclick="openCouponModalFromBtn(this)"
                   data-coupon-id="<%= coupon.id %>"
                   data-coupon-code="<%= coupon.code||'' %>"
@@ -178,8 +180,8 @@
                     <span class="text-sm font-extrabold tracking-widest"><%= coupon.code||'XXXXXXXXX' %></span>
                   </div>
                   <div class="absolute inset-0 flex items-center justify-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" style="color:#FF6B00" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-                    <span class="text-xs font-bold" style="color:#FF6B00;">Kodu G&#xF6;r</span>
+                    <svg class="w-3.5 h-3.5" style="color:<%=tclr.bg%>" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                    <span class="text-xs font-bold" style="color:<%=tclr.bg%>;">Kodu G&#xF6;r</span>
                   </div>
                 </div>
                 <button onclick="openCouponModalFromBtn(this)"
@@ -190,7 +192,7 @@
                   data-store-name="<%= store.name %>"
                   data-store-id="<%= store.id %>"
                   class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-white font-bold text-xs transition hover:opacity-90 whitespace-nowrap flex-shrink-0"
-                  style="background:#FF6B00;">
+                  style="background:<%=tclr.bg%>;">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                   Kodu Al
                 </button>
