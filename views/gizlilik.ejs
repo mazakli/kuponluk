@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Gizlilik Politikası","item":"https://kuponluk.com/gizlilik-politikasi"}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-3xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">Gizlilik Politikas&#x131;</span>
@@ -48,22 +51,10 @@
       <h2 class="text-gray-900 mb-3">2. Verilerin Kullan&#x131;m Amac&#x131;</h2>
       <p class="text-sm text-gray-600 leading-relaxed mb-3">Toplad&#x131;&#x11F;&#x131;m&#x131;z verileri a&#x15F;a&#x11F;&#x131;daki ama&#xE7;larla kullan&#x131;yoruz:</p>
       <ul class="space-y-2">
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          Hesab&#x131;n&#x131;z&#x131; olu&#x15F;turmak ve y&#xF6;netmek
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          Favori ma&#x11F;azalar&#x131;n&#x131;za ait yeni kupon bildirimlerini iletmek
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          &#x130;leti&#x15F;im taleplerinizi yan&#x131;tlamak
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          Hizmet kalitesini iyile&#x15F;tirmek ve teknik sorunlar&#x131; gidermek
-        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Hesab&#x131;n&#x131;z&#x131; olu&#x15F;turmak ve y&#xF6;netmek</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Favori ma&#x11F;azalar&#x131;n&#x131;za ait yeni kupon bildirimlerini iletmek</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>&#x130;leti&#x15F;im taleplerinizi yan&#x131;tlamak</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Hizmet kalitesini iyile&#x15F;tirmek ve teknik sorunlar&#x131; gidermek</li>
       </ul>
     </section>
 
@@ -71,73 +62,47 @@
       <h2 class="text-gray-900 mb-3">3. Veri Payla&#x15F;&#x131;m&#x131;</h2>
       <p class="text-sm text-gray-600 leading-relaxed mb-3">Ki&#x15F;isel verilerinizi a&#x15F;a&#x11F;&#x131;daki durumlar d&#x131;&#x15F;&#x131;nda &#xFC;&#xE7;&#xFC;nc&#xFC; taraflarla paylamayoruz:</p>
       <div class="space-y-2">
-        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Yasal zorunluluk:</strong> Yetkili makamlar&#x131;n yasal talepleri halinde ilgili veriler paylaşılabilir.</p>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Hizmet sa&#x11F;lay&#x131;c&#x131;lar:</strong> E-posta servisi gibi teknik altyap&#x131; sa&#x11F;lay&#x131;c&#x131;lar&#x131; yaln&#x131;zca hizmetin y&#xFC;r&#xFC;t&#xFC;lmesi amac&#x131;yla s&#x131;n&#x131;rl&#x131; veri alabilir.</p>
-        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100"><p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Yasal zorunluluk:</strong> Yetkili makamlar&#x131;n yasal talepleri halinde ilgili veriler paylaşılabilir.</p></div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100"><p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Hizmet sa&#x11F;lay&#x131;c&#x131;lar:</strong> E-posta servisi gibi teknik altyap&#x131; sa&#x11F;lay&#x131;c&#x131;lar&#x131; yaln&#x131;zca hizmetin y&#xFC;r&#xFC;t&#xFC;lmesi amac&#x131;yla s&#x131;n&#x131;rl&#x131; veri alabilir.</p></div>
       </div>
       <p class="text-sm text-gray-600 leading-relaxed mt-3">Kuponluk.com, ki&#x15F;isel verilerinizi pazarlama veya reklam ama&#xE7;l&#x131; olarak hi&#xE7;bir &#xFC;&#xE7;&#xFC;nc&#xFC; tarafla paylamaz.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">4. Affiliate Ba&#x11F;lant&#x131;lar</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Sitemizde yer alan baz&#x131; ma&#x11F;aza ba&#x11F;lant&#x131;lar&#x131;, affiliate (sat&#x131;&#x15F; ortakl&#x131;&#x11F;&#x131;) linkleri olabilir. Bu linkler arac&#x131;l&#x131;&#x11F;&#x131;yla yap&#x131;lan al&#x131;&#x15F;veri&#x15F;lerden Kuponluk.com komisyon kazanabilir. Bu durum kullan&#x131;c&#x131;lara sunulan fiyatlar&#x131; veya indirimleri etkilemez. Affiliate ili&#x15F;kileri her zaman &#x15F;effaf bir &#x15F;ekilde y&#xFC;r&#xFC;t&#xFC;lmektedir.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Sitemizde yer alan baz&#x131; ma&#x11F;aza ba&#x11F;lant&#x131;lar&#x131;, affiliate (sat&#x131;&#x15F; ortakl&#x131;&#x11F;&#x131;) linkleri olabilir. Bu linkler arac&#x131;l&#x131;&#x11F;&#x131;yla yap&#x131;lan al&#x131;&#x15F;veri&#x15F;lerden Kuponluk.com komisyon kazanabilir. Bu durum kullan&#x131;c&#x131;lara sunulan fiyatlar&#x131; veya indirimleri etkilemez.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">5. Veri G&#xFC;venli&#x11F;i</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Ki&#x15F;isel verilerinizi korumak i&#xE7;in endüstri standardı güvenlik önlemleri uygulamaktay&#x131;z. &#x15E;ifreler bcrypt algoritmas&#x131;yla &#x15F;ifrelenerek saklan&#x131;r; hi&#xE7;bir zaman d&#xFC;z metin olarak tutulmaz. Ancak internet &#xFC;zerinden hi&#xE7;bir veri iletiminin ya da depolaman&#x131;n %100 g&#xFC;venli oldu&#x11F;u garanti edilemez.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Ki&#x15F;isel verilerinizi korumak i&#xE7;in end&#xFC;stri standard&#x131; g&#xFC;venlik &#xF6;nlemleri uygulamaktay&#x131;z. &#x15E;ifreler bcrypt algoritmas&#x131;yla &#x15F;ifrelenerek saklan&#x131;r; hi&#xE7;bir zaman d&#xFC;z metin olarak tutulmaz.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">6. Kullan&#x131;c&#x131; Haklar&#x131;</h2>
       <p class="text-sm text-gray-600 leading-relaxed mb-3">6698 say&#x131;l&#x131; Ki&#x15F;isel Verilerin Korunmas&#x131; Kanunu (KVKK) kapsam&#x131;nda a&#x15F;a&#x11F;&#x131;daki haklara sahipsiniz:</p>
       <ul class="space-y-2">
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Ki&#x15F;isel verilerinizin i&#x15F;lenip i&#x15F;lenmedi&#x11F;ini &#xF6;&#x11F;renme
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Yanl&#x131;&#x15F; veya eksik verilerin d&#xFC;zeltilmesini talep etme
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Verilerinizin silinmesini veya anonim hale getirilmesini isteme
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Veri i&#x15F;lemeye itiraz etme
-        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Ki&#x15F;isel verilerinizin i&#x15F;lenip i&#x15F;lenmedi&#x11F;ini &#xF6;&#x11F;renme</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Yanl&#x131;&#x15F; veya eksik verilerin d&#xFC;zeltilmesini talep etme</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Verilerinizin silinmesini veya anonim hale getirilmesini isteme</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Veri i&#x15F;lemeye itiraz etme</li>
       </ul>
       <p class="text-sm text-gray-600 leading-relaxed mt-3">Bu haklar&#x131; kullanmak i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla bize ula&#x15F;abilirsiniz.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">7. &#xC7;erezler</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Sitemizin kulland&#x131;&#x11F;&#x131; &#xE7;erezler hakk&#x131;nda ayr&#x131;nt&#x131;l&#x131; bilgi i&#xE7;in <a href="/cerez-politikasi" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#xC7;erez Politikas&#x131;</a> sayfam&#x131;z&#x131; inceleyebilirsiniz.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Sitemizin kulland&#x131;&#x11F;&#x131; &#xE7;erezler hakk&#x131;nda ayr&#x131;nt&#x131;l&#x131; bilgi i&#xE7;in <a href="/cerez-politikasi" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#xC7;erez Politikas&#x131;</a> sayfam&#x131;z&#x131; inceleyebilirsiniz.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">8. Politika De&#x11F;i&#x15F;iklikleri</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Bu gizlilik politikas&#x131;, &#xF6;nceden bildirimde bulunmaks&#x131;z&#x131;n g&#xFC;ncellenebilir. &#xD6;nemli de&#x11F;i&#x15F;ikliklerde kay&#x131;tl&#x131; kullan&#x131;c&#x131;lar e-posta ile bilgilendirilecektir. G&#xFC;ncel politika her zaman bu sayfada yay&#x131;mlanacakt&#x131;r.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Bu gizlilik politikas&#x131;, &#xF6;nceden bildirimde bulunmaks&#x131;z&#x131;n g&#xFC;ncellenebilir. &#xD6;nemli de&#x11F;i&#x15F;ikliklerde kay&#x131;tl&#x131; kullan&#x131;c&#x131;lar e-posta ile bilgilendirilecektir.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">9. &#x130;leti&#x15F;im</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Gizlilik politikas&#x131;na ili&#x15F;kin sorular&#x131;n&#x131;z i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla ya da <strong>info@kuponluk.com</strong> e-posta adresi &#xFC;zerinden ula&#x15F;abilirsiniz.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Gizlilik politikas&#x131;na ili&#x15F;kin sorular&#x131;n&#x131;z i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla ya da <strong>info@kuponluk.com</strong> e-posta adresi &#xFC;zerinden ula&#x15F;abilirsiniz.</p>
     </section>
 
   </div>

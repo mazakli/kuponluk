@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"İletişim","item":"https://kuponluk.com/iletisim"}]},{"@type":"ContactPage","name":"Kuponluk.com İletişim","url":"https://kuponluk.com/iletisim","description":"Kuponluk.com ile iletişime geçin.","publisher":{"@type":"Organization","name":"Kuponluk.com","email":"info@kuponluk.com"}}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-5xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">&#x130;leti&#x15F;im</span>
@@ -21,7 +24,7 @@
         <svg class="w-5 h-5" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       </div>
       <div>
-        <h3 class="text-gray-800 mb-0.5">E-posta</h3>
+        <h2 class="text-gray-800 mb-0.5" style="font-size:1rem;font-weight:600;">E-posta</h2>
         <p class="text-sm text-gray-500">info@kuponluk.com</p>
       </div>
     </div>
@@ -30,7 +33,7 @@
         <svg class="w-5 h-5" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
       </div>
       <div>
-        <h3 class="text-gray-800 mb-0.5">Konum</h3>
+        <h2 class="text-gray-800 mb-0.5" style="font-size:1rem;font-weight:600;">Konum</h2>
         <p class="text-sm text-gray-500">&#x130;stanbul, T&#xFC;rkiye</p>
       </div>
     </div>
@@ -39,7 +42,7 @@
         <svg class="w-5 h-5" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
       </div>
       <div>
-        <h3 class="text-gray-800 mb-0.5">Telegram</h3>
+        <h2 class="text-gray-800 mb-0.5" style="font-size:1rem;font-weight:600;">Telegram</h2>
         <a href="/telegram" class="text-sm hover:opacity-80 transition font-semibold" style="color:#f97316;">Kanal&#x131;m&#x131;za kat&#x131;l&#x131;n</a>
       </div>
     </div>
@@ -111,7 +114,8 @@
         style="border:0;display:block;"
         allowfullscreen=""
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Kuponluk.com - İstanbul Konum">
       </iframe>
     </div>
 
@@ -133,7 +137,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errEl.textContent = 'Ge\xE7erli bir e-posta adresi girin.';
+    errEl.textContent = 'Geçerli bir e-posta adresi girin.';
     errEl.classList.remove('hidden');
     return;
   }

@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Hakkımızda","item":"https://kuponluk.com/hakkimizda"}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-4xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-8" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">Hakk&#x131;m&#x131;zda</span>

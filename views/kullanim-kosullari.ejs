@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Kullanım Koşulları","item":"https://kuponluk.com/kullanim-kosullari"}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-3xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">Kullan&#x131;m Ko&#x15F;ullar&#x131;</span>
@@ -23,94 +26,61 @@
 
     <section>
       <h2 class="text-gray-900 mb-3">1. Hizmet Tan&#x131;m&#x131;</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Kuponluk.com, &#xE7;e&#x15F;itli e-ticaret platformlar&#x131;na ait indirim kodlar&#x131;n&#x131;, promosyon kuponlar&#x131;n&#x131; ve kampanya bilgilerini bir araya getiren ba&#x11F;&#x131;ms&#x131;z bir bilgi platformudur. Sitemiz, listelenen ma&#x11F;azalar&#x131;n sat&#x131;&#x15F; ortakl&#x131;k (affiliate) program&#x131; kapsam&#x131;nda i&#x15F;lem yapabilir; ancak hi&#xE7;bir ma&#x11F;azayla do&#x11F;rudan ticari ba&#x11F; bulunmamaktad&#x131;r.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Kuponluk.com, &#xE7;e&#x15F;itli e-ticaret platformlar&#x131;na ait indirim kodlar&#x131;n&#x131;, promosyon kuponlar&#x131;n&#x131; ve kampanya bilgilerini bir araya getiren ba&#x11F;&#x131;ms&#x131;z bir bilgi platformudur.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">2. Kullan&#x131;c&#x131; Y&#xFC;k&#xFC;ml&#xFC;l&#xFC;kleri</h2>
       <p class="text-sm text-gray-600 leading-relaxed mb-3">Sitemizi kullan&#x131;rken a&#x15F;a&#x11F;&#x131;dakileri kabul etmi&#x15F; say&#x131;l&#x131;rs&#x131;n&#x131;z:</p>
       <ul class="space-y-2">
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Siteyi yasal ama&#xE7;larla ve d&#xFC;r&#xFC;stl&#xFC;k ilkesine uygun kullanmak
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Hesap bilgilerinizin g&#xFC;venli&#x11F;ini korumak ve ba&#x15F;kalar&#x131;yla payla&#x15F;mamak
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Yanl&#x131;&#x15F;, yan&#x131;lt&#x131;c&#x131; veya hakaret i&#xE7;eren i&#xE7;erik payla&#x15F;mamak
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Siteye otomatik ara&#xE7;larla (bot, scraper vb.) a&#x15F;&#x131;r&#x131; y&#xFC;k bindirmemek
-        </li>
-        <li class="flex items-start gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Yasal mevzuata ve&#160;i&#x15F;bu ko&#x15F;ullara uymak
-        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Siteyi yasal ama&#xE7;larla ve d&#xFC;r&#xFC;stl&#xFC;k ilkesine uygun kullanmak</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Hesap bilgilerinizin g&#xFC;venli&#x11F;ini korumak ve ba&#x15F;kalar&#x131;yla payla&#x15F;mamak</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Yanl&#x131;&#x15F;, yan&#x131;lt&#x131;c&#x131; veya hakaret i&#xE7;eren i&#xE7;erik payla&#x15F;mamak</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Siteye otomatik ara&#xE7;larla (bot, scraper vb.) a&#x15F;&#x131;r&#x131; y&#xFC;k bindirmemek</li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Yasal mevzuata ve&#160;i&#x15F;bu ko&#x15F;ullara uymak</li>
       </ul>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">3. Kupon ve &#x130;ndirim Bilgilerinin Do&#x11F;rulu&#x11F;u</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Kuponluk.com, listelenen kupon ve kampanya bilgilerinin do&#x11F;rulu&#x11F;unu sa&#x11F;lamak i&#xE7;in makul &#xF6;zen g&#xF6;stermektedir. Ancak ma&#x11F;azalar&#x131;n kampanya ko&#x15F;ullar&#x131;n&#x131; herhangi bir zamanda de&#x11F;i&#x15F;tirme hakk&#x131; bulundu&#x11F;undan, sitemizdeki baz&#x131; bilgiler eski veya hatal&#x131; olabilir. Kuponluk.com, bu bilgilerin yanl&#x131;&#x15F; ya da g&#xFC;ncel d&#x131;&#x15F;&#x131; olmas&#x131;ndan kaynaklanabilecek dolayl&#x131; veya do&#x11F;rudan zararlardan sorumlu tutulamaz.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Kuponluk.com, listelenen kupon ve kampanya bilgilerinin do&#x11F;rulu&#x11F;unu sa&#x11F;lamak i&#xE7;in makul &#xF6;zen g&#xF6;stermektedir. Ancak ma&#x11F;azalar&#x131;n kampanya ko&#x15F;ullar&#x131;n&#x131; herhangi bir zamanda de&#x11F;i&#x15F;tirme hakk&#x131; bulundu&#x11F;undan, sitemizdeki baz&#x131; bilgiler eski veya hatal&#x131; olabilir.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">4. Affiliate Ba&#x11F;lant&#x131;lar ve Komisyon</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Sitemizde yer alan baz&#x131; ba&#x11F;lant&#x131;lar affiliate ba&#x11F;lant&#x131;lar&#x131; olabilir. Bu ba&#x11F;lant&#x131;lar &#xFC;zerinden ger&#xE7;ekle&#x15F;en al&#x131;&#x15F;veri&#x15F;lerden Kuponluk.com bir komisyon kazanabilir. Bu durum, kullan&#x131;c&#x131;lara yans&#x131;yan fiyatlar&#x131; veya kupon indirimlerini etkilemez ve herhangi bir ek maliyet olu&#x15F;turmaz.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Sitemizde yer alan baz&#x131; ba&#x11F;lant&#x131;lar affiliate ba&#x11F;lant&#x131;lar&#x131; olabilir. Bu ba&#x11F;lant&#x131;lar &#xFC;zerinden ger&#xE7;ekle&#x15F;en al&#x131;&#x15F;veri&#x15F;lerden Kuponluk.com bir komisyon kazanabilir. Bu durum, kullan&#x131;c&#x131;lara yans&#x131;yan fiyatlar&#x131; veya kupon indirimlerini etkilemez.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">5. Fikri M&#xFC;lkiyet</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Kuponluk.com sitesindeki tasar&#x131;m, i&#xE7;erik, yaz&#x131;l&#x131;m ve di&#x11F;er materyaller Kuponluk.com'a aittir ve telif hakk&#x131; mevzuat&#x131;yla korunmaktad&#x131;r. Sitenin i&#xE7;eri&#x11F;i, kaynakta uygun at&#x131;f yap&#x131;lmadan ticari ama&#xE7;larla kopyalanamaz, da&#x11F;&#x131;t&#x131;lamaz veya de&#x11F;i&#x15F;tirilemez.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Kuponluk.com sitesindeki tasar&#x131;m, i&#xE7;erik, yaz&#x131;l&#x131;m ve di&#x11F;er materyaller Kuponluk.com'a aittir ve telif hakk&#x131; mevzuat&#x131;yla korunmaktad&#x131;r.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">6. Sorumluluk Reddi</h2>
       <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-        <p class="text-sm text-gray-600 leading-relaxed">
-          Kuponluk.com, listelenen kuponlar&#x131;n ge&#xE7;erlili&#x11F;i, ma&#x11F;azalar&#x131;n i&#x15F;lem s&#xFC;re&#xE7;leri, iade politikalar&#x131; veya sipari&#x15F; sorunlar&#x131; konusunda hi&#xE7;bir sorumluluk &#xFC;stlenmez. Bu t&#xFC;r konular do&#x11F;rudan ilgili ma&#x11F;azan&#x131;n m&#xFC;&#x15F;teri hizmetleriyle &#xE7;&#xF6;z&#xFC;lmelidir.
-        </p>
+        <p class="text-sm text-gray-600 leading-relaxed">Kuponluk.com, listelenen kuponlar&#x131;n ge&#xE7;erlili&#x11F;i, ma&#x11F;azalar&#x131;n i&#x15F;lem s&#xFC;re&#xE7;leri, iade politikalar&#x131; veya sipari&#x15F; sorunlar&#x131; konusunda hi&#xE7;bir sorumluluk &#xFC;stlenmez.</p>
       </div>
     </section>
 
     <section>
-      <h2 class="text-gray-900 mb-3">7. Hesap Askıya Alma</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Kullan&#x131;m ko&#x15F;ullar&#x131;n&#x131; ihlal eden, spam veya sahte kupon g&#xF6;nderen, ya da siteye zarar vermeye &#xE7;al&#x131;&#x15F;an kullan&#x131;c&#x131;lar&#x131;n hesaplar&#x131; &#xF6;nceden bildirimde bulunmaks&#x131;z&#x131;n ask&#x131;ya al&#x131;nabilir veya kal&#x131;c&#x131; olarak kapat&#x131;labilir.
-      </p>
+      <h2 class="text-gray-900 mb-3">7. Hesap Ask&#x131;ya Alma</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">Kullan&#x131;m ko&#x15F;ullar&#x131;n&#x131; ihlal eden, spam veya sahte kupon g&#xF6;nderen kullan&#x131;c&#x131;lar&#x131;n hesaplar&#x131; &#xF6;nceden bildirimde bulunmaks&#x131;z&#x131;n ask&#x131;ya al&#x131;nabilir veya kal&#x131;c&#x131; olarak kapat&#x131;labilir.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">8. Ko&#x15F;ullarda De&#x11F;i&#x15F;iklik</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Kuponluk.com, kullan&#x131;m ko&#x15F;ullar&#x131;n&#x131; herhangi bir zamanda g&#xFC;ncelleme hakk&#x131;n&#x131; sakl&#x131; tutar. G&#xFC;ncel ko&#x15F;ullar her zaman bu sayfada yay&#x131;mlanacakt&#x131;r. Sitenin kullan&#x131;m&#x131;na devam etmek, g&#xFC;ncellemi&#x15F; ko&#x15F;ullar&#x131; kabul etti&#x11F;iniz anlam&#x131;na gelir.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Kuponluk.com, kullan&#x131;m ko&#x15F;ullar&#x131;n&#x131; herhangi bir zamanda g&#xFC;ncelleme hakk&#x131;n&#x131; sakl&#x131; tutar. G&#xFC;ncel ko&#x15F;ullar her zaman bu sayfada yay&#x131;mlanacakt&#x131;r.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">9. Uygulanacak Hukuk</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Bu kullan&#x131;m ko&#x15F;ullar&#x131; T&#xFC;rk hukukuna tabidir. Olas&#x131; uyumazl&#x131;klarda &#x130;stanbul mahkemeleri ve icra daireleri yetkilidir.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Bu kullan&#x131;m ko&#x15F;ullar&#x131; T&#xFC;rk hukukuna tabidir. Olas&#x131; uyumazl&#x131;klarda &#x130;stanbul mahkemeleri ve icra daireleri yetkilidir.</p>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">10. &#x130;leti&#x15F;im</h2>
-      <p class="text-sm text-gray-600 leading-relaxed">
-        Bu ko&#x15F;ullarla ilgili sorular&#x131;n&#x131;z i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla ya da <strong>info@kuponluk.com</strong> e-posta adresi &#xFC;zerinden ula&#x15F;abilirsiniz.
-      </p>
+      <p class="text-sm text-gray-600 leading-relaxed">Bu ko&#x15F;ullarla ilgili sorular&#x131;n&#x131;z i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla ya da <strong>info@kuponluk.com</strong> e-posta adresi &#xFC;zerinden ula&#x15F;abilirsiniz.</p>
     </section>
 
   </div>

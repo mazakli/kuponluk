@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Sıkça Sorulan Sorular","item":"https://kuponluk.com/sss"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kupon kodu nedir ve nasıl kullanılır?","acceptedAnswer":{"@type":"Answer","text":"Kupon kodu, çevrimiçi alışverişlerde indirim elde etmek için kullanılan özel bir koddur. Kuponluk.com'dan kodu kopyaladıktan sonra, ödeme sayfasındaki İndirim Kodu alanına yapıştırın ve uygulayın."}},{"@type":"Question","name":"Kuponluk.com ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Evet, Kuponluk.com tamamen ücretsizdir. Kayıt olmadan da tüm kuponlara erişebilirsiniz."}},{"@type":"Question","name":"Kupon çalışmıyorsa ne yapmalıyım?","acceptedAnswer":{"@type":"Answer","text":"Kuponun son kullanma tarihini kontrol edin, kodu harfiyen doğru girdiğinizden emin olun ve minimum sepet tutarı şartı olup olmadığını kontrol edin."}},{"@type":"Question","name":"Yeni kuponlardan nasıl haberdar olabilirim?","acceptedAnswer":{"@type":"Answer","text":"Telegram kanalımıza katılarak her yeni kuponu anında alabilirsiniz. Ayrıca sitenin Yeni Kuponlar ve Popüler Kuponlar sayfalarını takip edebilirsiniz."}},{"@type":"Question","name":"Kuponluk.com'un affiliate bağlantıları var mı?","acceptedAnswer":{"@type":"Answer","text":"Evet, bazı bağlantılar affiliate linkleri olabilir. Ancak bu durum kullanıcılara sunulan fiyatları veya indirimleri etkilemez."}}]}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-3xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">S&#x131;k&#xE7;a Sorulan Sorular</span>
@@ -15,105 +18,105 @@
   </div>
 
   <!-- FAQ Items -->
-  <div class="space-y-4">
+  <div class="space-y-4" itemscope itemtype="https://schema.org/FAQPage">
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Kupon kodu nedir ve nas&#x131;l kullan&#x131;l&#x131;r?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Kupon kodu, &#xE7;evriми&#xE7;i al&#x131;&#x15F;veri&#x15F;lerde indirim elde etmek i&#xE7;in kullan&#x131;lan &#xF6;zel bir koddur. Kuponluk.com'dan kodu kopyalad&#x131;ktan sonra, al&#x131;&#x15F;veri&#x15F; yapt&#x131;&#x11F;&#x131;n&#x131;z sitenin &#xF6;deme sayfas&#x131;nda &ldquo;&#x130;ndirim Kodu&rdquo;, &ldquo;Promosyon Kodu&rdquo; veya &ldquo;Kupon&rdquo; alan&#x131;na yap&#x131;&#x15F;t&#x131;r&#x131;n ve uygulayın. İndirim tutarı sepetinizden otomatik düşülür.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Kupon kodu, &#xE7;evriми&#xE7;i al&#x131;&#x15F;veri&#x15F;lerde indirim elde etmek i&#xE7;in kullan&#x131;lan &#xF6;zel bir koddur. Kuponluk.com'dan kodu kopyalad&#x131;ktan sonra, al&#x131;&#x15F;veri&#x15F; yapt&#x131;&#x11F;&#x131;n&#x131;z sitenin &#xF6;deme sayfas&#x131;nda &ldquo;&#x130;ndirim Kodu&rdquo; alan&#x131;na yap&#x131;&#x15F;t&#x131;r&#x131;n ve uygulayın. İndirim tutarı sepetinizden otomatik düşülür.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Kuponluk.com &#xFC;cretsiz mi?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Evet, Kuponluk.com tamamen &#xFC;cretsizdir. Kay&#x131;t olmadan da t&#xFC;m kuponlara eri&#x15F;ebilirsiniz. &#xDC;ye olman&#x131;n ek avantajlar&#x131;; kuponlar&#x131; kaydetme, favori ma&#x11F;azalar&#x131; takip etme ve ki&#x15F;iselle&#x15F;tirilmi&#x15F; &#xF6;neriler almad&#x131;r.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Evet, Kuponluk.com tamamen &#xFC;cretsizdir. Kay&#x131;t olmadan da t&#xFC;m kuponlara eri&#x15F;ebilirsiniz. &#xDC;ye olman&#x131;n ek avantajlar&#x131;; kuponlar&#x131; kaydetme, favori ma&#x11F;azalar&#x131; takip etme ve ki&#x15F;iselle&#x15F;tirilmi&#x15F; &#xF6;neriler almad&#x131;r.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Kupon &#xE7;al&#x131;&#x15F;m&#x131;yorsa ne yapmal&#x131;y&#x131;m?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        &#xD6;nce &#x15F;unlar&#x131; kontrol edin: (1) Kuponun son kullanma tarihini kontrol edin. (2) Kodu harfiyen (b&#xFC;y&#xFC;k/k&#xFC;&#xE7;&#xFC;k harf duyarl&#x131;l&#x131;&#x11F;&#x131; dahil) do&#x11F;ru girdi&#x11F;inizden emin olun. (3) Kuponun minimum sepet tutar&#x131; veya belirli &#xFC;r&#xFC;n/kategori k&#x131;s&#x131;tlamas&#x131; olabilir. Sorun devam ederse &ldquo;&#xC7;al&#x131;&#x15F;m&#x131;yor&rdquo; butonuna t&#x131;klayarak bizi bilgilendirin, en k&#x131;sa s&#xFC;rede g&#xFC;ncelleme yapaca&#x11F;&#x131;z.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">&#xD6;nce &#x15F;unlar&#x131; kontrol edin: (1) Kuponun son kullanma tarihini kontrol edin. (2) Kodu harfiyen (b&#xFC;y&#xFC;k/k&#xFC;&#xE7;&#xFC;k harf duyarl&#x131;l&#x131;&#x11F;&#x131; dahil) do&#x11F;ru girdi&#x11F;inizden emin olun. (3) Kuponun minimum sepet tutar&#x131; veya belirli &#xFC;r&#xFC;n/kategori k&#x131;s&#x131;tlamas&#x131; olabilir. Sorun devam ederse &ldquo;&#xC7;al&#x131;&#x15F;m&#x131;yor&rdquo; butonuna t&#x131;klayarak bizi bilgilendirin.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         &ldquo;Do&#x11F;rulanm&#x131;&#x15F; Kupon&rdquo; ne anlama gelir?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Ye&#x15F;il &ldquo;&#x2713; Do&#x11F;rulanm&#x131;&#x15F; Kupon&rdquo; rozeti, s&#xF6;z konusu kuponun edit&#xF6;rlerimiz veya kullan&#x131;c&#x131;lar&#x131;m&#x131;z taraf&#x131;ndan test edilerek &#xE7;al&#x131;&#x15F;t&#x131;&#x11F;&#x131; teyit edilmi&#x15F; anlam&#x131;na gelir. Bu kuponlar&#x131;n ba&#x15F;ar&#x131;yla uygulanma oran&#x131; daha y&#xFC;ksektir. Ancak ma&#x11F;azalar ko&#x15F;ullar&#x131; istedi&#x11F;i zaman de&#x11F;i&#x15F;tirebilece&#x11F;inden, zaman zaman do&#x11F;rulanm&#x131;&#x15F; kuponlar da &#xE7;al&#x131;&#x15F;mayabilir.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Ye&#x15F;il &ldquo;&#x2713; Do&#x11F;rulanm&#x131;&#x15F; Kupon&rdquo; rozeti, s&#xF6;z konusu kuponun edit&#xF6;rlerimiz veya kullan&#x131;c&#x131;lar&#x131;m&#x131;z taraf&#x131;ndan test edilerek &#xE7;al&#x131;&#x15F;t&#x131;&#x11F;&#x131; teyit edilmi&#x15F; anlam&#x131;na gelir.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Bir kuponu birden fazla kez kullanabilir miyim?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Bu tamamen ma&#x11F;azan&#x131;n politikas&#x131;na ba&#x11F;l&#x131;d&#x131;r. Baz&#x131; kuponlar her al&#x131;&#x15F;veri&#x15F;te kullan&#x131;labilirken, baz&#x131;lar&#x131; kullan&#x131;c&#x131; ba&#x15F;&#x131;na veya sipari&#x15F; ba&#x15F;&#x131;na yaln&#x131;zca bir kez ge&#xE7;erlidir. Kupon a&#xE7;&#x131;klamas&#x131;n&#x131; okuyarak kullan&#x131;m ko&#x15F;ullar&#x131;n&#x131; kontrol edebilirsiniz.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Bu tamamen ma&#x11F;azan&#x131;n politikas&#x131;na ba&#x11F;l&#x131;d&#x131;r. Baz&#x131; kuponlar her al&#x131;&#x15F;veri&#x15F;te kullan&#x131;labilirken, baz&#x131;lar&#x131; kullan&#x131;c&#x131; ba&#x15F;&#x131;na yaln&#x131;zca bir kez ge&#xE7;erlidir.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Yeni kuponlardan nas&#x131;l haberdar olabilirim?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        En kolay yol Telegram kanal&#x131;m&#x131;za kat&#x131;lmakt&#x131;r. Her yeni kupon an&#x131;nda kanala g&#xF6;nderilir. Ayr&#x131;ca sitemizi d&#xFC;zenli ziyaret ederek &ldquo;Yeni Kuponlar&rdquo; ve &ldquo;Pop&#xFC;ler Kuponlar&rdquo; sayfalar&#x131;n&#x131; takip edebilirsiniz.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">En kolay yol Telegram kanal&#x131;m&#x131;za kat&#x131;lmakt&#x131;r. Her yeni kupon an&#x131;nda kanala g&#xF6;nderilir. Ayr&#x131;ca &ldquo;Yeni Kuponlar&rdquo; ve &ldquo;Pop&#xFC;ler Kuponlar&rdquo; sayfalar&#x131;n&#x131; takip edebilirsiniz.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Kendi buldu&#x11F;um kuponu nas&#x131;l ekleyebilirim?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        &ldquo;Kupon Ekle&rdquo; sayfam&#x131;z &#xFC;zerinden kupon &#xF6;nerisi g&#xF6;nderebilirsiniz. Ekibimiz inceledikten sonra onaylanan kuponlar 24 saat i&#xE7;inde sitemizde yay&#x131;nlanacakt&#x131;r. Topluma katk&#x131;n&#x131;z i&#xE7;in te&#x15F;ekk&#xFC;r ederiz!
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">&ldquo;Kupon Ekle&rdquo; sayfam&#x131;z &#xFC;zerinden kupon &#xF6;nerisi g&#xF6;nderebilirsiniz. Ekibimiz inceledikten sonra onaylanan kuponlar 24 saat i&#xE7;inde sitemizde yay&#x131;nlanacakt&#x131;r.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Kuponluk.com'un affiliate ba&#x11F;lant&#x131;lar&#x131; var m&#x131;?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Evet, baz&#x131; ma&#x11F;aza ba&#x11F;lant&#x131;lar&#x131; affiliate (sat&#x131;&#x15F; ortakl&#x131;&#x11F;&#x131;) linkleri i&#xE7;erebilir. Bu linkler &#xFC;zerinden yap&#x131;lan al&#x131;&#x15F;veri&#x15F;lerde sitemiz k&#xFC;&#xE7;&#xFC;k bir komisyon kazan&#x131;r. Bu durum, kullan&#x131;c&#x131;lar&#x131;m&#x131;za sunulan fiyatlar&#x131; veya indirimleri hi&#xE7;bir &#x15F;ekilde etkilemez; indirimler oldu&#x11F;u gibi uygulanmaya devam eder.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Evet, baz&#x131; ma&#x11F;aza ba&#x11F;lant&#x131;lar&#x131; affiliate (sat&#x131;&#x15F; ortakl&#x131;&#x11F;&#x131;) linkleri i&#xE7;erebilir. Bu linkler &#xFC;zerinden yap&#x131;lan al&#x131;&#x15F;veri&#x15F;lerde sitemiz k&#xFC;&#xE7;&#xFC;k bir komisyon kazan&#x131;r. Bu durum kullan&#x131;c&#x131;lara sunulan fiyatlar&#x131; veya indirimleri hi&#xE7;bir &#x15F;ekilde etkilemez.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         &#xDC;cretsiz kargo kuponu nas&#x131;l &#xE7;al&#x131;&#x15F;&#x131;r?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        &#xDC;cretsiz kargo kuponlar&#x131;, kargo &#xFC;cretini sepetinizden s&#x131;f&#x131;rlar. Kodu &#xF6;deme sayfas&#x131;nda &ldquo;Kupon Kodu&rdquo; alan&#x131;na girin; kargo bedeli otomatik olarak d&#xFC;&#x15F;&#xFC;r&#xFC;l&#xFC;r. Baz&#x131; &#xFC;cretsiz kargo kuponlar&#x131; belirli bir minimum sipari&#x15F; tutar&#x131; gerektirebilir.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">&#xDC;cretsiz kargo kuponlar&#x131;, kargo &#xFC;cretini sepetinizden s&#x131;f&#x131;rlar. Kodu &#xF6;deme sayfas&#x131;nda &ldquo;Kupon Kodu&rdquo; alan&#x131;na girin; kargo bedeli otomatik olarak d&#xFC;&#x15F;&#xFC;r&#xFC;l&#xFC;r.</p>
       </div>
     </details>
 
-    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition">
-      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none">
+    <details class="bg-white rounded-2xl border border-gray-100 shadow-sm group open:shadow-md transition" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <summary class="flex items-center justify-between px-6 py-5 cursor-pointer font-semibold text-gray-800 text-base list-none select-none" itemprop="name">
         Ma&#x11F;aza ile ilgili sorunum var, yard&#x131;mc&#x131; olabilir misiniz?
         <span class="text-2xl font-bold transition-transform group-open:rotate-45" style="color:#f97316;">+</span>
       </summary>
-      <div class="px-6 pb-6 text-gray-600 leading-relaxed">
-        Kuponluk.com yaln&#x131;zca kupon ve indirim kodlar&#x131;n&#x131; listeleyen ba&#x11F;&#x131;ms&#x131;z bir platformdur; ma&#x11F;azalarla do&#x11F;rudan ba&#x11F;lant&#x131;m&#x131;z bulunmamaktad&#x131;r. Sipari&#x15F;iniz, iade veya ma&#x11F;aza politikalar&#x131;yla ilgili sorunlar i&#xE7;in l&#xFC;tfen do&#x11F;rudan ilgili ma&#x11F;azan&#x131;n m&#xFC;&#x15F;teri hizmetleriyle ileti&#x15F;ime ge&#xE7;in.
+      <div class="px-6 pb-6 text-gray-600 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Kuponluk.com yaln&#x131;zca kupon ve indirim kodlar&#x131;n&#x131; listeleyen ba&#x11F;&#x131;ms&#x131;z bir platformdur; ma&#x11F;azalarla do&#x11F;rudan ba&#x11F;lant&#x131;m&#x131;z bulunmamaktad&#x131;r. Sipari&#x15F;iniz veya iade ile ilgili sorunlar i&#xE7;in l&#xFC;tfen do&#x11F;rudan ilgili ma&#x11F;azan&#x131;n m&#xFC;&#x15F;teri hizmetleriyle ileti&#x15F;ime ge&#xE7;in.</p>
       </div>
     </details>
 

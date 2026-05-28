@@ -1,11 +1,14 @@
 <%- include('partials/head') %>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Çerez Politikası","item":"https://kuponluk.com/cerez-politikasi"}]}
+</script>
 <%- include('partials/navbar') %>
 
 <div class="max-w-3xl mx-auto px-4 py-8">
 
   <!-- Breadcrumb + Title -->
   <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
-    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
       <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
       <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-gray-800 font-medium">&#xC7;erez Politikas&#x131;</span>
@@ -33,7 +36,7 @@
         </div>
         <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
           <h3 class="text-gray-800 mb-1.5">2.2 &#xDC;&#xE7;&#xFC;nc&#xFC; Taraf CDN &#xC7;erezleri</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">Sitemizde kullan&#x131;lan Google Fonts ve Tailwind CDN gibi &#xFC;&#xE7;&#xFC;nc&#xFC; taraf servisler kendi gizlilik politikalar&#x131; kapsam&#x131;nda &#xE7;erez veya benzer teknolojiler kullanabilir. &#x130;lgili sa&#x11F;lay&#x131;c&#x131;lar&#x131;n sayfalar&#x131;n&#x131; inceleyiniz.</p>
+          <p class="text-sm text-gray-600 leading-relaxed">Sitemizde kullan&#x131;lan Google Fonts ve Tailwind CDN gibi &#xFC;&#xE7;&#xFC;nc&#xFC; taraf servisler kendi gizlilik politikalar&#x131; kapsam&#x131;nda &#xE7;erez veya benzer teknolojiler kullanabilir.</p>
         </div>
       </div>
     </section>
@@ -42,28 +45,16 @@
       <h2 class="text-gray-900 mb-3">3. Kullanmad&#x131;&#x11F;&#x131;m&#x131;z &#xC7;erezler</h2>
       <p class="text-sm text-gray-600 mb-3">Kuponluk.com a&#x15F;a&#x11F;&#x131;daki ama&#xE7;larla &#xE7;erez kullanmamaktad&#x131;r:</p>
       <ul class="space-y-2">
-        <li class="flex items-center gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          Kullan&#x131;c&#x131; davran&#x131;&#x15F;&#x131; takibi (analytics)
-        </li>
-        <li class="flex items-center gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          Reklam hedefleme
-        </li>
-        <li class="flex items-center gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          Sosyal medya profil olu&#x15F;turma
-        </li>
-        <li class="flex items-center gap-2.5 text-sm text-gray-600">
-          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          &#xDC;&#xE7;&#xFC;nc&#xFC; taraf pazarlama
-        </li>
+        <li class="flex items-center gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Kullan&#x131;c&#x131; davran&#x131;&#x15F;&#x131; takibi (analytics)</li>
+        <li class="flex items-center gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Reklam hedefleme</li>
+        <li class="flex items-center gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Sosyal medya profil olu&#x15F;turma</li>
+        <li class="flex items-center gap-2.5 text-sm text-gray-600"><svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>&#xDC;&#xE7;&#xFC;nc&#xFC; taraf pazarlama</li>
       </ul>
     </section>
 
     <section>
       <h2 class="text-gray-900 mb-3">4. &#xC7;erezleri Nas&#x131;l Kontrol Edebilirsiniz?</h2>
-      <p class="text-sm text-gray-600 mb-4">Taray&#x131;c&#x131; ayarlar&#x131;n&#x131;zdan &#xE7;erezleri diledi&#x11F;iniz zaman silebilir veya engelleyebilirsiniz. Ancak zorunlu teknik &#xE7;erezleri devre d&#x131;&#x15F;&#x131; b&#x131;rakman&#x131;z sitenin baz&#x131; &#xF6;zelliklerinin &#xE7;al&#x131;&#x15F;mamas&#x131;na neden olabilir.</p>
+      <p class="text-sm text-gray-600 mb-4">Taray&#x131;c&#x131; ayarlar&#x131;n&#x131;zdan &#xE7;erezleri diledi&#x11F;iniz zaman silebilir veya engelleyebilirsiniz.</p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 text-center">
           <p class="font-semibold text-gray-700 text-sm mb-1">Chrome</p>
