@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 
   const stores = db.prepare(query).all(...params);
   const categories = db.prepare('SELECT * FROM categories ORDER BY name').all();
-  const alphabet = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'.split('');
+  const alphabet = 'ABÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'.split('');
 
   res.render('stores', {
     title: 'Tüm Mağazalar - Kuponluk.com',
@@ -79,6 +79,15 @@ router.get('/:slug', (req, res) => {
     LIMIT 6
   `).all(store.category_id, store.id);
 
+  const reviews = db.prepare(`
+    SELECT cr.*, u.username
+    FROM coupon_reviews cr
+    JOIN users u ON cr.user_id = u.id
+    JOIN coupons c ON cr.coupon_id = c.id
+    WHERE c.store_id = ?
+    ORDER BY cr.created_at DESC LIMIT 10
+  `).all(store.id);
+
   let isFavorite = false;
   if (req.session.user) {
     const fav = db.prepare('SELECT 1 FROM user_favorites WHERE user_id = ? AND store_id = ?').get(req.session.user.id, store.id);
@@ -91,6 +100,7 @@ router.get('/:slug', (req, res) => {
     totalUses: storeStats.total_uses,
     totalCoupons: storeStats.total_coupons,
     avgRating,
+    reviews,
     currentUser: req.session.user || null,
   });
 });

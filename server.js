@@ -92,12 +92,12 @@ app.get('/robots.txt', (req, res) => {
 
 // 404
 app.use((req, res) => {
-  res.status(404).render('404', { title: 'Sayfa Bulunamadı - Kuponluk.com' });
+  res.status(404).render('404', { title: 'Sayfa Bulunamadı - Kuponluk.com', currentUser: req.session.user || null });
 });
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).render('404', { title: 'Sunucu Hatası - Kuponluk.com' });
+  res.status(500).render('404', { title: 'Sunucu Hatası - Kuponluk.com', currentUser: req.session && req.session.user || null });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
