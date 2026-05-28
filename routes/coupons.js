@@ -172,6 +172,11 @@ router.post('/:id/puan', (req, res) => {
 router.post('/:id/kullan', (req, res) => {
   const db = getDb();
   db.prepare('UPDATE coupons SET use_count = use_count + 1 WHERE id = ?').run(req.params.id);
+  if (req.session.user) {
+    try {
+      db.prepare('INSERT INTO coupon_usages (user_id, coupon_id) VALUES (?, ?)').run(req.session.user.id, req.params.id);
+    } catch(e) {}
+  }
   res.json({ success: true });
 });
 

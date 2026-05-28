@@ -94,6 +94,21 @@ router.get('/:slug', (req, res) => {
     isFavorite = !!fav;
   }
 
+  let usableReviewCoupons = [];
+  if (req.session.user) {
+    try {
+      usableReviewCoupons = db.prepare(`
+        SELECT c.id, c.title FROM coupons c
+        INNER JOIN coupon_usages cu ON cu.coupon_id = c.id AND cu.user_id = ?
+        WHERE c.store_id = ?
+        AND NOT EXISTS (
+          SELECT 1 FROM coupon_reviews cr WHERE cr.coupon_id = c.id AND cr.user_id = ?
+        )
+        LIMIT 5
+      `).all(req.session.user.id, store.id, req.session.user.id);
+    } catch(e) { usableReviewCoupons = []; }
+  }
+
   res.render('store', {
     title: `${store.name} İndirim Kodu ve Kuponları - Kuponluk.com`,
     store, coupons, relatedStores, isFavorite,
@@ -101,6 +116,7 @@ router.get('/:slug', (req, res) => {
     totalCoupons: storeStats.total_coupons,
     avgRating,
     reviews,
+    usableReviewCoupons,
     currentUser: req.session.user || null,
   });
 });
