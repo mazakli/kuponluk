@@ -1,85 +1,148 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <meta name="description" content="<%= description %>">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.724eczane.com/gizlilik">
-  <meta property="og:title" content="<%= title %>">
-  <meta property="og:description" content="<%= description %>">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="724eczane.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="d-flex flex-column min-vh-100">
-
+<%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-<main class="flex-grow-1">
+<div class="max-w-3xl mx-auto px-4 py-8">
 
-<section class="hero-section py-4 text-white text-center">
-  <div class="container">
-    <h1 class="h2 fw-bold mb-2"><i class="fa-solid fa-shield-halved me-2"></i>Gizlilik Politikası</h1>
-    <p class="lead mb-0">Son güncelleme: Mayıs 2025</p>
+  <!-- Breadcrumb + Title -->
+  <div class="bg-white rounded-2xl p-6 mb-6" style="border: 3px solid #e2e8f0;">
+    <nav class="text-sm text-gray-500 flex items-center gap-1.5 mb-3 flex-wrap">
+      <a href="/" class="hover:text-orange-600 transition">Ana Sayfa</a>
+      <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-gray-800 font-medium">Gizlilik Politikas&#x131;</span>
+    </nav>
+    <h1 class="text-gray-900 mb-1">Gizlilik Politikas&#x131;</h1>
+    <p class="text-sm text-gray-500">Son g&#xFC;ncelleme: May&#x131;s 2026</p>
   </div>
-</section>
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="legal-content">
+  <!-- Content -->
+  <div class="bg-white rounded-2xl p-6 sm:p-8 space-y-8" style="border: 3px solid #e2e8f0;">
 
-          <p class="text-muted">Bu gizlilik politikası, <strong>724eczane.com</strong> web sitesinin kişisel verileri nasıl topladığını, kullandığını ve koruduğunu açıklamaktadır.</p>
+    <p class="text-sm text-gray-600 leading-relaxed">
+      Bu gizlilik politikas&#x131;, <strong class="text-gray-800">Kuponluk.com</strong> (bundan sonra &ldquo;Kuponluk&rdquo;, &ldquo;biz&rdquo; veya &ldquo;sitemiz&rdquo; olarak an&#x131;lacakt&#x131;r) taraf&#x131;ndan i&#x15F;letilen web sitesini kullanan ziyaret&#xE7;ilerin ki&#x15F;isel verilerinin nas&#x131;l topland&#x131;&#x11F;&#x131;n&#x131;, kullan&#x131;ld&#x131;&#x11F;&#x131;n&#x131; ve korundu&#x11F;unu a&#xE7;&#x131;klamaktad&#x131;r. Sitemizi kullanarak bu politikay&#x131; kabul etmi&#x15F; say&#x131;l&#x131;rs&#x131;n&#x131;z.
+    </p>
 
-          <h2>1. Toplanan Veriler</h2>
-          <p>724eczane.com, kullanıcılarından minimum düzeyde veri toplar:</p>
-          <ul>
-            <li><strong>Konum Verisi:</strong> Yol tarifi özelliğini kullandığınızda tarayıcınız konum izni ister. Bu veri yalnızca tarayıcınızda işlenir; sunucularımıza aktarılmaz veya saklanmaz.</li>
-            <li><strong>Sunucu Logları:</strong> Standart web sunucusu logları (IP adresi, erişim zamanı, sayfa URL'si) teknik amaçlarla kısa süre tutulabilir.</li>
-            <li><strong>İletişim Formu:</strong> Bize mesaj gönderdiğinizde adınız, e-posta adresiniz ve mesajınız iletişim amacıyla saklanır.</li>
-          </ul>
-
-          <h2>2. Çerezler (Cookies)</h2>
-          <p>Sitemiz, işlevsellik için zorunlu teknik çerezler dışında üçüncü taraf izleme çerezi kullanmamaktadır. Bootstrap ve diğer kütüphaneler CDN üzerinden yüklendiğinden bu sağlayıcıların gizlilik politikaları da geçerlidir.</p>
-
-          <h2>3. Üçüncü Taraf Hizmetler</h2>
-          <p>724eczane.com aşağıdaki üçüncü taraf hizmetlerden faydalanmaktadır:</p>
-          <ul>
-            <li><strong>NosyAPI:</strong> Nöbetçi eczane verileri bu API aracılığıyla alınmaktadır. Kullanıcı verileri NosyAPI ile paylaşılmamaktadır.</li>
-            <li><strong>OpenStreetMap / OSRM:</strong> Harita gösterimi ve rota hesaplama için kullanılmaktadır. Rota hesaplaması sırasında konum verisi bu hizmetlere iletilebilir.</li>
-            <li><strong>Google Fonts:</strong> Yazı tipi yüklemesi için kullanılmaktadır.</li>
-          </ul>
-
-          <h2>4. Veri Güvenliği</h2>
-          <p>Verilerinizi korumak için endüstri standardı güvenlik önlemleri alınmaktadır. Ancak internet üzerinden veri iletiminin %100 güvenli olduğunu garanti edemeyiz.</p>
-
-          <h2>5. Çocukların Gizliliği</h2>
-          <p>Sitemiz 13 yaşın altındaki çocuklardan bilerek kişisel veri toplamamaktadır.</p>
-
-          <h2>6. Değişiklikler</h2>
-          <p>Bu gizlilik politikası zaman zaman güncellenebilir. Değişiklikler bu sayfada yayımlanacaktır.</p>
-
-          <h2>7. İletişim</h2>
-          <p>Gizlilik konusundaki sorularınız için <a href="/iletisim" class="text-danger">iletişim sayfamızı</a> kullanabilirsiniz.</p>
-
+    <section>
+      <h2 class="text-gray-900 mb-3">1. Toplanan Veriler</h2>
+      <p class="text-sm text-gray-600 leading-relaxed mb-3">Kuponluk.com, a&#x15F;a&#x11F;&#x131;daki durumlarda ki&#x15F;isel veri toplayabilir:</p>
+      <div class="space-y-3">
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <h3 class="text-gray-800 text-sm font-semibold mb-1">&#xDC;ye Kayd&#x131;</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Hesap olu&#x15F;turdu&#x11F;unuzda kullan&#x131;c&#x131; ad&#x131;, e-posta adresi ve &#x15F;ifreniz (&#x15F;ifrelenmi&#x15F; olarak) saklan&#x131;r.</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <h3 class="text-gray-800 text-sm font-semibold mb-1">B&#xFC;lten Aboneli&#x11F;i</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Bildirim almak istedi&#x11F;inizde e-posta adresiniz liste sistemimize kaydedilir.</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <h3 class="text-gray-800 text-sm font-semibold mb-1">&#x130;leti&#x15F;im Formu</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">&#x130;leti&#x15F;im sayfas&#x131;ndan mesaj g&#xF6;nderdi&#x11F;inizde ad-soyad, e-posta ve mesaj i&#xE7;eri&#x11F;iniz kaydedilir.</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <h3 class="text-gray-800 text-sm font-semibold mb-1">Kupon Etkile&#x15F;imi</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Oturum a&#xE7;m&#x131;&#x15F; kullan&#x131;c&#x131;lar&#x131;n kaydetti&#x11F;i, favori ekledi&#x11F;i ve kulland&#x131;&#x11F;&#x131; kuponlar hesab&#x131;n&#x131;za ba&#x11F;l&#x131; olarak tutulur.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-</main>
+    <section>
+      <h2 class="text-gray-900 mb-3">2. Verilerin Kullan&#x131;m Amac&#x131;</h2>
+      <p class="text-sm text-gray-600 leading-relaxed mb-3">Toplad&#x131;&#x11F;&#x131;m&#x131;z verileri a&#x15F;a&#x11F;&#x131;daki ama&#xE7;larla kullan&#x131;yoruz:</p>
+      <ul class="space-y-2">
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Hesab&#x131;n&#x131;z&#x131; olu&#x15F;turmak ve y&#xF6;netmek
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Favori ma&#x11F;azalar&#x131;n&#x131;za ait yeni kupon bildirimlerini iletmek
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          &#x130;leti&#x15F;im taleplerinizi yan&#x131;tlamak
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Hizmet kalitesini iyile&#x15F;tirmek ve teknik sorunlar&#x131; gidermek
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">3. Veri Payla&#x15F;&#x131;m&#x131;</h2>
+      <p class="text-sm text-gray-600 leading-relaxed mb-3">Ki&#x15F;isel verilerinizi a&#x15F;a&#x11F;&#x131;daki durumlar d&#x131;&#x15F;&#x131;nda &#xFC;&#xE7;&#xFC;nc&#xFC; taraflarla paylamayoruz:</p>
+      <div class="space-y-2">
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Yasal zorunluluk:</strong> Yetkili makamlar&#x131;n yasal talepleri halinde ilgili veriler paylaşılabilir.</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <p class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-700">Hizmet sa&#x11F;lay&#x131;c&#x131;lar:</strong> E-posta servisi gibi teknik altyap&#x131; sa&#x11F;lay&#x131;c&#x131;lar&#x131; yaln&#x131;zca hizmetin y&#xFC;r&#xFC;t&#xFC;lmesi amac&#x131;yla s&#x131;n&#x131;rl&#x131; veri alabilir.</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed mt-3">Kuponluk.com, ki&#x15F;isel verilerinizi pazarlama veya reklam ama&#xE7;l&#x131; olarak hi&#xE7;bir &#xFC;&#xE7;&#xFC;nc&#xFC; tarafla paylamaz.</p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">4. Affiliate Ba&#x11F;lant&#x131;lar</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Sitemizde yer alan baz&#x131; ma&#x11F;aza ba&#x11F;lant&#x131;lar&#x131;, affiliate (sat&#x131;&#x15F; ortakl&#x131;&#x11F;&#x131;) linkleri olabilir. Bu linkler arac&#x131;l&#x131;&#x11F;&#x131;yla yap&#x131;lan al&#x131;&#x15F;veri&#x15F;lerden Kuponluk.com komisyon kazanabilir. Bu durum kullan&#x131;c&#x131;lara sunulan fiyatlar&#x131; veya indirimleri etkilemez. Affiliate ili&#x15F;kileri her zaman &#x15F;effaf bir &#x15F;ekilde y&#xFC;r&#xFC;t&#xFC;lmektedir.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">5. Veri G&#xFC;venli&#x11F;i</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Ki&#x15F;isel verilerinizi korumak i&#xE7;in endüstri standardı güvenlik önlemleri uygulamaktay&#x131;z. &#x15E;ifreler bcrypt algoritmas&#x131;yla &#x15F;ifrelenerek saklan&#x131;r; hi&#xE7;bir zaman d&#xFC;z metin olarak tutulmaz. Ancak internet &#xFC;zerinden hi&#xE7;bir veri iletiminin ya da depolaman&#x131;n %100 g&#xFC;venli oldu&#x11F;u garanti edilemez.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">6. Kullan&#x131;c&#x131; Haklar&#x131;</h2>
+      <p class="text-sm text-gray-600 leading-relaxed mb-3">6698 say&#x131;l&#x131; Ki&#x15F;isel Verilerin Korunmas&#x131; Kanunu (KVKK) kapsam&#x131;nda a&#x15F;a&#x11F;&#x131;daki haklara sahipsiniz:</p>
+      <ul class="space-y-2">
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Ki&#x15F;isel verilerinizin i&#x15F;lenip i&#x15F;lenmedi&#x11F;ini &#xF6;&#x11F;renme
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Yanl&#x131;&#x15F; veya eksik verilerin d&#xFC;zeltilmesini talep etme
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Verilerinizin silinmesini veya anonim hale getirilmesini isteme
+        </li>
+        <li class="flex items-start gap-2.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Veri i&#x15F;lemeye itiraz etme
+        </li>
+      </ul>
+      <p class="text-sm text-gray-600 leading-relaxed mt-3">Bu haklar&#x131; kullanmak i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla bize ula&#x15F;abilirsiniz.</p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">7. &#xC7;erezler</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Sitemizin kulland&#x131;&#x11F;&#x131; &#xE7;erezler hakk&#x131;nda ayr&#x131;nt&#x131;l&#x131; bilgi i&#xE7;in <a href="/cerez-politikasi" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#xC7;erez Politikas&#x131;</a> sayfam&#x131;z&#x131; inceleyebilirsiniz.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">8. Politika De&#x11F;i&#x15F;iklikleri</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Bu gizlilik politikas&#x131;, &#xF6;nceden bildirimde bulunmaks&#x131;z&#x131;n g&#xFC;ncellenebilir. &#xD6;nemli de&#x11F;i&#x15F;ikliklerde kay&#x131;tl&#x131; kullan&#x131;c&#x131;lar e-posta ile bilgilendirilecektir. G&#xFC;ncel politika her zaman bu sayfada yay&#x131;mlanacakt&#x131;r.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-gray-900 mb-3">9. &#x130;leti&#x15F;im</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Gizlilik politikas&#x131;na ili&#x15F;kin sorular&#x131;n&#x131;z i&#xE7;in <a href="/iletisim" class="font-semibold hover:opacity-80 transition" style="color:#f97316;">&#x130;leti&#x15F;im sayfam&#x131;z</a> arac&#x131;l&#x131;&#x11F;&#x131;yla ya da <strong>info@kuponluk.com</strong> e-posta adresi &#xFC;zerinden ula&#x15F;abilirsiniz.
+      </p>
+    </section>
+
+  </div>
+</div>
 
 <%- include('partials/footer') %>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
 </body>
 </html>
