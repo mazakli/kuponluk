@@ -8,19 +8,26 @@
   <meta name="keywords" content="kupon kodu, indirim kodu, promosyon kodu, trendyol kupon, hepsiburada indirim, amazon kupon, ücretsiz kargo, banka kampanyaları">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Kuponluk.com">
+  <!-- Open Graph -->
   <meta property="og:title" content="<%= title %>">
   <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin kupon merkezi' %>">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://kuponluk.com/img/og-image.png">
+  <meta property="og:type" content="<%= typeof ogType !== 'undefined' ? ogType : 'website' %>">
+  <meta property="og:image" content="<%= typeof ogImage !== 'undefined' ? ogImage : 'https://kuponluk.com/img/og-image.png' %>">
   <meta property="og:url" content="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
   <meta property="og:site_name" content="Kuponluk.com">
   <meta property="og:locale" content="tr_TR">
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@kuponlukcom">
   <meta name="twitter:title" content="<%= title %>">
   <meta name="twitter:description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin en büyük kupon ve indirim platformu.' %>">
-  <meta name="twitter:image" content="https://kuponluk.com/img/og-image.png">
+  <meta name="twitter:image" content="<%= typeof ogImage !== 'undefined' ? ogImage : 'https://kuponluk.com/img/og-image.png' %>">
+  <!-- Canonical + hreflang -->
   <link rel="canonical" href="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
+  <link rel="alternate" hreflang="tr" href="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
+  <link rel="alternate" hreflang="x-default" href="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <!-- WebSite Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -32,9 +39,27 @@
       "@type": "SearchAction",
       "target": { "@type": "EntryPoint", "urlTemplate": "https://kuponluk.com/arama?q={search_term_string}" },
       "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kuponluk.com",
+      "url": "https://kuponluk.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kuponluk.com/img/og-image.png",
+        "width": 512,
+        "height": 512
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@kuponluk.com",
+        "contactType": "customer support",
+        "availableLanguage": "Turkish"
+      }
     }
   }
   </script>
+  <%- typeof pageSchema !== 'undefined' && pageSchema ? pageSchema : '' %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

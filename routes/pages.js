@@ -38,13 +38,13 @@ router.post('/kupon-gonder', (req, res) => {
 });
 
 router.get('/telegram', (req, res) => res.render('telegram', { title: 'Telegram Kanalımız - Kuponluk.com' }));
-router.get('/hakkimizda', (req, res) => res.render('about', { title: 'Hakkımızda - Kuponluk.com' }));
-router.get('/iletisim', (req, res) => res.render('contact', { title: 'İletişim - Kuponluk.com', success: false, error: null }));
-router.post('/iletisim', (req, res) => res.render('contact', { title: 'İletişim - Kuponluk.com', success: true, error: null }));
-router.get('/sss', (req, res) => res.render('faq', { title: 'Sıkça Sorulan Sorular - Kuponluk.com' }));
-router.get('/gizlilik-politikasi', (req, res) => res.render('privacy', { title: 'Gizlilik Politikası - Kuponluk.com' }));
-router.get('/kullanim-kosullari', (req, res) => res.render('terms', { title: 'Kullanım Koşulları - Kuponluk.com' }));
-router.get('/cerez-politikasi', (req, res) => res.render('cookies', { title: 'Çerez Politikası - Kuponluk.com' }));
+router.get('/hakkimizda', (req, res) => res.render('about', { title: 'Hakkımızda - Kuponluk.com', description: 'Kuponluk.com hakkında bilgi alın. Misyonumuz, ekibimiz ve kupon platformu hikayemiz.' }));
+router.get('/iletisim', (req, res) => res.render('iletisim', { title: 'İletişim - Kuponluk.com', description: 'Kuponluk.com ile iletişime geçin. Soru, öneri ve geri bildirimleriniz için bize ulaşın.', success: false, error: null }));
+router.post('/iletisim', (req, res) => res.render('iletisim', { title: 'İletişim - Kuponluk.com', description: 'Kuponluk.com ile iletişime geçin. Soru, öneri ve geri bildirimleriniz için bize ulaşın.', success: true, error: null }));
+router.get('/sss', (req, res) => res.render('faq', { title: 'Sıkça Sorulan Sorular - Kuponluk.com', description: 'Kupon kodları nasıl kullanılır? Kuponluk.com hakkında sıkça sorulan sorular ve cevapları.' }));
+router.get('/gizlilik-politikasi', (req, res) => res.render('gizlilik', { title: 'Gizlilik Politikası - Kuponluk.com', description: 'Kuponluk.com gizlilik politikası. Kişisel verilerinizin nasıl toplandığı ve korunduğu hakkında bilgi alın.' }));
+router.get('/kullanim-kosullari', (req, res) => res.render('kullanim-kosullari', { title: 'Kullanım Koşulları - Kuponluk.com', description: 'Kuponluk.com kullanım koşulları. Siteyi kullanmadan önce lütfen okuyun.' }));
+router.get('/cerez-politikasi', (req, res) => res.render('cerez-politikasi', { title: 'Çerez Politikası - Kuponluk.com', description: 'Kuponluk.com çerez politikası. Çerezlerin nasıl kullanıldığı ve nasıl kontrol edebileceğiniz hakkında bilgi.' }));
 
 router.get('/araclar/kupon-kodu-olusturma', (req, res) => {
   res.render('kupon-olusturucu', { title: 'Ücretsiz Kupon Kodu Oluşturucu - Kuponluk.com' });

@@ -9,6 +9,8 @@ const { loadUser } = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
+
 initDb();
 
 app.set('view engine', 'ejs');
@@ -32,10 +34,16 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'kuponluk-gizli-anahtar-2024',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true },
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'lax' },
 }));
 
 app.use(loadUser);
+
+// Canonical path for SEO (used in head.ejs for hreflang + og:url)
+app.use((req, res, next) => {
+  res.locals.canonicalPath = req.path;
+  next();
+});
 
 // Routes
 app.use('/', require('./routes/index'));
@@ -74,6 +82,10 @@ app.get('/sitemap.xml', (req, res) => {
   add('/kupon-gonder', 'monthly', '0.6');
   add('/sss', 'monthly', '0.5');
   add('/hakkimizda', 'monthly', '0.4');
+  add('/iletisim', 'monthly', '0.4');
+  add('/gizlilik-politikasi', 'monthly', '0.3');
+  add('/kullanim-kosullari', 'monthly', '0.3');
+  add('/cerez-politikasi', 'monthly', '0.3');
 
   stores.forEach(s => add(`/magaza/${s.slug}`, 'weekly', '0.8'));
   categories.forEach(c => add(`/kategori/${c.slug}`, 'weekly', '0.8'));
