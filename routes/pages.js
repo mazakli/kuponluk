@@ -46,6 +46,49 @@ router.get('/gizlilik-politikasi', (req, res) => res.render('gizlilik', { title:
 router.get('/kullanim-kosullari', (req, res) => res.render('kullanim-kosullari', { title: 'Kullanım Koşulları - Kuponluk.com', description: 'Kuponluk.com kullanım koşulları. Siteyi kullanmadan önce lütfen okuyun.' }));
 router.get('/cerez-politikasi', (req, res) => res.render('cerez-politikasi', { title: 'Çerez Politikası - Kuponluk.com', description: 'Kuponluk.com çerez politikası. Çerezlerin nasıl kullanıldığı ve nasıl kontrol edebileceğiniz hakkında bilgi.' }));
 
+router.get('/sitene-ekle', (req, res) => {
+  const db = getDb();
+  const categories = db.prepare('SELECT * FROM categories ORDER BY name').all();
+  res.render('sitene-ekle', {
+    title: 'Sitenize Kupon Ekleyin - Kuponluk.com',
+    description: 'Haber sitenize veya bloğunuza ücretsiz kupon widget’ı ekleyin. Tek satır kod ile ziyaretçilerinize binlerce fırsatı sunun.',
+    categories,
+  });
+});
+
+router.get('/widget', (req, res) => {
+  const db = getDb();
+  const kategori = (req.query.kategori || '').replace(/[^a-z0-9À-ɏ-]/gi, '');
+  const magaza   = (req.query.magaza   || '').replace(/[^a-z0-9-]/gi, '');
+  const adet = Math.min(Math.max(parseInt(req.query.adet) || 5, 1), 10);
+  const tema = req.query.tema === 'dark' ? 'dark' : 'light';
+
+  let query = `SELECT cp.id, cp.title, cp.code, cp.discount_value, cp.discount_type,
+    s.name as store_name, s.slug as store_slug
+    FROM coupons cp
+    JOIN stores s ON cp.store_id = s.id
+    WHERE (cp.expiry_date IS NULL OR cp.expiry_date >= date('now'))`;
+  const params = [];
+
+  if (kategori) {
+    query += ` AND s.category_id = (SELECT id FROM categories WHERE slug = ? LIMIT 1)`;
+    params.push(kategori);
+  }
+  if (magaza) {
+    query += ` AND s.slug = ?`;
+    params.push(magaza);
+  }
+  query += ` ORDER BY cp.is_verified DESC, cp.use_count DESC LIMIT ?`;
+  params.push(adet);
+
+  let coupons = [];
+  try { coupons = db.prepare(query).all(...params); } catch (e) {}
+
+  res.setHeader('X-Frame-Options', 'ALLOWALL');
+  res.setHeader('Content-Security-Policy', 'frame-ancestors *');
+  res.render('widget', { coupons, tema });
+});
+
 router.get('/araclar/kupon-kodu-olusturma', (req, res) => {
   res.render('kupon-olusturucu', { title: 'Ücretsiz Kupon Kodu Oluşturucu - Kuponluk.com' });
 });
@@ -68,28 +111,19 @@ router.get('/ilanlar', (req, res) => {
   const storeNames = db.prepare("SELECT DISTINCT store_name FROM listings WHERE status='approved' ORDER BY store_name").all().map(r => r.store_name);
   res.render('ilanlar', {
     title: 'İlanlar - Kuponluk.com',
-    listings,
-    categories,
-    storeNames,
-    filterCategory: kategori || null,
-    filterStore: magaza || null,
-    filterType: tip || null,
-    filterMinFiyat: minFiyat || null,
-    filterMaxFiyat: maxFiyat || null,
+    listings, categories, storeNames,
+    filterCategory: kategori || null, filterStore: magaza || null,
+    filterType: tip || null, filterMinFiyat: minFiyat || null, filterMaxFiyat: maxFiyat || null,
   });
 });
 
 router.get('/ilanlar/olustur', (req, res) => {
-  if (!req.session || !req.session.user) {
-    return res.redirect('/giris?redirect=/ilanlar/olustur');
-  }
+  if (!req.session || !req.session.user) return res.redirect('/giris?redirect=/ilanlar/olustur');
   res.render('ilan-olustur', { title: 'İlan Oluştur - Kuponluk.com', success: false, error: null });
 });
 
 router.post('/ilanlar/olustur', (req, res) => {
-  if (!req.session || !req.session.user) {
-    return res.redirect('/giris?redirect=/ilanlar/olustur');
-  }
+  if (!req.session || !req.session.user) return res.redirect('/giris?redirect=/ilanlar/olustur');
   const db = getDb();
   ensureListingsTable(db);
   const { title, coupon_code, store_name, category, price, is_free, description, expires_at } = req.body;

@@ -1,58 +1,46 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= il.name %><%= ilce ? ' ' + ilce.name : '' %> Nöbetçi Eczaneleri - 724eczane.com</title>
-  <meta name="robots" content="noindex">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:system-ui,sans-serif;font-size:13px;color:#222;background:#fff}
-    .w-header{background:#C8102E;color:#fff;padding:8px 12px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
-    .w-list{list-style:none}
-    .w-item{padding:8px 12px;border-bottom:1px solid #f0f0f0;display:flex;flex-direction:column;gap:2px}
-    .w-item:hover{background:#fff5f6}
-    .w-name{font-weight:600;color:#222}
-    .w-addr{color:#666;font-size:11px}
-    .w-phone a{color:#C8102E;text-decoration:none;font-size:12px;font-weight:500}
-    .w-empty{padding:20px;text-align:center;color:#888}
-    .w-footer{padding:6px 12px;text-align:right;border-top:1px solid #f0f0f0;background:#fafafa}
-    .w-footer a{color:#C8102E;text-decoration:none;font-size:10px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kuponluk.com Widget</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:<%- tema==='dark'?'#0d1b3e':'#f1f5f9' %>;padding:10px;min-height:100vh}
+.card{background:<%- tema==='dark'?'#1a2c56':'#ffffff' %>;border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border:1px solid <%- tema==='dark'?'#2a3f6f':'#e2e8f0' %>;}
+.logo{width:38px;height:38px;border-radius:8px;background:#f97316;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;flex-shrink:0;overflow:hidden;position:relative;}
+.logo img{width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;position:absolute;top:0;left:0;}
+.info{flex:1;min-width:0;}
+.store-nm{font-size:12px;font-weight:700;color:<%- tema==='dark'?'#e2e8f0':'#1e293b' %>;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.disc{font-size:11px;color:#f97316;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.btn{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:7px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0;}
+.footer-bar{text-align:center;margin-top:10px;padding-top:8px;border-top:1px solid <%- tema==='dark'?'#2a3f6f':'#e2e8f0' %>;}
+.footer-bar a{font-size:11px;color:#f97316;text-decoration:none;font-weight:600;}
+.empty{text-align:center;padding:24px 12px;color:<%- tema==='dark'?'#94a3b8':'#64748b' %>;font-size:13px;}
+</style>
 </head>
 <body>
-  <div class="w-header">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-    <%= il.name %><%= ilce ? ' / ' + ilce.name : '' %> &mdash; Bugün Nöbetçi Eczaneler
+<% if (!coupons || coupons.length === 0) { %>
+<div class="empty">&#x15E;u an aktif kupon bulunamad&#x131;.</div>
+<% } else { %>
+<% coupons.forEach(function(c) { %>
+<div class="card">
+  <div class="logo">
+    <span><%= (c.store_name || 'K').charAt(0).toUpperCase() %></span>
+    <img src="https://kuponluk.com/uploads/brands/<%= c.store_slug %>.png" alt="<%= c.store_name %>" onerror="this.style.display='none'">
   </div>
-  <div id="wContent"><div class="w-empty">Yükleniyor...</div></div>
-  <div class="w-footer"><a href="https://724eczane.com/nobetci-<%= il.slug %><%= ilce ? '-' + ilce.slug : '' %>" target="_blank">724eczane.com'da Aç &rarr;</a></div>
-
-  <script>
-    var IL   = '<%= il.slug %>';
-    var ILCE = '<%= ilce ? ilce.slug : "" %>';
-    var DATE = '<%= today.bugun.iso %>';
-    var url  = '/api/eczaneler?il=' + IL + '&tarih=' + DATE + (ILCE ? '&ilce=' + ILCE : '');
-    fetch(url).then(function(r){return r.json();}).then(function(data){
-      var list = data.pharmacies || [];
-      if(!list.length){
-        document.getElementById('wContent').innerHTML = '<div class="w-empty">Bugün nöbetçi eczane bulunamadı.</div>';
-        return;
-      }
-      var html = '<ul class="w-list">';
-      list.forEach(function(p){
-        html += '<li class="w-item">';
-        html += '<span class="w-name">' + esc(p.name) + '</span>';
-        if(p.address) html += '<span class="w-addr">' + esc(p.address) + '</span>';
-        if(p.phone) html += '<span class="w-phone"><a href="tel:' + esc(p.phone.replace(/\s/g,'')) + '">☎ ' + esc(p.phone) + '</a></span>';
-        html += '</li>';
-      });
-      html += '</ul>';
-      document.getElementById('wContent').innerHTML = html;
-    }).catch(function(){
-      document.getElementById('wContent').innerHTML = '<div class="w-empty">Veri yüklenemedi.</div>';
-    });
-    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  </script>
+  <div class="info">
+    <div class="store-nm"><%= c.store_name %></div>
+    <div class="disc"><%= c.title %></div>
+  </div>
+  <a href="https://kuponluk.com/magaza/<%= c.store_slug %>?utm_source=widget&utm_medium=embed&utm_campaign=sitene-ekle" target="_blank" class="btn">
+    <%= c.code ? 'Kodu Al' : 'F&#x131;rsata Git' %>
+  </a>
+</div>
+<% }) %>
+<% } %>
+<div class="footer-bar">
+  <a href="https://kuponluk.com?utm_source=widget&utm_medium=embed" target="_blank">&#x1F3F7;&#xFE0F; Kuponluk.com&rsquo;da t&#xFC;m f&#x131;rsatlar&#x131; g&#xF6;r &rarr;</a>
+</div>
 </body>
 </html>

@@ -1,199 +1,276 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <meta name="description" content="<%= description %>">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.724eczane.com/sitene-ekle">
-  <meta property="og:title" content="<%= title %>">
-  <meta property="og:description" content="<%= description %>">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="724eczane.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="d-flex flex-column min-vh-100">
-
+<%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-<main class="flex-grow-1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://kuponluk.com"},{"@type":"ListItem","position":2,"name":"Sitene Ekle","item":"https://kuponluk.com/sitene-ekle"}]}
+</script>
 
-<section class="hero-section py-4 text-white text-center">
-  <div class="container">
-    <h1 class="h2 fw-bold mb-2"><i class="fa-solid fa-code me-2"></i>Sitenize Nöbetçi Eczane Ekleyin</h1>
-    <p class="lead mb-0">İl ve ilçe seçin, tek satır kod ile sitenize entegre edin &mdash; tamamen ücretsiz.</p>
-  </div>
-</section>
+<!-- Breadcrumb -->
+<div class="max-w-6xl mx-auto px-4 pt-4">
+  <nav aria-label="Breadcrumb" class="inline-flex items-center gap-1.5 bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm">
+    <a href="/" class="text-gray-500 hover:text-orange-600 transition">Ana Sayfa</a>
+    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-gray-800 font-medium">Sitene Ekle</span>
+  </nav>
+</div>
 
-<section class="py-4 bg-light border-bottom">
-  <div class="container">
-    <div class="row g-3 text-center">
-      <div class="col-md-4">
-        <div class="embed-feature-card h-100">
-          <i class="fa-solid fa-circle-check fa-2x text-success mb-2"></i>
-          <h3 class="h6 fw-bold">Tamamen Ücresiz</h3>
-          <p class="text-muted small mb-0">API key, üyelik veya ödeme gerektirmez. Herkes kullanabilir.</p>
-        </div>
+<!-- Hero -->
+<section class="py-8">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="rounded-2xl p-8 text-white text-center" style="background:linear-gradient(135deg,#0d1b3e 0%,#1a3466 100%);">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4" style="background:rgba(249,115,22,0.2);">
+        <svg class="w-4 h-4" style="color:#fb923c" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span class="text-xs font-bold uppercase tracking-wider" style="color:#fb923c;">&#xDC;cretsiz Widget</span>
       </div>
-      <div class="col-md-4">
-        <div class="embed-feature-card h-100">
-          <i class="fa-solid fa-bolt fa-2x text-warning mb-2"></i>
-          <h3 class="h6 fw-bold">Tek Satır Entegrasyon</h3>
-          <p class="text-muted small mb-0">&lt;iframe&gt; kodunu kopyalayın, sayfanıza yapıştırın. Hepsi bu kadar.</p>
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3">Sitenize Kupon Ekleyin</h1>
+      <p class="text-base max-w-2xl mx-auto mb-6" style="color:rgba(255,255,255,0.75);">Haber sitenize, blogunuza veya web uygulamanıza en güncel kupon kodlarını ekleyin. Tek satır kod ile ziyaretçilerinize binlerce fırsatı sunun.</p>
+      <div class="flex flex-wrap justify-center gap-3 text-sm">
+        <% [['Tamamen Ücretsiz',''],['Otomatik Güncellenir',''],['Kolay Entegrasyon',''],['Özelleştirilebilir','']].forEach(function(f){ %>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-xl" style="background:rgba(255,255,255,0.1);">
+          <svg class="w-4 h-4" style="color:#4ade80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span><%= f[0] %></span>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="embed-feature-card h-100">
-          <i class="fa-solid fa-rotate fa-2x text-primary mb-2"></i>
-          <h3 class="h6 fw-bold">Otomatik Güncelleme</h3>
-          <p class="text-muted small mb-0">Nöbetçi eczane listesi günlük olarak otomatik güncellenir.</p>
-        </div>
+        <% }) %>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
+<!-- Configurator + Preview -->
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <div class="card shadow-sm border-0 mb-4">
-          <div class="card-header bg-danger text-white fw-bold">
-            <i class="fa-solid fa-sliders me-2"></i>1. Şehir ve İlçe Seçin
+      <!-- Config -->
+      <div class="bg-white rounded-2xl p-6" style="border:3px solid #e2e8f0;">
+        <h2 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+            <svg class="w-4 h-4" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
           </div>
-          <div class="card-body">
-            <div class="row g-3">
-              <div class="col-sm-5">
-                <label class="form-label fw-semibold small">İl</label>
-                <select id="seIl" class="form-select">
-                  <option value="">— İl seçin —</option>
-                  <% iller.slice().sort(function(a,b){return a.name.localeCompare(b.name,'tr');}).forEach(function(il){ %>
-                  <option value="<%= il.slug %>" data-districts='<%- JSON.stringify(il.districts) %>'><%= il.name %></option>
-                  <% }); %>
-                </select>
-              </div>
-              <div class="col-sm-5">
-                <label class="form-label fw-semibold small">İlçe <span class="text-muted">(isteğe bağlı)</span></label>
-                <select id="seIlce" class="form-select" disabled>
-                  <option value="">Tüm İlçeler</option>
-                </select>
-              </div>
-              <div class="col-sm-2 d-flex align-items-end">
-                <button id="seBtn" class="btn btn-danger w-100" onclick="generateEmbed()" disabled>
-                  <i class="fa-solid fa-code me-1"></i>Kodu Al
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          Widget Ayarları
+        </h2>
 
-        <div id="embedResult" style="display:none">
-          <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center">
-              <span><i class="fa-solid fa-code me-2"></i>2. Embed Kodunu Kopyalayın</span>
-              <button class="btn btn-sm btn-outline-light" onclick="copyCode()">
-                <i class="fa-solid fa-copy me-1"></i>Kopyala
-              </button>
-            </div>
-            <div class="card-body p-0">
-              <textarea id="embedCode" class="embed-code-box w-100 border-0" rows="3" readonly></textarea>
-            </div>
-          </div>
-
-          <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header fw-bold">
-              <i class="fa-solid fa-eye me-2"></i>3. Önizleme
-            </div>
-            <div class="card-body p-0">
-              <iframe id="embedPreview" src="" width="100%" height="350" frameborder="0" style="display:block;"></iframe>
-            </div>
-          </div>
-        </div>
-
-        <div class="alert alert-success d-flex align-items-start gap-3">
-          <i class="fa-solid fa-gift fa-lg mt-1 flex-shrink-0"></i>
+        <div class="space-y-5">
+          <!-- Kategori -->
           <div>
-            <strong>Tamamen Ücresiz!</strong> Bu widget'ı kullanmak için herhangi bir kayıt, API anahtarı veya ödeme gerekmez. İstediğiniz kadar sayfaya ekleyebilirsiniz.
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Kategori</label>
+            <select id="cfgKategori" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2" style="outline:none;">
+              <option value="">T&#xFC;m Kategoriler</option>
+              <% (categories || []).forEach(function(cat) { %>
+              <option value="<%= cat.slug %>"><%= cat.name %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <!-- Adet -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Kupon Sayısı</label>
+            <div class="flex gap-2">
+              <button class="adet-btn flex-1 py-2 rounded-xl text-sm font-semibold border-2 transition" data-val="3" style="border-color:#e2e8f0;color:#4b5563;">3</button>
+              <button class="adet-btn flex-1 py-2 rounded-xl text-sm font-semibold border-2 transition" data-val="5" style="border-color:#f97316;color:#f97316;background:#fff7ed;">5</button>
+              <button class="adet-btn flex-1 py-2 rounded-xl text-sm font-semibold border-2 transition" data-val="8" style="border-color:#e2e8f0;color:#4b5563;">8</button>
+              <button class="adet-btn flex-1 py-2 rounded-xl text-sm font-semibold border-2 transition" data-val="10" style="border-color:#e2e8f0;color:#4b5563;">10</button>
+            </div>
+          </div>
+
+          <!-- Tema -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tema</label>
+            <div class="flex gap-3">
+              <button class="tema-btn flex-1 py-2.5 rounded-xl text-sm font-semibold border-2 transition" data-val="light" style="border-color:#f97316;color:#f97316;background:#fff7ed;">&#x2600;&#xFE0F; A&#xE7;&#x131;k</button>
+              <button class="tema-btn flex-1 py-2.5 rounded-xl text-sm font-semibold border-2 transition" data-val="dark" style="border-color:#e2e8f0;color:#4b5563;">&#x1F319; Koyu</button>
+            </div>
+          </div>
+
+          <!-- Genişlik -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Geni&#x15F;lik: <span id="widthVal">320px</span></label>
+            <input type="range" id="cfgWidth" min="280" max="600" value="320" step="20" class="w-full" style="accent-color:#f97316;">
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>280px</span><span>600px</span></div>
           </div>
         </div>
 
+        <!-- Embed Code -->
+        <div class="mt-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Embed Kodu</label>
+          <div class="relative">
+            <textarea id="embedCode" rows="4" readonly
+              class="w-full text-xs bg-gray-50 border border-gray-200 rounded-xl p-3 font-mono resize-none"
+              style="color:#334155;outline:none;"></textarea>
+            <button onclick="copyEmbed()" id="copyBtn"
+              class="absolute top-2 right-2 px-3 py-1.5 rounded-lg text-xs font-bold text-white transition"
+              style="background:linear-gradient(135deg,#f97316,#ea580c);">Kopyala</button>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Bu kodu sitenizde kuponların görünmesini istediğiniz yere yapıştırın.</p>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="bg-white rounded-2xl p-6" style="border:3px solid #e2e8f0;">
+        <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#FFF3E8;">
+            <svg class="w-4 h-4" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          </div>
+          Canlı Önizleme
+        </h2>
+        <div class="flex justify-center" style="background:#e2e8f0;border-radius:12px;padding:16px;min-height:300px;">
+          <iframe id="widgetPreview"
+            src="/widget?adet=5&tema=light"
+            width="320" height="380"
+            frameborder="0"
+            style="border-radius:10px;border:none;max-width:100%;"
+            title="Widget Önizlemesi">
+          </iframe>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-3">Gerçek görünüm sitenizin tasarımına uyum sağlar</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-5 bg-light">
-  <div class="container">
-    <h2 class="h4 fw-bold text-danger mb-2 text-center">
-      <i class="fa-solid fa-star me-2"></i>Referanslar
-    </h2>
-    <p class="text-center text-muted small mb-4">Widget'ı kullanan siteler</p>
-    <div class="text-center text-muted py-3">
-      <i class="fa-solid fa-handshake fa-3x mb-3 text-secondary"></i>
-      <p class="mb-1">Sitenize ekledikten sonra bize bildirin, burada gösterelim.</p>
-      <a href="/iletisim" class="btn btn-outline-danger btn-sm mt-2">
-        <i class="fa-solid fa-envelope me-1"></i>Bize Ulaşın
-      </a>
+<!-- How to Use -->
+<section class="py-6">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="bg-white rounded-2xl p-8" style="border:3px solid #e2e8f0;">
+      <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Nasıl Entegre Edilir?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 text-white font-extrabold text-lg" style="background:linear-gradient(135deg,#f97316,#ea580c);">1</div>
+          <h3 class="font-bold text-gray-800 mb-2">Widget'ı Yapılandır</h3>
+          <p class="text-sm text-gray-500">Kategori, kupon sayısı ve tema seçerek widget'ı özelleştirin. Canlı önizlemede anında görün.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 text-white font-extrabold text-lg" style="background:linear-gradient(135deg,#f97316,#ea580c);">2</div>
+          <h3 class="font-bold text-gray-800 mb-2">Kodu Kopyala</h3>
+          <p class="text-sm text-gray-500">"Kopyala" butonuna tıklayın. Tek satır iframe kodu otomatik oluşturulur.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 text-white font-extrabold text-lg" style="background:linear-gradient(135deg,#f97316,#ea580c);">3</div>
+          <h3 class="font-bold text-gray-800 mb-2">Sitenize Yapıştır</h3>
+          <p class="text-sm text-gray-500">HTML editörünüzde istediğiniz yere yapıştırın. Kuponlar otomatik olarak güncellenir.</p>
+        </div>
+      </div>
+      <div class="p-5 rounded-2xl" style="background:#f8fafc;">
+        <p class="text-sm font-semibold text-gray-700 mb-3">Platform örnekleri:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <% [['WordPress','Görsel editörde HTML bloğu ekleyin → kodu yapıştırın.'],['Blogger / Blogspot','Tema → HTML düzenle → sidebar widget alanına ekleyin.'],['PHP Haber Siteleri','Sidebar veya makale altı template dosyasına yapıştırın.'],['Statik HTML','İstediğiniz <div> içine yapıştırmanız yeterli.']].forEach(function(p){ %>
+          <div class="bg-white rounded-xl p-4" style="border:1px solid #e2e8f0;">
+            <p class="text-xs font-bold text-gray-700 mb-1"><%= p[0] %></p>
+            <p class="text-xs text-gray-500"><%= p[1] %></p>
+          </div>
+          <% }) %>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-</main>
+<!-- Benefits -->
+<section class="py-4">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white rounded-2xl p-6 text-center" style="border:3px solid #e2e8f0;">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:#FFF3E8;"><svg class="w-6 h-6" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></div>
+        <h3 class="font-bold text-gray-800 mb-2">Her Zaman Güncel</h3>
+        <p class="text-sm text-gray-500">Kuponlar otomatik güncellenir. Süresi dolan kuponlar değişir, müdahale gerekmez.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center" style="border:3px solid #e2e8f0;">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:#FFF3E8;"><svg class="w-6 h-6" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+        <h3 class="font-bold text-gray-800 mb-2">Ziyaretçi Değeri</h3>
+        <p class="text-sm text-gray-500">İlgili kategori kuponları içerik kalitesini artırır ve sayfada kalma süresini uzatır.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center" style="border:3px solid #e2e8f0;">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:#FFF3E8;"><svg class="w-6 h-6" style="color:#f97316" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+        <h3 class="font-bold text-gray-800 mb-2">Doğrulanmış Kuponlar</h3>
+        <p class="text-sm text-gray-500">Yalnızca test edilmiş ve onaylanmış kupon kodları gösterilir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Params Table -->
+<section class="py-4 pb-8">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="bg-white rounded-2xl p-6" style="border:3px solid #e2e8f0;">
+      <h2 class="text-lg font-bold text-gray-800 mb-4">Widget URL Parametreleri</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th class="text-left px-4 py-3 font-semibold text-gray-600 rounded-l-xl">Parametre</th>
+              <th class="text-left px-4 py-3 font-semibold text-gray-600">Değerler</th>
+              <th class="text-left px-4 py-3 font-semibold text-gray-600">Varsayılan</th>
+              <th class="text-left px-4 py-3 font-semibold text-gray-600 rounded-r-xl">Açıklama</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% [['kategori','elektronik, moda, ...','Tümü','Kategori slug göre filtrele'],['adet','1 – 10','5','Gösterilecek kupon sayısı'],['tema','light, dark','light','Açık veya koyu tema'],['magaza','trendyol, amazon, ...','—','Belirli bir mağazanın kuponları']].forEach(function(r,i){ %>
+            <tr style="border-top:1px solid #f1f5f9;">
+              <td class="px-4 py-3 font-mono font-bold" style="color:#f97316;"><%= r[0] %></td>
+              <td class="px-4 py-3 text-gray-600"><%= r[1] %></td>
+              <td class="px-4 py-3 text-gray-400"><%= r[2] %></td>
+              <td class="px-4 py-3 text-gray-600"><%= r[3] %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 p-4 rounded-xl" style="background:#f0fdf4;border:1px solid #bbf7d0;">
+        <p class="text-xs font-semibold text-green-700 mb-1">Örnek URL:</p>
+        <code class="text-xs font-mono" style="color:#166534;">https://kuponluk.com/widget?kategori=elektronik&amp;adet=5&amp;tema=dark</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+var cfg = { kategori: '', adet: 5, tema: 'light', width: 320 };
+function updateWidget() {
+  var params = new URLSearchParams();
+  if (cfg.kategori) params.set('kategori', cfg.kategori);
+  params.set('adet', cfg.adet);
+  params.set('tema', cfg.tema);
+  var src = '/widget?' + params.toString();
+  var iframe = document.getElementById('widgetPreview');
+  iframe.src = src;
+  iframe.width = cfg.width;
+  var fullSrc = 'https://kuponluk.com/widget?' + params.toString();
+  var h = cfg.adet * 63 + 52;
+  document.getElementById('embedCode').value = '<iframe src="' + fullSrc + '" width="' + cfg.width + '" height="' + h + '" frameborder="0" style="border-radius:12px;border:none;" title="Kuponluk.com Kupon Widget"></iframe>';
+}
+document.getElementById('cfgKategori').addEventListener('change', function() { cfg.kategori = this.value; updateWidget(); });
+document.querySelectorAll('.adet-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    cfg.adet = parseInt(this.dataset.val);
+    document.querySelectorAll('.adet-btn').forEach(function(b) { b.style.borderColor='#e2e8f0'; b.style.color='#4b5563'; b.style.background=''; });
+    this.style.borderColor='#f97316'; this.style.color='#f97316'; this.style.background='#fff7ed';
+    updateWidget();
+  });
+});
+document.querySelectorAll('.tema-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    cfg.tema = this.dataset.val;
+    document.querySelectorAll('.tema-btn').forEach(function(b) { b.style.borderColor='#e2e8f0'; b.style.color='#4b5563'; b.style.background=''; });
+    this.style.borderColor='#f97316'; this.style.color='#f97316'; this.style.background='#fff7ed';
+    updateWidget();
+  });
+});
+document.getElementById('cfgWidth').addEventListener('input', function() {
+  cfg.width = parseInt(this.value);
+  document.getElementById('widthVal').textContent = cfg.width + 'px';
+  updateWidget();
+});
+function copyEmbed() {
+  var ta = document.getElementById('embedCode');
+  ta.select(); ta.setSelectionRange(0, 99999);
+  try { document.execCommand('copy'); } catch(e) { navigator.clipboard && navigator.clipboard.writeText(ta.value); }
+  var btn = document.getElementById('copyBtn');
+  btn.textContent = '✓ Kopyalandı';
+  setTimeout(function() { btn.textContent = 'Kopyala'; }, 2000);
+}
+updateWidget();
+</script>
 
 <%- include('partials/footer') %>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
-<script>
-var _illerMap = {};
-document.querySelectorAll('#seIl option[data-districts]').forEach(function(opt){
-  _illerMap[opt.value] = JSON.parse(opt.dataset.districts);
-});
-
-document.getElementById('seIl').addEventListener('change', function(){
-  var ilSlug   = this.value;
-  var ilceSelect = document.getElementById('seIlce');
-  var btn      = document.getElementById('seBtn');
-  ilceSelect.innerHTML = '<option value="">Tüm İlçeler</option>';
-  document.getElementById('embedResult').style.display = 'none';
-  if(!ilSlug){ ilceSelect.disabled = true; btn.disabled = true; return; }
-  var districts = _illerMap[ilSlug] || [];
-  districts.slice().sort(function(a,b){return a.name.localeCompare(b.name,'tr');}).forEach(function(d){
-    var o = document.createElement('option');
-    o.value = d.slug; o.textContent = d.name;
-    ilceSelect.appendChild(o);
-  });
-  ilceSelect.disabled = false;
-  btn.disabled = false;
-});
-
-function generateEmbed(){
-  var il   = document.getElementById('seIl').value;
-  var ilce = document.getElementById('seIlce').value;
-  if(!il) return;
-  var src  = 'https://724eczane.com/widget?il=' + il + (ilce ? '&ilce=' + ilce : '');
-  var code = '<iframe src="' + src + '" width="100%" height="400" frameborder="0" style="border:none;border-radius:8px;" title="Nöbetçi Eczaneler - 724eczane.com"></iframe>';
-  document.getElementById('embedCode').value = code;
-  document.getElementById('embedPreview').src = '/widget?il=' + il + (ilce ? '&ilce=' + ilce : '');
-  document.getElementById('embedResult').style.display = '';
-  document.getElementById('embedResult').scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-function copyCode(){
-  var ta = document.getElementById('embedCode');
-  ta.select();
-  document.execCommand('copy');
-  var btn = event.currentTarget;
-  var orig = btn.innerHTML;
-  btn.innerHTML = '<i class="fa-solid fa-check me-1"></i>Kopyalandı!';
-  setTimeout(function(){ btn.innerHTML = orig; }, 2000);
-}
-</script>
 </body>
 </html>
