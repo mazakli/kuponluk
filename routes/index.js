@@ -1,17 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
+const { getIcerikler } = require('../cms');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const db = getDb();
 
-  const sliders = db.prepare(`
+  // CMS'den slider çek, yoksa DB'den al
+  let cmsSliders = await getIcerikler('slider');
+  const dbSliders = db.prepare(`
     SELECT sl.*, s.slug as store_slug, s.logo_url as store_logo, s.name as store_name_real
     FROM sliders sl
     LEFT JOIN stores s ON s.slug = REPLACE(REPLACE(sl.link_url, '/magaza/', ''), '/', '')
     WHERE sl.active = 1
     ORDER BY sl.order_index ASC
   `).all();
+
+  const sliders = cmsSliders.length > 0
+    ? cmsSliders.map(s => ({
+        id: s.id,
+        title: s.baslik,
+        description: s.ozet || '',
+        image_url: s.gorsel_url || '',
+        btn1_text: s.ekstra?.buton1_metin || '',
+        btn1_url: s.ekstra?.buton1_url || '/',
+        btn2_text: s.ekstra?.buton2_metin || '',
+        btn2_url: s.ekstra?.buton2_url || '/',
+        order_index: s.sira || 0,
+      }))
+    : dbSliders;
 
   const popularBrands = db.prepare(`
     SELECT s.*, SUM(cp.use_count) as total_uses, COUNT(cp.id) as active_coupons
